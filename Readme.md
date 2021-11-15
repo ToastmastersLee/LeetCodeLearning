@@ -595,3 +595,46 @@ public class Solution {
 
 ## 2021-9-30
 
+
+
+## 2021-11-15 [Binary Search](https://leetcode-cn.com/problems/binary-search/)
+
+```C#
+    public int Search(int[] nums, int target)
+    {
+        int head = 0, tail = nums.Length - 1, mid = (tail - head + head) / 2;//【1】
+        while (head <= tail)
+        {
+            //int mid = (tail - head + head) / 2; 【1】
+            //【2】tail-head /2 + head
+            if (target == nums[mid])
+            {
+                return mid;
+            }
+
+            if (target > nums[mid])
+            {
+                head = mid + 1;
+            }
+            else
+            {
+                tail = mid - 1;
+            }
+        }
+        return -1;
+    }
+```
+
+
+
+- 今天再次coding Binary Search这道简单的编程，还是相当困难。（再次验证了，每日30分钟的练习是多么重要） 
+
+- 一开始只记得一个双指针的概念，根据这个概念回忆起了head, tail两个变量，第三个变量mid想了几分钟都记不起来，直到自己画图帮助理解，才一下子记起来了。
+
+- 【1】：在这里卡住，把mid定义在循环外面，导致(head<=tail)这个循环永远break不了。 因为mid不会变，则head和tail就永远不会变。
+
+- 【2】：还记得在整数比较大的情况下，需要不能简单的把头尾相加除以2，这样会出现整数溢出。 正确的式子应该是 **`(tail - head) /2 + head`**; 但是我写成**`(tail - head + head) / 2`** 导致循环无法打破=>  tail /2.....
+
+  <img src="./img/image-20211115173408218.png" alt="image-20211115173408218" style="zoom:67%;" />
+
+    如同所示，只要第一次走的不是tail =mid -1, 也就是tail不变，则就陷入死循环。。。
