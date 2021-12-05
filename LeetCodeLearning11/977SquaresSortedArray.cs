@@ -13,7 +13,7 @@ namespace LeetCodeLearning11
             int index = result.Length;
             while (left <= right)
             {
-                if (nums[left] * nums[left] > nums[right] * right[*])
+                if (nums[left] * nums[left] > nums[right] * nums[right])
                 {
                     result[index--] = nums[left] * nums[left];
                     left++;
