@@ -169,6 +169,10 @@ Output: [0]
 
 
 
+<img src="./img/344_fig1.png" alt="img" style="zoom: 50%;" />
+
+
+
 ## 27 Remove Element
 
 
