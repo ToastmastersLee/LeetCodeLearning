@@ -492,3 +492,89 @@ public class Solution {
 }
 ```
 
+
+
+
+
+## 2021-12-9 [Middle of the Linked List](https://leetcode-cn.com/problems/middle-of-the-linked-list/)
+
+Given the head of a singly linked list, return the middle node of the linked list.
+
+给定一个头结点为 `head` 的非空单链表，返回链表的中间结点。
+
+If there are two middle nodes, return **the second middle** node.
+
+如果有两个中间结点，则返回第二个中间结点。
+
+**Example 1:**
+
+> Input: head = [1,2,3,4,5]
+> Output: [3,4,5]
+> Explanation: The middle node of the list is node 3.
+
+
+
+**Example 2:**
+
+> Input: head = [1,2,3,4,5,6]
+> Output: [4,5,6]
+> Explanation: Since the list has two middle nodes with values 3 and 4, we return the second one.
+
+<img src="./img/image-20211209172712604.png" alt="image-20211209172712604" style="zoom: 80%;" />
+
+> 中文的解释显然有点[倒灶](https://baike.baidu.com/item/%E5%80%92%E7%81%B6/11052948?fr=aladdin)。
+>
+> 英文明确指出输出(Output)是[4,5,6],中文解释尼玛输出节点3？
+
+
+
+### 经验教训
+
+```C#
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     public int val;
+ *     public ListNode next;
+ *     public ListNode(int val=0, ListNode next=null) {
+ *         this.val = val;
+ *         this.next = next;
+ *     }
+ * }
+ */
+public class Solution {
+    public ListNode MiddleNode(ListNode head) {
+        ListNode[] arrNode = {};
+        int i =0;
+        while(head.next!=null)
+        {
+            arrNode[i] = head
+        }
+        return arrNode[i/2];
+    }
+}
+```
+
+- 显然我这种写法还是未能理解整个链表的本质：head是链表上的一个元素，head.next也是链表上的一个元素，这两个元素是等量齐观的。
+- 数组大小必须固定，如果不想固定，[可以考虑使用List,最后再把List.ToArray()](https://stackoverflow.com/questions/202813/adding-values-to-a-c-sharp-array);
+
+
+
+### 数组法
+
+```C#
+public class Solution {
+    public ListNode MiddleNode(ListNode head) {
+        //ListNode[] arrNode = {};//这样写会数组越界，以为数组一旦定义无法再改变大小
+        ListNode[] arrNode = new ListNode[100];
+        int i =0;
+        while(head!=null)
+        {
+            arrNode[i++] = head;
+            head = head.next;
+        }
+        return arrNode[i/2];
+    }
+}
+```
+
