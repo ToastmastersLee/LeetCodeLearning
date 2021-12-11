@@ -562,6 +562,8 @@ public class Solution {
 
 ### 数组法
 
+链表的缺点在于不能通过下标访问对应的元素。因此我们可以考虑对链表进行遍历，同时将遍历到的元素依次放入数组 A 中。如果我们遍历到了 N 个元素，那么链表以及数组的长度也为 N，对应的中间节点即为 A[N/2]。
+
 ```C#
 public class Solution {
     public ListNode MiddleNode(ListNode head) {
@@ -578,3 +580,44 @@ public class Solution {
 }
 ```
 
+**复杂度分析**
+
+- 时间复杂度：O(N)*O*(*N*)，其中 N*N* 是给定链表中的结点数目。
+- 空间复杂度：O(N)*O*(*N*)，即数组 `A` 用去的空间。
+
+
+
+### 单指针法
+
+我们可以对方法一进行空间优化，省去数组 A。
+
+我们可以对链表进行两次遍历。第一次遍历时，我们统计链表中的元素个数 N；第二次遍历时，我们遍历到第 N/2 个元素（链表的首节点为第 0 个元素）时，将该元素返回即可
+
+
+
+```c#
+public class Solution{
+    public ListNode MiddleNode(ListNode head){
+        int i = 0;
+        ListNode cur = head;
+        while(head!=null)
+        {
+            head=head.next;
+            i++;
+        }
+        cur = head;
+        int k = 0;
+        while(k<i/n)
+        {
+            cur = cur.next;
+            k++;
+        }
+        return cur;
+    }
+}
+```
+
+**复杂度分析**
+
+- 时间复杂度：O(N)*O*(*N*)，其中 N*N* 是给定链表的结点数目。
+- 空间复杂度：O(1)*O*(1)，只需要常数空间存放变量和指针。
