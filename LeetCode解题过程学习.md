@@ -226,3 +226,111 @@ If all assertions pass, then your solution will be accepted.
 
 1. [27. 移除元素](https://programmercarl.com/0027.%E7%A7%BB%E9%99%A4%E5%85%83%E7%B4%A0.html#%E6%80%9D%E8%B7%AF)
 2. 
+
+
+
+
+
+## 19. [Remove nth node from end of list](https://leetcode-cn.com/problems/remove-nth-node-from-end-of-list/)
+
+Given the **`head`** of a linked list, remove the **n<sup>th</sup>** node from the list and return its head.
+
+给你一个链表，删除链表的倒数第 `n` 个结点，并且返回链表的头结点。
+
+**Example 1:**
+
+<img src="./img/image-20211213115333648.png" alt="image-20211213115333648" style="zoom:50%;" />
+
+```c#
+Input: head = [1,2,3,4,5], n = 2
+Output: [1,2,3,5]
+```
+
+**Example 2:**
+
+```c#
+Input: head = [1], n = 1
+Output: []
+```
+
+**Example 3:**
+
+```c#
+Input: head = [1,2], n = 1
+Output: [1]
+```
+
+
+
+### Dummy node
+
+在对链表进行操作时，一种常用的技巧是添加一个[哑节点](https://leetcode-cn.com/problems/remove-nth-node-from-end-of-list/solution/shan-chu-lian-biao-de-dao-shu-di-nge-jie-dian-b-61/)（**dummy node**），它的**next** 指针指向链表的头节点。这样一来，我们就不需要对头节点进行特殊的判断了。
+
+例如，在本题中，如果我们要删除节点 **y**，我们需要知道节点 **y** 的前驱节点 **x**，并将 **x** 的指针指向 **y** 的后继节点。但由于头节点不存在前驱节点，因此我们需要在删除头节点时进行特殊判断。但如果我们添加了哑节点，那么头节点的前驱节点就是哑节点本身，此时我们就只需要考虑通用的情况即可。
+
+> 特别地，在某些语言中，由于需要自行对内存进行管理。因此在实际的面试中，对于「是否需要释放被删除节点对应的空间」这一问题，我们需要和面试官进行积极的沟通以达成一致。下面的代码中默认不释放空间。
+
+
+
+### 双指针
+
+
+
+我们也可以在不预处理出链表的长度，以及使用常数空间的前提下解决本题。
+
+由于我们需要找到倒数第 $n$ 个节点，因此我们可以使用两个指针 **first** 和 **second** 同时对链表进行遍历，并且**first** 比 **second**超前 **n** 个节点。当 **first** 遍历到链表的末尾时，**second** 就恰好处于倒数第 **n** 个节点。
+
+具体地，初始时**first** 和 **second** 均指向头节点。我们首先使用 **first** 对链表进行遍历，遍历的次数为 **n**。此时，**first** 和 **second** 之间间隔了 $n−1$ 个节点，即 **first** 比 **second** 超前了 **n** 个节点。
+
+<img src="./img/cc43daa8cbb755373ce4c5cd10c44066dc770a34a6d2913a52f8047cbf5e6e56-file_1559548337458" alt="img" style="zoom: 50%;" />
+
+> 这个[动画](https://leetcode-cn.com/problems/remove-nth-node-from-end-of-list/solution/dong-hua-tu-jie-leetcode-di-19-hao-wen-ti-shan-chu/)实在是神来之笔
+
+因此我们可以考虑在初始时将 **second** 指向哑节点，其余的操作步骤不变。这样一来，当**first** 遍历到链表的末尾时，**second** 的下一个节点就是我们需要删除的节点。
+
+<img src="./img/p3.png" alt="p3" style="zoom:67%;" />
+
+
+
+### 代码
+
+```c#
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     public int val;
+ *     public ListNode next;
+ *     public ListNode(int val=0, ListNode next=null) {
+ *         this.val = val;
+ *         this.next = next;
+ *     }
+ * }
+ */
+public class Solution {
+    public ListNode RemoveNthFromEnd(ListNode head, int n) {
+        /*往head上链表上插入全新的一个节点，生成一个全新的链表dummyList
+        该dummyList有两个作用，一个是赋予second指针删除节点用，
+        另一个是把删除过后的链表返回给方法*/
+        ListNode dummyList = new ListNode(0,head);
+        /*head是head，和dummyList是独立的两条链表，
+        但是这样子无法解释该算法的空间复杂度为O（1）*/
+        ListNode first = head;
+        ListNode second = dummyList;
+        for(int i=0;i<n;i++){ //先移动first指针往前n步
+            first = first.next;
+        }
+        while(first!=null){
+            first=first.next;
+            second=second.next;
+        }
+        second.next=second.next.next;
+    }
+}
+```
+
+- 我对链表模型上可以理解，但是无法解释代码执行情况，说明还未彻底理解；
+-   `ListNode dummyList = new ListNode(0,head);`究竟是产生了一个全新的链表`dummyList`,还是只是产生一个新的节点？我在这两个认知中反复横条；
+- 从字面意识上看 `dummyList`其实是一个节点，因为其类型是`ListNode`,而不是 `ListNode[]` 这样的东西；
+- 由于我未能彻底理解`LinkedList`的结构，在LeetCode给出的有限的代码下做错误的理解，因此导致每次写代码都需要看提示。于是我就参考[Implementing Linked List In C#](https://www.c-sharpcorner.com/article/linked-list-implementation-in-c-sharp/)和[LinkedList<T> Class](https://docs.microsoft.com/en-us/dotnet/api/system.collections.generic.linkedlist-1?view=net-6.0)两片文章做进一步了解。
+- 有时候编程需要深入了解才能彻底掌握，急不得，也不要急，大不了LeetCode代码多抄写几次，然后先卡在这些题目上几天、几个礼拜。每日的坚持比刷进度，从长远来看，更有效。
+
