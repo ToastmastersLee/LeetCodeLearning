@@ -235,7 +235,7 @@ If all assertions pass, then your solution will be accepted.
 
 Given the **`head`** of a linked list, remove the **n<sup>th</sup>** node from the list and return its head.
 
-给你一个链表，删除链表的倒数第 `n` 个结点，并且返回链表的头结点。
+给你一个链表（上的head节点），删除链表的倒数第 `n` 个结点，并且返回链表的头结点。
 
 **Example 1:**
 
@@ -328,9 +328,48 @@ public class Solution {
 }
 ```
 
-- 我对链表模型上可以理解，但是无法解释代码执行情况，说明还未彻底理解；
+- 我对链表模型上可以理解，但是无法解释代码执行情况，说明还未彻底理解；（中文翻译也有点误导）。
 -   `ListNode dummyList = new ListNode(0,head);`究竟是产生了一个全新的链表`dummyList`,还是只是产生一个新的节点？我在这两个认知中反复横条；
+- 我是在尝试写备注，把每一句执行的过程记录下来的过程中发现了问题，才开始反思，否则就这样稀里糊涂过了，所以上面的备注随后以后追溯看起来很会很funny，不过这确实是一个过程，也确实是发现问题的关键所在，值得记录下来为后续的难题记录提供参考。
 - 从字面意识上看 `dummyList`其实是一个节点，因为其类型是`ListNode`,而不是 `ListNode[]` 这样的东西；
-- 由于我未能彻底理解`LinkedList`的结构，在LeetCode给出的有限的代码下做错误的理解，因此导致每次写代码都需要看提示。于是我就参考[Implementing Linked List In C#](https://www.c-sharpcorner.com/article/linked-list-implementation-in-c-sharp/)和[LinkedList<T> Class](https://docs.microsoft.com/en-us/dotnet/api/system.collections.generic.linkedlist-1?view=net-6.0)两片文章做进一步了解。
-- 有时候编程需要深入了解才能彻底掌握，急不得，也不要急，大不了LeetCode代码多抄写几次，然后先卡在这些题目上几天、几个礼拜。每日的坚持比刷进度，从长远来看，更有效。
+- 由于我未能彻底理解`LinkedList`的结构，在**LeetCode**给出的有限的代码下做错误的理解，因此导致每次写代码都需要看提示。于是我就参考[Implementing Linked List In C#](https://www.c-sharpcorner.com/article/linked-list-implementation-in-c-sharp/)和[LinkedList<T> Class](https://docs.microsoft.com/en-us/dotnet/api/system.collections.generic.linkedlist-1?view=net-6.0)两片文章做进一步了解。
+- 有时候编程需要深入了解才能彻底掌握，急不得，也不要急，大不了**LeetCode**代码多抄写几次，然后先卡在这些题目上几天、几个礼拜。每日的坚持比刷进度，从长远来看，更有效。
+
+
+
+### 正确代码
+
+```C#
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     public int val;
+ *     public ListNode next;
+ *     public ListNode(int val=0, ListNode next=null) {
+ *         this.val = val;
+ *         this.next = next;
+ *     }
+ * }
+ */
+public class Solution {
+    public ListNode RemoveNthFromEnd(ListNode head, int n) {
+        /*往链表上新增一个DummyNode节点*/
+        ListNode dummyNode = new ListNode(0,head);
+        ListNode first = head;
+        ListNode second = dummyNode;
+        for(int i=0;i<n;i++){ //先移动first指针往前n步
+            first = first.next;
+        }
+        while(first!=null){
+            first=first.next;
+            second=second.next;
+        }
+        //改变链表上的要删除的N点的前驱节点的后驱指针指向的位置
+        second.next=second.next.next;
+        //把哑节点的下一个节点（亦即head节点）传递给ans
+        ListNode ans = dummyNode.next;
+        return ans;
+    }
+}
+```
 
