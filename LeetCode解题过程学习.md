@@ -6,7 +6,7 @@
 
 
 
-## 二分查找
+## Binary Search二分查找
 
 
 
@@ -121,7 +121,7 @@ You must write an algorithm with $$O(log n)$$ runtime complexity.
 
 
 
-## 双指针
+## Tow Pointers双指针
 
 ### [C# array initialization](https://www.tutorialspoint.com/csharp/csharp_arrays.htm)
 
@@ -228,7 +228,16 @@ public class Solution {
 
 
 
-### Rotate array
+### 189.Rotate array
+
+| Title                                                        | Type         | Date       |
+| ------------------------------------------------------------ | ------------ | ---------- |
+| [189. Rotate array](https://leetcode-cn.com/problems/rotate-array/solution/xuan-zhuan-shu-zu-by-leetcode-solution-nipk/) | Tow Pointers | 2021-12-4  |
+|                                                              |              | 2021-12-15 |
+
+
+
+<font size =5> 题目</font>
 
 Given an array, **rotate** the array **to the right** by `k` steps, where `k` is non-negative
 
@@ -252,27 +261,67 @@ rotate 3 steps to the right: [5,6,7,1,2,3,4]
 
 
 
+<font size=5>取模（2021-9-17）</font>
+
+这里必须要取模（需要考虑向右移动次数超出数组本身的长度的情况）：这里只有7个元素，向右边移动7次，其实等于没有移动；向右移动8次等于向右移动1次，所以**8%7=1**；
+
+
+
+<font size=5>解题思路</font>
+
+观察:
+
+输入: nums = [1,2,3,4,5,6,7], k = 3
+输出: [5,6,7,1,2,3,4]
+
+<img src="./img/image-20211215140438499.png" alt="image-20211215140438499" style="zoom:80%;" />
+
+
+
+- **[S1:翻转整个数组](https://leetcode-cn.com/problems/rotate-array/solution/shu-zu-fan-zhuan-xuan-zhuan-shu-zu-by-de-5937/)**
+
+
+
+<img src="./img/image-20211215140549183.png" alt="image-20211215140549183" style="zoom:80%;" />
+
+- **S2: 从第K个元素后，将数组划分为左右两快字数组**
+
+<img src="./img/image-20211215141622437.png" alt="image-20211215141622437" style="zoom:80%;" />
+
+- **S3:左右两组子数组，各自翻转**
+
+<img src="./img/image-20211215141851432.png" alt="image-20211215141851432" style="zoom:80%;" />
+
+- **S4:Done**
+
+<img src="./img/image-20211215143721169.png" alt="image-20211215143721169" style="zoom: 80%;" />
+
+
+
+该方法基于如下的事实：当我们将数组的元素向右移动 `k` 次后，尾部 $k\mod n$ 个元素会移动至数组头部，其余元素向后移动 个$k\mod n$位置。
+
+该方法为数组的翻转：我们可以先将所有元素翻转，这样尾部的 $k\mod n$个元素就被移至数组头部，然后我们再翻转 **[0,k mod n−1]** 区间的元素和 **[k mod n,n−1]** 区间的元素即能得到最后的答案。
+
+
+
 <font size=5>参考代码</font>
 
 ```c#
 public class Solution {
     public void Rotate(int[] nums, int k) {
-        k%= nums.Length;  //-->: k= k % nums.Length;
-        reverse(nums,0,nums.Length-1);
-        reverse(nums,0,k-1);
-        reverse(nums,k,nums.Length-1);
+        k= k%nums.Length;//-->: k= k % nums.Length;
+        reverseArr(nums,0,nums.Length-1);//第一次全翻转
+        reverseArr(nums,0,k-1);//第二次翻转左边部分，由于end是数组的下标，所以需要k-1;
+        reverseArr(nums,k,nums.Length-1);//翻转右边部分，如果不能理解这里为什么不需要k-1,可以参考上图的k=3的位置
     }
-
-    public void reverse(int[] nums,int start, int end){
-      //while(end>=start)
-      while(end>start)
-      {
-        int temp = nums[start];
-        nums[start] =nums[end];
-        nums[end] =temp;
-        start++;
-        end--;
-      }
+    private void reverseArr(int[]nums, int start, int end){
+        while(start<=end){
+            int temp = nums[start];
+            nums[start] =nums[end];
+            nums[end] =temp;
+            start++;
+            end--;
+        }
     }
 }
 ```
@@ -353,8 +402,6 @@ Output: [0]
 
 
 ### 27. Remove Element
-
-
 
 | Title                                                        | Type         | Date      |
 | ------------------------------------------------------------ | ------------ | --------- |
@@ -541,7 +588,7 @@ public class Solution {
 
 ## [滑动窗口](https://leetcode-cn.com/problems/longest-substring-without-repeating-characters/solution/hua-dong-chuang-kou-by-powcai/)
 
-什么是滑动窗口？
+<font size =5>什么是滑动窗口？</font>
 
 其实就是一个队列,比如例题中的 `abcabcbb`，进入这个队列（窗口）为 `abc` 满足题目要求，当再进入 `a`，队列变成了 `abca`，这时候不满足要求。所以，我们要移动这个队列！
 
@@ -583,3 +630,42 @@ Notice that the answer must be a substring, "pwke" is a subsequence and not a su
      请注意，你的答案必须是 子串 的长度，"pwke" 是一个子序列，不是子串。
 ```
 
+
+
+
+
+```java
+public int lengthOfLongestSubstring(String s) {
+        HashMap<Character, Integer> map = new HashMap<>();
+        int maxLen = 0;//用于记录最大不重复子串的长度
+        int left = 0;//滑动窗口左指针
+        for (int i = 0; i < s.length() ; i++)
+        {
+            /**
+            1、首先，判断当前字符是否包含在map中，如果不包含，将该字符添加到map（字符，字符在数组下标）,
+             此时没有出现重复的字符，左指针不需要变化。此时不重复子串的长度为：i-left+1，与原来的maxLen比较，取最大值；
+
+            2、如果当前字符 ch 包含在 map中，此时有2类情况：
+             1）当前字符包含在当前有效的子段中，如：abca，当我们遍历到第二个a，当前有效最长子段是 abc，我们又遍历到a，
+             那么此时更新 left 为 map.get(a)+1=1，当前有效子段更新为 bca；
+             2）当前字符不包含在当前最长有效子段中，如：abba，我们先添加a,b进map，此时left=0，我们再添加b，发现map中包含b，
+             而且b包含在最长有效子段中，就是1）的情况，我们更新 left=map.get(b)+1=2，此时子段更新为 b，而且map中仍然包含a，map.get(a)=0；
+             随后，我们遍历到a，发现a包含在map中，且map.get(a)=0，如果我们像1）一样处理，就会发现 left=map.get(a)+1=1，实际上，left此时
+             应该不变，left始终为2，子段变成 ba才对。
+
+             为了处理以上2类情况，我们每次更新left，left=Math.max(left , map.get(ch)+1).
+             另外，更新left后，不管原来的 s.charAt(i) 是否在最长子段中，我们都要将 s.charAt(i) 的位置更新为当前的i，
+             因此此时新的 s.charAt(i) 已经进入到 当前最长的子段中！
+             */
+            if(map.containsKey(s.charAt(i)))
+            {
+                left = Math.max(left , map.get(s.charAt(i))+1);
+            }
+            //不管是否更新left，都要更新 s.charAt(i) 的位置！
+            map.put(s.charAt(i) , i);
+            maxLen = Math.max(maxLen , i-left+1);
+        }
+        
+        return maxLen;
+    }
+```
