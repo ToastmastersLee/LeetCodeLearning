@@ -6,19 +6,15 @@
 
 
 
-## 35. Search Insert Position
+## 二分查找
 
 
 
-| Title                                                        | Type          | Date      |
-| ------------------------------------------------------------ | ------------- | --------- |
-| [Search Insert Position](https://leetcode-cn.com/problems/search-insert-position/) | Binary Search | 2021-12-1 |
+### 思路与关键概念
 
-Given a sorted array of distinct integers and a target value, return the index if the target is found. If not, return the index where it would be if it were inserted in order.
+<font size=5>1. Binary Search 算法复习</font>
 
-You must write an algorithm with $$O(log n)$$ runtime complexity.
 
-### Binary Search 算法复习
 
 - 双指针：先设定左侧下标 **left** 和右侧下标 **right**, 再计算中间下标 **mid**;
 - 每次根据 **nums[mid]**和**target** 之间的大小进行判断：
@@ -29,7 +25,7 @@ You must write an algorithm with $$O(log n)$$ runtime complexity.
 
 
 
-### Why left+(right+left)/2 equals (left+right)/2?
+<font size=5>2. Why left+(right+left)/2 equals (left+right)/2?</font>
 
 We can derive it from the mathematical formula.
 $$
@@ -43,8 +39,7 @@ $$
 
 
 
-
-### [Why left+(right+left)2/ will not overflow](https://stackoverflow.com/questions/27167943/why-leftright-left-2-will-not-overflow#)
+<font size=5>3. [Why left+(right+left)2/ will not overflow](https://stackoverflow.com/questions/27167943/why-leftright-left-2-will-not-overflow#) </font>
 
 You have $left < right$ by definition.
 
@@ -72,15 +67,109 @@ and since we don’t know the values of `left` and `right`, it’s entirely poss
 
 
 
-## 977. Squares of a sorted array
+### 704. Binary Search
+
+| Title                                                        | Type          | Date       |
+| ------------------------------------------------------------ | ------------- | ---------- |
+| [Search Insert Position](https://leetcode-cn.com/problems/search-insert-position/) | Binary Search | 2021-12-1  |
+|                                                              |               | 2021-12-15 |
 
 
+
+Given an array of integers `nums` which is sorted in ascending order, and an integer `target`, write a function to search `target` in `nums`. If `target` exists, then return its index. Otherwise, return `-1.`
+
+You must write an algorithm with $O(log n)$ runtime complexity.
+
+```c#
+public class Solution{
+    public int BinarySearch(int[] nums, int target)
+    {
+        int left = 0;
+        int right = nums.Length -1;//这里一定要减去1，因为数组的下标是从0开始，而长度是从1开始；
+        while(left<=right) //必须考虑==的情况，比如输入 [5],target=5,这种情况就会报错
+        {
+            int mid = (int)((left + right) /2);//默认向下取整
+            if(target == nums[mid])
+            {
+                return mid;
+            }
+            if(target > nums[mid])
+            {//目标值比中间值大，于数组右边，需调整left的指针.目标落座在[mid+1, right]
+                left=mid +1;
+            }
+            if(target <num[mid])
+            {//目标值比中间小，于数字左边，需要调整right的指针，目标坐落在[left,rigt-1]
+                right = mid =1;
+            }
+        }
+        return -1;
+    }
+}
+```
+
+
+
+### 35. Search Insert Position
+
+| Title                                                        | Type          | Date      |
+| ------------------------------------------------------------ | ------------- | --------- |
+| [Search Insert Position](https://leetcode-cn.com/problems/search-insert-position/) | Binary Search | 2021-12-1 |
+
+Given a sorted array of distinct integers and a target value, return the index if the target is found. If not, return the index where it would be if it were inserted in order.
+
+You must write an algorithm with $$O(log n)$$ runtime complexity.
+
+
+
+## 双指针
+
+### [C# array initialization](https://www.tutorialspoint.com/csharp/csharp_arrays.htm)
+
+An array stores a **fixed-size sequential collection** of elements of the same type.
+
+Declaring an array does not initialize the array in the memory. When the array variable is initialized, you can assign values to the array.
+
+Array is a reference type, so you need to use the **new** keyword to create an instance of the array. For example,
+
+```C#
+double[] balance = new double[10];
+```
+
+
+
+You can assign values to the array **at the time of declaration**, as shown −
+
+```C#
+double[] balance = {2340.0, 4523.69, 3421.0};
+```
+
+
+
+You can also **create and initialize** an array, as shown −
+
+```C#
+int[] marks = new int[5]{99,  98, 92, 97, 95};
+```
+
+
+
+You may also **omit** the size of the array, as shown −
+
+```c#
+int[] marks = new [] {99,  98, 92, 97, 95};
+```
+
+
+
+### 977. Squares of a sorted array
 
 | Title                                                        | Type         | Date      |
 | ------------------------------------------------------------ | ------------ | --------- |
 | [977. Squares of a Sorted Array](https://leetcode-cn.com/problems/squares-of-a-sorted-array/) | Tow Pointers | 2021-12-3 |
 
-![img](./img/Squares_of_a_sorted_array.gif)
+
+
+<font size=5> 解题思路 </font>
 
 数组其实是有序的， 只不过负数平方之后可能成为最大数了。
 
@@ -98,15 +187,105 @@ and since we don’t know the values of `left` and `right`, it’s entirely poss
 
 
 
+<font size=5>算法图解</font>
+
+![img](./img/Squares_of_a_sorted_array.gif)
 
 
-## Move Zeros
+
+<font size=5>参考代码</font>
+
+```C#
+public class Solution {
+    public int[] SortedSquares(int[] nums) {
+    	//i 是数组开头位置， j是数组结尾位置， pos是返回的数组在当前循环内最大的数组
+     	int i = 0, j = nums.Length -1, pos = nums.Length -1;
+     
+    	// int[] ans = new int[nums.Length-1]; // 数组越界！
+   		int[] ans = new int[nums.Length];
+   		// while(i<j)  [-7,-3,2,3,11] => [0,9,9,49,121]
+        while(i<=j)
+        {
+             if(nums[i] * nums[i] > nums[j] * nums[j])
+             {
+                 ans[pos] = nums[i] * nums[i];
+                 //确认了是i最大，因此移动i指针到下一位进行比较
+                i++;
+             }
+             else
+             {
+                 ans[pos] = nums[j] * nums[j];
+                 //反之，如果确认是j更大，把更大的值赋予ans数组的最大位(pos),并且修改j指针的位置
+                 j--;
+             }
+             //every iterated, need to change the pointer of pos(self minus) 
+             pos-- ;
+         }
+         return ans;
+    }
+}
+```
+
+
+
+### Rotate array
+
+Given an array, **rotate** the array **to the right** by `k` steps, where `k` is non-negative
+
+给定一个数组，将数组中的元素向右移动 `k` 个位置，其中 `k` 是非负数。
+
+**Example 1:**
+
+```javascript
+Input: nums = [1,2,3,4,5,6,7], k = 3
+Output: [5,6,7,1,2,3,4]
+Explanation:
+rotate 1 steps to the right: [7,1,2,3,4,5,6]
+rotate 2 steps to the right: [6,7,1,2,3,4,5]
+rotate 3 steps to the right: [5,6,7,1,2,3,4]
+```
+
+**Follow up:**
+
+- Try to come up with as many solutions as you can. There are at least three different ways to solve this problem.
+- Could you do it in-place with `O(1)` extra space?
+
+
+
+<font size=5>参考代码</font>
+
+```c#
+public class Solution {
+    public void Rotate(int[] nums, int k) {
+        k%= nums.Length;  //-->: k= k % nums.Length;
+        reverse(nums,0,nums.Length-1);
+        reverse(nums,0,k-1);
+        reverse(nums,k,nums.Length-1);
+    }
+
+    public void reverse(int[] nums,int start, int end){
+      //while(end>=start)
+      while(end>start)
+      {
+        int temp = nums[start];
+        nums[start] =nums[end];
+        nums[end] =temp;
+        start++;
+        end--;
+      }
+    }
+}
+```
+
+
+
+### 283.Move Zeros
 
 | Title                                                        | Type         | Date      |
 | ------------------------------------------------------------ | ------------ | --------- |
 | [283. Move Zeros](https://leetcode-cn.com/problems/move-zeroes/) | Tow Pointers | 2021-12-5 |
 
-### 题目
+<font size=5> 题目</font>
 
 Given an integer array `nums`, move all `0`'s to the end of it while maintaining the relative order of the non-zero elements.
 
@@ -130,7 +309,7 @@ Output: [0]
 
 
 
-### 参考代码
+<font size=5>参考代码</font>
 
 ```csharp
     public void MoveZeros(int[] nums)
@@ -155,7 +334,7 @@ Output: [0]
     }
 ```
 
-### 图解过程
+<font size=5>图解过程</font>
 
 <img src="./img/image-20211205174414441.png" alt="image-20211205174414441" style="zoom:80%;" />
 
@@ -173,13 +352,15 @@ Output: [0]
 
 
 
-## 27 Remove Element
+### 27. Remove Element
 
 
 
 | Title                                                        | Type         | Date      |
 | ------------------------------------------------------------ | ------------ | --------- |
 | [27. Remove Element](https://leetcode-cn.com/problems/remove-element/) | Tow Pointers | 2021-12-5 |
+
+<font size=5>题目</font>
 
 Given an integer array `nums` and an integer `val`, remove all occurrences of `val` in `nums` [in-place](https://en.wikipedia.org/wiki/In-place_algorithm). The relative order of the elements may be changed.
 
@@ -197,28 +378,11 @@ Do **not** allocate extra space for another array. You must do this by **modifyi
 
 > 不要使用额外的数组空间，你必须仅使用 `O(1)` 额外空间并 **[原地 ](https://baike.baidu.com/item/原地算法)修改输入数组**。
 
-**Custom Judge:**
-
-The judge will test your solution with the following code:
-
-```csharp
-int[] nums = [...]; // Input array
-int val = ...; // Value to remove
-int[] expectedNums = [...]; // The expected answer with correct length.
-                            // It is sorted with no values equaling val.
-
-int k = removeElement(nums, val); // Calls your implementation
-
-assert k == expectedNums.length;
-sort(nums, 0, k); // Sort the first k elements of nums
-for (int i = 0; i < actualLength; i++) {
-    assert nums[i] == expectedNums[i];
-}
-```
-
-If all assertions pass, then your solution will be accepted.
 
 
+
+
+<font size=5>图解过程</font>
 
 ![27.移除元素-双指针法](./img/008eGmZEly1gntrds6r59g30du09mnpd.gif)
 
@@ -231,7 +395,7 @@ If all assertions pass, then your solution will be accepted.
 
 
 
-## 19. [Remove nth node from end of list](https://leetcode-cn.com/problems/remove-nth-node-from-end-of-list/)
+### 19. [Remove nth node from end of list](https://leetcode-cn.com/problems/remove-nth-node-from-end-of-list/)
 
 Given the **`head`** of a linked list, remove the **n<sup>th</sup>** node from the list and return its head.
 
@@ -262,7 +426,7 @@ Output: [1]
 
 
 
-### Dummy node
+#### Dummy node
 
 在对链表进行操作时，一种常用的技巧是添加一个[哑节点](https://leetcode-cn.com/problems/remove-nth-node-from-end-of-list/solution/shan-chu-lian-biao-de-dao-shu-di-nge-jie-dian-b-61/)（**dummy node**），它的**next** 指针指向链表的头节点。这样一来，我们就不需要对头节点进行特殊的判断了。
 
@@ -272,7 +436,7 @@ Output: [1]
 
 
 
-### 双指针
+<font size=5>双指针</font>
 
 
 
@@ -292,7 +456,7 @@ Output: [1]
 
 
 
-### 代码
+<font size=5>参考代码</font>
 
 ```c#
 /**
@@ -337,7 +501,7 @@ public class Solution {
 
 
 
-### 正确代码
+<font size=5>正确代码</font>
 
 ```C#
 /**
@@ -371,5 +535,51 @@ public class Solution {
         return ans;
     }
 }
+```
+
+
+
+## [滑动窗口](https://leetcode-cn.com/problems/longest-substring-without-repeating-characters/solution/hua-dong-chuang-kou-by-powcai/)
+
+什么是滑动窗口？
+
+其实就是一个队列,比如例题中的 `abcabcbb`，进入这个队列（窗口）为 `abc` 满足题目要求，当再进入 `a`，队列变成了 `abca`，这时候不满足要求。所以，我们要移动这个队列！
+
+如何移动？
+
+我们只要把队列的左边的元素移出就行了，直到满足题目要求！
+
+一直维持这样的队列，找出队列出现最长的长度时候，求出解！
+
+时间复杂度：$O(n)$
+
+
+
+###  [3. Longest substring without repeating character](https://leetcode-cn.com/problems/longest-substring-without-repeating-characters/)
+
+Given a string **s**, find the length of the **longest substring** without repeating characters.
+
+给定一个字符串 **s** ，请你找出其中不含有重复字符的 **最长子串** 的长度。
+
+ 
+
+示例 1:
+
+```c#
+输入: s = "abcabcbb"
+输出: 3 
+解释: 因为无重复字符的最长子串是 "abc"，所以其长度为 3。
+```
+
+示例 3:
+
+```c#
+输入: s = "pwwkew"
+输出: 3
+Explanation: The answer is "wke", with the length of 3.
+Notice that the answer must be a substring, "pwke" is a subsequence and not a substring.
+
+解释: 因为无重复字符的最长子串是 "wke"，所以其长度为 3。
+     请注意，你的答案必须是 子串 的长度，"pwke" 是一个子序列，不是子串。
 ```
 
