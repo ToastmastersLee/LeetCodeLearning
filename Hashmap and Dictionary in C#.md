@@ -74,6 +74,26 @@ Some notable differences that you should be aware of:
 
 
 
+##  [C# equivalent to Java's charAt()?](https://stackoverflow.com/questions/3581741/c-sharp-equivalent-to-javas-charat)
+
+You can index into a string in C# like an array, and you get the character at that index.
+
+Example:
+
+In Java, you would say
+
+```python
+str.charAt(8);
+```
+
+In C#, you would say
+
+```C#
+str[8];
+```
+
+<img src="./img/image-20211216172653807.png" alt="image-20211216172653807" style="zoom: 80%;" />
+
 ## Reference
 
 1. [Difference between HashSet and HashMap?](https://stackoverflow.com/questions/2773824/difference-between-hashset-and-hashmap)

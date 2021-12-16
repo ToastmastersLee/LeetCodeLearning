@@ -669,3 +669,42 @@ public int lengthOfLongestSubstring(String s) {
         return maxLen;
     }
 ```
+
+
+
+<font size=5> C#代码 </font>
+
+```C#
+public class Solution {
+    public int LengthOfLongestSubstring(string s) {
+        Dictionary<char,int> map = new Dictionary<char,int>();
+        int maxLen=0;//用于记录最大不重复子串的长度
+        int left=0;//滑动窗口做指针
+        for(int i =0;i<s.Length;i++)
+        {
+            if(map.ContainsKey(s[i]))
+            {
+                left =Math.Max(left,map[s[i]]+1);
+            }
+            //不管是否更新left，都要更新 s.charAt(i) 的位置！
+            map[s[i]] = i;
+            maxLen= Math.Max(maxLen,i-left+1);
+        }
+        return maxLen;
+    }
+}
+```
+
+```
+执行结果：
+通过
+
+执行用时：
+80 ms
+, 在所有 C# 提交中击败了67.06%的用户
+内存消耗：38.7 MB, 在所有 C# 提交中击败了29.88%的用户
+
+通过测试用例：
+987 / 987
+```
+
