@@ -440,6 +440,54 @@ Do **not** allocate extra space for another array. You must do this by **modifyi
 
 
 
+### 876. Middle of the Linked List
+
+| Titile                                                       | Type         | Date       |
+| ------------------------------------------------------------ | ------------ | ---------- |
+| [Middle of the Linked List](https://leetcode-cn.com/problems/middle-of-the-linked-list/) | Two Pointers | 2021-12-10 |
+|                                                              |              | 2021-12-18 |
+|                                                              |              |            |
+
+这题是对链表这种陌生结构的第一次了解。
+
+<font size=5> 题目</font>
+
+Give the `head` of a singly linked list, return *the middle node of the linked list*.
+
+If there are two middle nodes, return **the second middle** node. 
+
+<img src="./img/image-20211218211707715.png" alt="image-20211218211707715" style="zoom:70%;" />
+
+<font size=5>参考代码</font>
+
+```c#
+public class Solution {
+    public ListNode MiddleNode(ListNode head) {
+        var slow=head, fast=head;
+        /*
+        注意题目要求如果存在两个中间节点，则返回第二个。
+        因此快指针fast可以前进的条件是，当前快指针和
+        快指针的下一个节点都非空。
+        */
+        while(fast!=null && fast.next!=null)
+        {
+            /*
+            慢指针slow走一步，快指针fast走两步
+            */
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+        return slow;
+    }
+}
+```
+
+<font size=5>图解过程</font>
+
+<img src="./img/image-20211218214437866.png" alt="image-20211218214437866" style="zoom: 67%;" />
+
+<img src="./img/image-20211218211153995.png" alt="image-20211218211153995" style="zoom: 67%;" />
+
 
 
 ### 19. [Remove nth node from end of list](https://leetcode-cn.com/problems/remove-nth-node-from-end-of-list/)
