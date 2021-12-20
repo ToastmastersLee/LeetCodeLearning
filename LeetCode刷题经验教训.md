@@ -621,3 +621,81 @@ public class Solution{
 
 - 时间复杂度：O(N)*O*(*N*)，其中 N*N* 是给定链表的结点数目。
 - 空间复杂度：O(1)*O*(1)，只需要常数空间存放变量和指针。
+
+
+
+## 2021-12-20
+
+```C#
+public class Solution {
+    public int LengthOfLongestSubstring(string s) {
+        // 哈希集合，记录每个字符是否出现过
+        //Hashset<char> cSet = new Hashset<char>();
+        HashSet<char> cSet = new HashSet<char>();
+        int rk=0;//右指针
+        int ans = 0; //答案 answers
+        for (int i=0;i<s.Length-1;i++) //左指针
+        {
+            if(i!=0)
+            {
+                // 左指针向右移动一格，移除一个字符
+                cSet.Remove(s[i-1]);
+            }
+            //如果当前哈希表不包含rk字符，则纳入到哈希表
+            while(rk < s.Length-1 && !cSet.Contains(s[rk])) 
+            {
+              // 不断地移动右指针 
+              cSet.Add(s[rk]);
+              rk++;
+            }
+            // 第 i 到 rk 个字符是一个极长的无重复字符子串
+            ans = Math.Max(ans,rk-i);
+        }
+        return ans;
+    }
+}
+```
+
+
+
+- 为什么一定要让rk=-1, 直接等于0不是更加单吗？
+
+  因为尼玛的竟然有空字符串的情况：
+
+  <img src="./img/image-20211220161809062.png" alt="image-20211220161809062" style="zoom: 67%;" />
+
+
+
+```C#
+public class Solution {
+    public int LengthOfLongestSubstring(string s) {
+        // 哈希集合，记录每个字符是否出现过
+        //Hashset<char> cSet = new Hashset<char>();
+        HashSet<char> cSet = new HashSet<char>();
+        int rk=-1;//右指针
+        int ans = 0; //答案 answers
+        for (int i=0;i<s.Length;i++) //左指针
+        {
+            if(i!=0)
+            {
+                // 左指针向右移动一格，移除一个字符
+                cSet.Remove(s[i-1]);
+            }
+            //如果当前哈希表不包含rk字符，则纳入到哈希表
+            while(rk+1 < s.Length && !cSet.Contains(s[rk+1])) 
+            {
+              // 不断地移动右指针 
+              cSet.Add(s[rk+1]);
+              rk++;
+            }
+            // 第 i 到 rk 个字符是一个极长的无重复字符子串
+            ans = Math.Max(ans,rk-i+1);
+        }
+        return ans;
+    }
+}
+```
+
+
+
+调整之后调试通过，一开始以为 rk=-1是多此一举。。。。
