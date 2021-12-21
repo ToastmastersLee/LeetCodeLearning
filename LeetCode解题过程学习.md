@@ -682,67 +682,83 @@ Notice that the answer must be a substring, "pwke" is a subsequence and not a su
 
 
 
-```java
-public int lengthOfLongestSubstring(String s) {
-        HashMap<Character, Integer> map = new HashMap<>();
-        int maxLen = 0;//用于记录最大不重复子串的长度
-        int left = 0;//滑动窗口左指针
-        for (int i = 0; i < s.length() ; i++)
-        {
-            /**
-            1、首先，判断当前字符是否包含在map中，如果不包含，将该字符添加到map（字符，字符在数组下标）,
-             此时没有出现重复的字符，左指针不需要变化。此时不重复子串的长度为：i-left+1，与原来的maxLen比较，取最大值；
-
-            2、如果当前字符 ch 包含在 map中，此时有2类情况：
-             1）当前字符包含在当前有效的子段中，如：abca，当我们遍历到第二个a，当前有效最长子段是 abc，我们又遍历到a，
-             那么此时更新 left 为 map.get(a)+1=1，当前有效子段更新为 bca；
-             2）当前字符不包含在当前最长有效子段中，如：abba，我们先添加a,b进map，此时left=0，我们再添加b，发现map中包含b，
-             而且b包含在最长有效子段中，就是1）的情况，我们更新 left=map.get(b)+1=2，此时子段更新为 b，而且map中仍然包含a，map.get(a)=0；
-             随后，我们遍历到a，发现a包含在map中，且map.get(a)=0，如果我们像1）一样处理，就会发现 left=map.get(a)+1=1，实际上，left此时
-             应该不变，left始终为2，子段变成 ba才对。
-
-             为了处理以上2类情况，我们每次更新left，left=Math.max(left , map.get(ch)+1).
-             另外，更新left后，不管原来的 s.charAt(i) 是否在最长子段中，我们都要将 s.charAt(i) 的位置更新为当前的i，
-             因此此时新的 s.charAt(i) 已经进入到 当前最长的子段中！
-             */
-            if(map.containsKey(s.charAt(i)))
-            {
-                left = Math.max(left , map.get(s.charAt(i))+1);
-            }
-            //不管是否更新left，都要更新 s.charAt(i) 的位置！
-            map.put(s.charAt(i) , i);
-            maxLen = Math.max(maxLen , i-left+1);
-        }
-        
-        return maxLen;
-    }
-```
-
-
-
 <font size=5> C#代码 </font>
+
+## 
 
 ```C#
 public class Solution {
     public int LengthOfLongestSubstring(string s) {
-        Dictionary<char,int> map = new Dictionary<char,int>();
-        int maxLen=0;//用于记录最大不重复子串的长度
-        int left=0;//滑动窗口做指针
-        for(int i =0;i<s.Length;i++)
+        // 哈希集合，记录每个字符是否出现过
+        //Hashset<char> cSet = new Hashset<char>();
+        HashSet<char> cSet = new HashSet<char>();
+        int rk=0;//右指针
+        int ans = 0; //答案 answers
+        for (int i=0;i<s.Length-1;i++) //左指针
         {
-            if(map.ContainsKey(s[i]))
+            if(i!=0)
             {
-                left =Math.Max(left,map[s[i]]+1);
+                // 左指针向右移动一格，移除一个字符
+                cSet.Remove(s[i-1]);
             }
-            //判断当前字符是否包含在map中，如果不包含，将该字符添加到map
-            //不管是否更新left，都要更新 s.charAt(i) 的位置！
-            map[s[i]] = i;
-            maxLen= Math.Max(maxLen,i-left+1);
+            //如果当前哈希表不包含rk字符，则纳入到哈希表
+            while(rk < s.Length-1 && !cSet.Contains(s[rk])) 
+            {
+              // 不断地移动右指针 
+              cSet.Add(s[rk]);
+              rk++;
+            }
+            // 第 i 到 rk 个字符是一个极长的无重复字符子串
+            ans = Math.Max(ans,rk-i);
         }
-        return maxLen;
+        return ans;
     }
 }
 ```
+
+
+
+- 为什么一定要让rk=-1, 直接等于0不是更加单吗？
+
+  因为尼玛的竟然有空字符串的情况：
+
+  <img src="F:\Lee\Githubs\LeetCodeLearning\img\image-20211220161809062.png" alt="image-20211220161809062" style="zoom: 67%;" />
+
+
+
+```C#
+public class Solution {
+    public int LengthOfLongestSubstring(string s) {
+        // 哈希集合，记录每个字符是否出现过
+        //Hashset<char> cSet = new Hashset<char>();
+        HashSet<char> cSet = new HashSet<char>();
+        int rk=-1;//右指针
+        int ans = 0; //答案 answers
+        for (int i=0;i<s.Length;i++) //左指针
+        {
+            if(i!=0)
+            {
+                // 左指针向右移动一格，移除一个字符
+                cSet.Remove(s[i-1]);
+            }
+            //如果当前哈希表不包含rk字符，则纳入到哈希表
+            while(rk+1 < s.Length && !cSet.Contains(s[rk+1])) 
+            {
+              // 不断地移动右指针 
+              cSet.Add(s[rk+1]);
+              rk++;
+            }
+            // 第 i 到 rk 个字符是一个极长的无重复字符子串
+            ans = Math.Max(ans,rk-i+1);
+        }
+        return ans;
+    }
+}
+```
+
+
+
+调整之后调试通过，一开始以为 rk=-1是多此一举。。。。
 
 
 
@@ -777,4 +793,111 @@ public class Solution {
   <img src="./img/image-20211219213102446.png" alt="image-20211219213102446" style="zoom:80%;" /> 
 
 - 同样，**e**也是如此操作：
-  ![image-20211219213212750](./img/image-20211219213212750.png)
+  <img src="./img/image-20211219213212750.png" alt="image-20211219213212750" style="zoom:80%;" />
+
+
+
+## 广度优先搜索 / 深度优先搜索
+
+
+
+### 733. Flood fill
+
+An image is represented by an `mxn` integer grid `image` where `image[i][j]`represents the pixel value of the image.
+
+You are also given three integers `sr`,`sc`,and `newColor`. You should perform a **flood fill** on the images starting from the pixel `images[sr][sc]`.
+
+To perform a **flood fill**, consider the starting pixel, plus any pixels connected **4-directionally** to those pixels (also with the same color), and so on. Replace the color of all the aforementioned pixels with `newColor`.
+
+Return *the modified image after performing the flood fill.*
+
+<img src="./img/flood1-grid.jpg" alt="img" style="zoom:80%;" />
+
+
+
+```c#
+Input: image = [[1,1,1],[1,1,0],[1,0,1]], sr = 1, sc = 1, newColor = 2
+    
+Output: [[2,2,2],[2,2,0],[2,0,1]]
+
+Explanation: 
+From the center of the image with position (sr, sc) = (1, 1) (i.e., the red pixel), all pixels connected by a path of the same color as the starting pixel (i.e., the blue pixels) are colored with the new color.
+Note the bottom corner is not colored 2, because it is not 4-directionally connected to the starting pixel.
+
+在图像的正中间，(坐标(sr,sc)=(1,1)), 在路径上所有符合条件的像素点的颜色都被更改成2。注意，右下角的像素没有更改为2，因为它不是在上下左右四个方向上与初始点相连的像素点。
+```
+
+
+
+
+
+<font size=5> 上下左右四个方向的偏移量</font>
+
+问：
+
+```c#
+ int[] dx = {1, 0, 0, -1}; 
+ int[] dy = {0, 1, -1, 0}; 
+```
+
+这两个什么意思啊
+
+答：上下左右四个方向的偏移量；
+
+
+
+即便有大佬给出了[答案](https://leetcode-cn.com/problems/flood-fill/solution/tu-xiang-xuan-ran-by-leetcode-solution/)，一时间还是有点难以理解，为什么dx一定是 `{1,0,0,-1}`，而不是 `{1,-1}`呢？
+
+这个需要往回追溯之前更简单的，更易于理解，但是不那么简洁的代码：
+
+```C#
+// sr表示 row, sc表示column
+public int[][] floodFill(int[][] image, int sr, int sc, int newColor) {
+        int oldColor = image[sr][sc];
+        if(oldColor == newColor){
+            return image;
+        }else {
+            image[sr][sc] = newColor;
+        }
+        //存在上
+        if(sr - 1 >= 0 && image[sr-1][sc] == oldColor){
+            floodFill(image,sr-1,sc,newColor);
+        }
+        //存在下
+        if(sr + 1 < image.length && image[sr+1][sc] == oldColor){
+            floodFill(image,sr+1,sc,newColor);
+        }
+        //存在左
+        if(sc - 1 >= 0 && image[sr][sc-1] == oldColor){
+            floodFill(image,sr,sc-1,newColor);
+        }
+        //存在右
+        if(sc + 1 < image[sr].length && image[sr][sc+1] == oldColor){
+            floodFill(image,sr,sc+1,newColor);
+        }
+        return image;
+    }
+```
+
+
+
+<img src="./img/image-20211221153458658.png" alt="image-20211221153458658" style="zoom:80%;" />
+
+如上图的一个矩阵所所示：
+
+- image\[0][0]=a;	 image\[0][1]=b; 	image\[0][2]=c;  由此可以看出，移动第二个下标，指针会在a\b\c（同一个row的)三个**column**之间转跳检索;
+- image\[0][0]=a;   image\[1][0]=d; image\[2][0]=g;  移动第一个下标，指针会在 a\d\g(同一个column下的)三个不同row之间转跳检索；
+
+**由此可得出结论：**
+
+- 改变第一个下标，则会在上下这个放下检索数据；
+- 改变第二个下标，则会在左右这个放下检索数据。
+
+我之前理解困难的原因：
+
+- 移动第二个下标，明明就是改变row的位置嘛， 怎么就是改变column的位置呢?实在是是改变**同一个Row上的不同column**。这样解释是不是更能帮助自己理解？
+
+- 有时候初学者的思维就会卡在这里面，会强烈的认为事情A是B，这时候需要反复阅读、抄写，画图理解则显得尤为重要。通过学这些算法，能深刻帮助理解孩子在学习过程中的思维以及如何引导。
+
+  
+
