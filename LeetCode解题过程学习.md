@@ -684,8 +684,6 @@ Notice that the answer must be a substring, "pwke" is a subsequence and not a su
 
 <font size=5> C#代码 </font>
 
-## 
-
 ```C#
 public class Solution {
     public int LengthOfLongestSubstring(string s) {
@@ -797,6 +795,39 @@ public class Solution {
 
 
 
+### 567.  [Permutation in string](https://leetcode-cn.com/problems/permutation-in-string/)
+
+Given two string `s1` and `s2`, return `true` ***if** `s2` contains a permutation of `s1`, or `fase` otherwise.*
+
+In other words, return `true` if one of `s1`'s permutation is the substring of `s2`.
+
+
+
+**Example 1:**
+
+```C#
+Input: s1 = "ab", s2 = "eidbaooo"
+Output: true
+Explanation: s2 contains one permutation of s1 ("ba").
+```
+
+
+
+**Example 2:**
+
+```C#
+Input: s1 = "ab", s2 = "eidboaoo"
+Output: false
+```
+
+
+
+**Constraints:**
+
+- `s1` and `s2` consist of lowercase English letters.
+
+
+
 ## 广度优先搜索 / 深度优先搜索
 
 
@@ -900,4 +931,18 @@ public int[][] floodFill(int[][] image, int sr, int sc, int newColor) {
 - 有时候初学者的思维就会卡在这里面，会强烈的认为事情A是B，这时候需要反复阅读、抄写，画图理解则显得尤为重要。通过学这些算法，能深刻帮助理解孩子在学习过程中的思维以及如何引导。
 
   
+
+
+
+
+
+## 常见单词记录
+
+
+
+| 单词                                    | 解释                                                         |
+| --------------------------------------- | ------------------------------------------------------------ |
+| **Substring** <br />**Subsequence**     | "**`pwwkew`**"：`wke` be a **substring** of `pwwkew`,  whereas "`pwke`" is a **subsequence** and not a substring toward `pwwkew`. |
+| **in-place**                            | adv： 部署（放置）适当的；就地；原状；在位<br />[In-place algorithm](https://en.wikipedia.org/wiki/In-place_algorithm): In [computer science](https://en.wikipedia.org/wiki/Computer_science), an **in-place algorithm** is an [algorithm](https://en.wikipedia.org/wiki/Algorithm) which transforms input using no auxiliary [data structure](https://en.wikipedia.org/wiki/Data_structure). |
+| **permutation**<br />【ˌpɜːrmjuˈteɪʃn】 | per-完全 + mut-改变 + -ation表名词，***是单词 permute 派生的名词***。<br />**`per-`** <br/>表示“完全，贯穿，自始至终，向前”。forth, ford 是其同源词。<br/>**`mute-`** <br/>= change, 表示“改变、交换”。源自拉丁语 mutare "to change." |
 
