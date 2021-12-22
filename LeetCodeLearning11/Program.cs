@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 
 namespace LeetCodeLearning11
 {
@@ -15,9 +16,14 @@ namespace LeetCodeLearning11
             //var retVal = resversClass.ReverseWords2("Let's take LeetCode contest");
             //Console.WriteLine(retVal);
 
-            _3longest_substring_without_repeating_characters longS = new _3longest_substring_without_repeating_characters();
-            var retVal = longS.LengthOfLongestSubstring("pwwkew");
-            Console.WriteLine(retVal);
+            //_3longest_substring_without_repeating_characters longS = new _3longest_substring_without_repeating_characters();
+            //var retVal = longS.LengthOfLongestSubstring("pwwkew");
+            //Console.WriteLine(retVal);
+
+            string s = "2021-12-22";
+            DateTime mDate = DateTime.Parse(s);
+            int aa =  mDate.DayOfYear;
+            Console.WriteLine(aa);
             Console.WriteLine("Hello World!");
         }
     }

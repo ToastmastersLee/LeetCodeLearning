@@ -624,78 +624,59 @@ public class Solution{
 
 
 
-## 2021-12-20
+
+
+## 2021-12-22 Day of the year 题思考
+
+Given a string `date` representing a ***Gregorian calendar*** date formatted as `YYYY-MM-DD`, return the day number of the year.
+
+```C#
+Input: date = "2019-01-09"
+Output: 9
+Explanation: Given date is the 9th day of the year in 2019.
+```
+
+
+
+一开始我几乎是懵逼的，完全不知道怎么做，更不知道闰年到底要怎么搞；由于题目标注的是简单题，这给与了我看参考答案的勇气，看一几次就开始誊写（读书人的抄怎么能算抄呢，是**誊**）：
+
+```c#
+public class Solution{
+	public int DayOfYear(string date){
+		int year = int.Parse(date.Substring(0,4));//从第0位开始，截取4位长度
+		int month = int.Parse(date.Substring(5,2));
+		int day = int.Parse(date.Substring(8));
+		
+		int[] amount ={31,28,31,30,31,30,31,31,30,31,30,31};
+		if(year%400 == 0 || year%4==0 && year%100!=0){
+			//闰年2月加1
+			amount[1]++;
+		}
+		int ans = 0;
+		for(int i=0; i<month-1;i++){//amount数组下标从0开始，所以要-1；
+			ans += amount[i];
+		}
+        return ans + day;
+	}
+}
+```
+
+
+
+然后Vincent告知C#内置的方法也可以做到这点：
 
 ```C#
 public class Solution {
-    public int LengthOfLongestSubstring(string s) {
-        // 哈希集合，记录每个字符是否出现过
-        //Hashset<char> cSet = new Hashset<char>();
-        HashSet<char> cSet = new HashSet<char>();
-        int rk=0;//右指针
-        int ans = 0; //答案 answers
-        for (int i=0;i<s.Length-1;i++) //左指针
-        {
-            if(i!=0)
-            {
-                // 左指针向右移动一格，移除一个字符
-                cSet.Remove(s[i-1]);
-            }
-            //如果当前哈希表不包含rk字符，则纳入到哈希表
-            while(rk < s.Length-1 && !cSet.Contains(s[rk])) 
-            {
-              // 不断地移动右指针 
-              cSet.Add(s[rk]);
-              rk++;
-            }
-            // 第 i 到 rk 个字符是一个极长的无重复字符子串
-            ans = Math.Max(ans,rk-i);
-        }
-        return ans;
+    public int DayOfYear(string date) {
+        //var mDate = DateTime.ParseExact(date,"yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture);
+        var mDate = DateTime.Parse(date);//两种方法都可以，前一种速度比当前这种速度快一点
+        return mDate.DayOfYear;
     }
 }
 ```
 
 
 
-- 为什么一定要让rk=-1, 直接等于0不是更加单吗？
+相当有趣，如果工作中遇到这种题目，StackOverflow一下就搞定了，很难有机会思考背后的机制原理。刷LeetCode之后才慢慢有所体会。
 
-  因为尼玛的竟然有空字符串的情况：
-
-  <img src="./img/image-20211220161809062.png" alt="image-20211220161809062" style="zoom: 67%;" />
-
-
-
-```C#
-public class Solution {
-    public int LengthOfLongestSubstring(string s) {
-        // 哈希集合，记录每个字符是否出现过
-        //Hashset<char> cSet = new Hashset<char>();
-        HashSet<char> cSet = new HashSet<char>();
-        int rk=-1;//右指针
-        int ans = 0; //答案 answers
-        for (int i=0;i<s.Length;i++) //左指针
-        {
-            if(i!=0)
-            {
-                // 左指针向右移动一格，移除一个字符
-                cSet.Remove(s[i-1]);
-            }
-            //如果当前哈希表不包含rk字符，则纳入到哈希表
-            while(rk+1 < s.Length && !cSet.Contains(s[rk+1])) 
-            {
-              // 不断地移动右指针 
-              cSet.Add(s[rk+1]);
-              rk++;
-            }
-            // 第 i 到 rk 个字符是一个极长的无重复字符子串
-            ans = Math.Max(ans,rk-i+1);
-        }
-        return ans;
-    }
-}
-```
-
-
-
-调整之后调试通过，一开始以为 rk=-1是多此一举。。。。
+2021年12月22日10:04:33
