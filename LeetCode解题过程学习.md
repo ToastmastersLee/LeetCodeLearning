@@ -4,6 +4,150 @@
 
 [toc]
 
+## 基础题
+
+### [Two Sum](https://leetcode-cn.com/problems/two-sum/)
+
+Given an array of integers `nums` and an integer `target`, return *indices of the two numbers such that they add up to `target`.*
+
+You may assume that each input would have **exactly one solution**, and you may not use the *same* element twice.
+
+You can return the answer in any order.
+
+```c#
+Input: nums = [2,7,11,15], target = 9
+Output: [0,1]
+Output: Because nums[0] + nums[1] == 9, we return [0, 1].
+```
+
+**Constraints:**
+
+- 2 <= nums.length <= 104
+- -109 <= nums[i] <= 109
+- -109 <= target <= 109
+- **Only one valid answer exists.**
+
+**Follow-up**: Can you come up with an algorithm that is less than $O(n2)$ time complexity?
+
+
+
+<font size=5> 参考答案 </font>
+
+```c#
+public class Solution {
+    public int[] TwoSum(int[] nums, int target) {
+        Dictionary<int,int> dic =new Dictionary<int,int>();
+        for (int i=0;i<nums.Length;i++)
+        {
+            if(dic.ContainsKey(target-nums[i]))
+            {
+                return new int[]{dic[target-nums[i]],i};
+            }
+            dic.Add(nums[i],i);
+        }
+        return new int[0];
+    }
+}
+```
+
+```c#
+Unhandled exception. System.ArgumentException: An item with the same key has already been added. Key: 1 At System.Collections.Generic.Dictionary`2.TryInsert(TKey key, TValue value, InsertionBehavior behavior) Line 10: Solution.TwoSum(Int32[] nums, Int32 target) in Solution.cs Line 35: __Driver__.Main(String[] args) in __Driver__.cs
+```
+
+最后执行的输入：
+
+```c#
+[1,1,1,1,1,4,1,1,1,1,1,7,1,1,1,1,1] 
+
+11
+```
+
+
+
+<font size=5> Duplicate keys in .NET dictionaries?</font>
+
+If you're using .NET 3.5, use the [`Lookup`](http://msdn.microsoft.com/en-us/library/bb460184.aspx) class.
+
+EDIT: You generally create a `Lookup` using [`Enumerable.ToLookup`](http://msdn.microsoft.com/en-us/library/system.linq.enumerable.tolookup.aspx). This does assume that you don't need to change it afterwards - but I typically find that's good enough.
+
+If that *doesn't* work for you, I don't think there's anything in the framework which will help - and using the dictionary is as good as it gets :(
+
+<font size=6>What is the difference between LINQ ToDictionary and ToLookup</font>
+
+A dictionary is a 1:1 map (each key is mapped to a single value), and a dictionary is mutable (editable) after the fact.
+
+A lookup is a 1:many map (multi-map; each key is mapped to an `IEnumerable<>` of the values with that key), and there is no mutate on the `ILookup<,>` interface.
+
+As a side note, you can query a lookup (via the indexer) on a key that doesn't exist, and you'll get an empty sequence. Do the same with a dictionary and you'll get an exception.
+
+So: how many records share each key?
+
+An overly simplified way of looking at it is that a `Lookup<TKey,TValue>` is *roughly comparable* to a `Dictionary<TKey,IEnumerable<TValue>>`
+
+
+
+Two significant differences:
+
+- `Lookup` is immutable. Yay :) (At least, I believe the concrete `Lookup` class is immutable, and the `ILookup` interface doesn't provide any mutating members. There *could* be other mutable implementations, of course.)
+- When you lookup a key which isn't present in a lookup, you get an empty sequence back instead of a `KeyNotFoundException`. (Hence there's no `TryGetValue`, AFAICR.)
+
+They're likely to be equivalent in efficiency - the lookup may well use a `Dictionary<TKey, GroupingImplementation<TValue>>` behind the scenes, for example. Choose between them based on your requirements. Personally I find that the lookup is usually a better fit than a `Dictionary<TKey, List<TValue>>`, mostly due to the first two points above.
+
+Note that as an implementation detail, the concrete implementation of `IGrouping<,>` which is used for the values implements `IList<TValue>`, which means that it's efficient to use with `Count()`, `ElementAt()` etc.
+
+
+
+A [Lookup](https://docs.microsoft.com/en-us/dotnet/api/system.linq.lookup-2?view=net-6.0) resembles a [Dictionary](https://docs.microsoft.com/en-us/dotnet/api/system.collections.generic.dictionary-2?view=net-6.0). The difference is that a [Dictionary](https://docs.microsoft.com/en-us/dotnet/api/system.collections.generic.dictionary-2?view=net-6.0) maps keys to single values, whereas a [Lookup](https://docs.microsoft.com/en-us/dotnet/api/system.linq.lookup-2?view=net-6.0) maps keys to collections of values.
+
+You can create an instance of a [Lookup](https://docs.microsoft.com/en-us/dotnet/api/system.linq.lookup-2?view=net-6.0) by calling [ToLookup](https://docs.microsoft.com/en-us/dotnet/api/system.linq.enumerable.tolookup?view=net-6.0) on an object that implements [IEnumerable](https://docs.microsoft.com/en-us/dotnet/api/system.collections.generic.ienumerable-1?view=net-6.0).
+
+
+
+> Lookup<TKey, TElement>不能像一般的字典那样创建，而必须调用方法ToLookup()，它返回一个Lookup<TKey, TElement>对象。方法ToLookup()是一个扩展方法，可以用于实现了IEnumerable<T>的所有类。
+
+
+
+
+
+**Reference:**
+
+1. [Duplicate keys in .NET dictionaries?](https://stackoverflow.com/questions/146204/duplicate-keys-in-net-dictionaries)
+
+2. [What is the difference between LINQ ToDictionary and ToLookup](https://stackoverflow.com/questions/5659066/what-is-the-difference-between-linq-todictionary-and-tolookup)
+
+3. [Difference between Lookup() and Dictionary(Of list())](https://stackoverflow.com/questions/13362490/difference-between-lookup-and-dictionaryof-list)
+
+4. [Lookup<TKey,TElement> Class--MSDN](https://docs.microsoft.com/en-us/dotnet/api/system.linq.lookup-2?redirectedfrom=MSDN&view=net-6.0)
+
+   
+
+
+
+研究了半天的Lookup和Dictionary区别，最后发现只要加个这样的判断，厚礼蟹：
+
+```C#
+public class Solution {
+    public int[] TwoSum(int[] nums, int target) {
+        Dictionary<int,int> dic =new Dictionary<int,int>();
+        for (int i=0;i<nums.Length;i++)
+        {
+            if(dic.ContainsKey(target-nums[i]))
+            {
+                return new int[]{dic[target-nums[i]],i};
+            }
+            if(!dic.ContainsKey(nums[i])) //去重判断
+            {
+                dic.Add(nums[i],i);
+            }
+           
+        }
+        return new int[0];
+    }
+}
+```
+
+
+
 
 
 ## 罗马数字
