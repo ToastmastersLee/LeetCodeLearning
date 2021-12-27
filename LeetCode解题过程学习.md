@@ -1476,6 +1476,8 @@ Output: [1,1,2,3,4,4]
 
 **复杂度分析**
 
+<img src="./img/image-20211227112932132.png" alt="image-20211227112932132" style="zoom:80%;" /> 
+
 如何计算递归的时间复杂度和空间复杂度呢？ 力扣对此进行了 详细介绍 ，其中时间复杂度可以这样计算：
 
 给出一个递归算法，其时间复杂度 $O(T)$  通常是递归调用的数量（记作 $R$） 和计算的时间复杂度的乘积（表示为$O(s)$）的乘积：
@@ -1496,11 +1498,38 @@ $m$, $n$ 为 $l1$, $l2$ 的元素个数。递归函数每次去掉一个元素�
 
 
 
-
-
 <font size=5> 参考代码 </font>
 
-
+```c#
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     public int val;
+ *     public ListNode next;
+ *     public ListNode(int val=0, ListNode next=null) {
+ *         this.val = val;
+ *         this.next = next;
+ *     }
+ * }
+ */
+public class Solution {
+    public ListNode MergeTwoLists(ListNode list1, ListNode list2) {
+        if(list1 ==null){
+            return list2;
+        }
+        if(list2==null){
+            return list1;
+        }
+        if(list1.val<list2.val){
+           list1.next =  MergeTwoLists(list1.next,list2);
+           return list1;
+        } else {
+            list2.next = MergeTwoLists(list1,list2.next);
+            return list2;
+        }
+    }
+}
+```
 
 
 
