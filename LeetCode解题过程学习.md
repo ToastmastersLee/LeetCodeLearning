@@ -949,6 +949,78 @@ It's worth noting that this will break if any character other than `a-z` is pres
 
 
 
+####  [How to compare arrays in C#?](https://stackoverflow.com/questions/4423318/how-to-compare-arrays-in-c) 
+
+You can use the Enumerable.SequenceEqual() in the System.Linq to compare the contents in the array
+
+```C#
+bool isEqual = Enumerable.SequenceEqual(target1, target2);
+```
+
+
+
+You could use [`Enumerable.SequenceEqual`](https://docs.microsoft.com/en-us/dotnet/api/system.linq.enumerable.sequenceequal). This works for any `IEnumerable<T>`, not just arrays.
+
+
+
+> Great answer, and I know it's a little late, but that could be simplified to this: **bool isEqual = target1.SequenceEqual(target2)**
+
+
+
+
+
+<font size =5> 解题思路 </font>
+
+由于排列不会改变字符串中每个字符的个数，所以只有当两个字符串每个字符的个数均相等时，一个字符串才是另一个字符串的排列。
+
+根据这一性质，记 `s1` 的长度为 `n` , 我们可以遍历`s2`中的每个长度为`n`的*子串*, 判断子串和`s1`中每个字符的个数是否相等，若相等则说明该子串是`s1`的一个排列。
+
+使用两个数组`cnt1`和`cnt2`: `cnt1`统计`s1`中各个字符的个数, `cnt2`统计当前遍历的子串中各个字符的个数。
+
+由于需要遍历的子串长度均为`n`,我们可以使用一个固定长度为 `n`的**滑动窗口**来维护`cnt2`: 滑动窗口每向右滑动一次，就多统计一次进入窗口的字符，少统计一次离开窗口的字符。然后，判断`cnt1`是否与`cnt2`相等，若相等则意味着 `s1`的排列是`s2`啊的子串。
+
+
+
+<font size=5> 参考代码 </font>
+
+```c#
+public class Solution {
+    public bool CheckInclusion(string s1, string s2) {
+        int n = s1.Length, m = s2.Length;
+        if(n>m)
+        {
+            return false;
+        }
+        int[] cnt1 = new int[26];
+        int[] cnt2 = new int[26];
+
+        for(int i=0;i<n;i++)
+        {
+            cnt1[s1[i]-'a']++;
+            cnt2[s2[i]-'a']++;
+        }
+        if(Enumerable.SequenceEqual(cnt1,cnt2))
+        {
+            return true;
+        }
+        for(int i =n; i<m;i++)//滑动 n个窗口
+        {
+            cnt2[s2[i]-'a']++; 
+            cnt2[s2[i-n]-'a']--;
+            if(cnt2.SequenceEqual(cnt1))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+}
+```
+
+
+
+
+
 ## 广度优先搜索 / 深度优先搜索
 
 
@@ -980,6 +1052,40 @@ Note the bottom corner is not colored 2, because it is not 4-directionally conne
 ```
 
 
+
+<font size=5>参考代码 </font>
+
+```c#
+public class Solution {
+    int[] dx={1,0,0,-1};
+    int[] dy={0,1,-1,0};
+    public int[][] FloodFill(int[][] image, int sr, int sc, int newColor) 
+    {
+        int oldColor = image[sr][sc];
+        if(oldColor!=newColor)
+        {
+            dsf(image,sr,sc,oldColor,newColor);
+        }
+        return image;
+    }
+
+    private void dsf(int[][] image,int r, int c,int oldColor, int newColor)
+    {
+        if(image[r][c]==oldColor)
+        {
+            image[r][c] = newColor;
+            for(int i = 0; i<4;i++)
+            {
+                int mr = r + dx[i],mc = c+dy[i];
+                if(mr>=0 && mr<image.Length && mc>=0 && mc<image[0].Length)
+                {
+                    dsf(image,mr,mc,oldColor,newColor);
+                }
+            }
+        }
+    }
+}
+```
 
 
 
@@ -1050,9 +1156,6 @@ public int[][] floodFill(int[][] image, int sr, int sc, int newColor) {
 - 移动第二个下标，明明就是改变row的位置嘛， 怎么就是改变column的位置呢?实在是是改变**同一个Row上的不同column**。这样解释是不是更能帮助自己理解？
 
 - 有时候初学者的思维就会卡在这里面，会强烈的认为事情A是B，这时候需要反复阅读、抄写，画图理解则显得尤为重要。通过学这些算法，能深刻帮助理解孩子在学习过程中的思维以及如何引导。
-
-  
-
 
 
 
