@@ -1303,6 +1303,206 @@ public int[][] floodFill(int[][] image, int sr, int sc, int newColor) {
 
 
 
+### 617. [Merge two binary trees](https://leetcode-cn.com/problems/merge-two-binary-trees/)
+
+You are given two binary trees `root1` and `root2`.
+
+Imagine that when you put one of them to cover the other, some nodes of the two trees are overlapped while the others are not. You need to merge the two trees into a new binary tree. The merge rule is that if two nodes overlap, then sum node values up as the new value of the merged node. Otherwise, the NOT null node will be used as the node of the new tree.
+
+Return *the merged tree*.
+
+**Note:** The merging process must start from the root nodes of both trees.
+
+示例 1:
+
+```c#
+输入: 
+	Tree 1                     Tree 2                  
+          1                         2                             
+         / \                       / \                            
+        3   2                     1   3                        
+       /                           \   \                      
+      5                             4   7                  
+输出: 
+合并后的树:
+	     3
+	    / \
+	   4   5
+	  / \   \ 
+	 5   4   7
+```
+
+
+
+<font size=5> 参考代码  </font>
+
+```c#
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     public int val;
+ *     public TreeNode left;
+ *     public TreeNode right;
+ *     public TreeNode(int val=0, TreeNode left=null, TreeNode right=null) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+	public TreeNode mergeTrees(TreeNode t1, TreeNode t2) {
+		if(t1==null || t2==null) {
+			return t1==null? t2 : t1;
+		}
+		return dfs(t1,t2);
+	}
+	
+	TreeNode dfs(TreeNode r1, TreeNode r2) {
+		// 如果 r1和r2中，只要有一个是null，函数就直接返回
+		if(r1==null || r2==null) {
+			return r1==null? r2 : r1;
+		}
+		//让r1的值 等于  r1和r2的值累加，再递归的计算两颗树的左节点、右节点
+		r1.val += r2.val;
+		r1.left = dfs(r1.left,r2.left);
+		r1.right = dfs(r1.right,r2.right);
+		return r1;
+	}
+}
+
+作者：wang_ni_ma
+链接：https://leetcode-cn.com/problems/merge-two-binary-trees/solution/dong-hua-yan-shi-di-gui-die-dai-617he-bing-er-cha-/
+来源：力扣（LeetCode）
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+```
+
+
+
+可以进一步简化为：
+
+```c#
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     public int val;
+ *     public TreeNode left;
+ *     public TreeNode right;
+ *     public TreeNode(int val=0, TreeNode left=null, TreeNode right=null) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+public class Solution {
+    public TreeNode MergeTrees(TreeNode root1, TreeNode root2) {
+        if(root1 ==null)
+        {
+            return root2;
+        }
+        if(root2 ==null)
+        {
+            return root1;
+        }
+        TreeNode merged = new TreeNode(root1.val + root2.val);
+        merged.left = MergeTrees(root1.left,root2.left);
+        merged.right = MergeTrees(root1.right,root2.right);
+        return merged;
+    }
+}
+```
+
+
+
+
+
+## 递龟
+
+<img src="./img/image-20211227104028158.png" alt="image-20211227104028158" style="zoom: 67%;" />
+
+### [21. Merge Two Sorted Lists](https://leetcode-cn.com/problems/merge-two-sorted-lists/)
+
+You are given the heads of two sorted linked lists `list1` and `list2`.
+
+Merge the two lists in a one **sorted** list. The list should be made by splicing together the nodes of the first two lists. (新链表是通过拼接给定的两个链表的所有节点组成的)
+
+Return *the head of the merged linked list.*
+
+
+
+**Example 1:**
+
+
+
+<img src="./img/image-20211227103032702.png" alt="image-20211227103032702" style="zoom: 67%;" />
+
+```c#
+Input: list1 = [1,2,4], list2 = [1,3,4]
+Output: [1,1,2,3,4,4]
+```
+
+
+
+**Constarints:**
+
+- The number of nodes in both lists is in the range `[0, 50]`.
+- Both `list1` and `list2` are sorted in **non-decreasing** order.
+
+
+
+<font size=5> 图解过程</font>
+
+#### [递归解法](https://leetcode-cn.com/problems/merge-two-sorted-lists/solution/yi-kan-jiu-hui-yi-xie-jiu-fei-xiang-jie-di-gui-by-/) 一图入魂
+
+- 终止条件：当两个链表都为空时，表示我们对链表已合并完成。
+
+- 如何递归：我们判断 `l1` 和 `l2` 头结点哪个更小，然后较小结点的 `next` 指针指向**其余结点的合并结果。（调用递归）**
+
+  > 为什么较小节点的 `next'指向其余节点的合并结果，没有明白。
+  >
+  > 因为土木是要求从小到大排序的，所以一定要求最小的排在最前面，因此如果判断到两个链表上的元素，谁最小则就在最前面，其next指针指向下一个次小的；而次小的还未马上检测出来，需要在其余的节点里面再次比较出最小的。
+
+
+
+| 1                                                            | 2                                                            |
+| ------------------------------------------------------------ | ------------------------------------------------------------ |
+| <img src="./img/image-20211227105432586.png" alt="image-20211227105432586" style="zoom:50%;" /> | <img src="./img/image-20211227105457938.png" alt="image-20211227105457938" style="zoom:50%;" /> |
+| <img src="./img/image-20211227105529638.png" alt="image-20211227105529638" style="zoom:50%;" /> | <img src="./img/image-20211227105559197.png" alt="image-20211227105559197" style="zoom:50%;" /> |
+| <img src="./img/image-20211227105646659.png" alt="image-20211227105646659" style="zoom:50%;" /> | <img src="./img/image-20211227105735132.png" alt="image-20211227105735132" style="zoom:50%;" /> |
+| <img src="./img/image-20211227105816214.png" alt="image-20211227105816214" style="zoom:50%;" /> | <img src="./img/image-20211227105847196.png" alt="image-20211227105847196" style="zoom:50%;" /> |
+
+
+
+**复杂度分析**
+
+如何计算递归的时间复杂度和空间复杂度呢？ 力扣对此进行了 详细介绍 ，其中时间复杂度可以这样计算：
+
+给出一个递归算法，其时间复杂度 $O(T)$  通常是递归调用的数量（记作 $R$） 和计算的时间复杂度的乘积（表示为$O(s)$）的乘积：
+
+$O(T)=R*O(s)$
+
+
+
+**时间复杂度**：$O(m+n)$
+
+$m$, $n$ 为 $l1$, $l2$ 的元素个数。递归函数每次去掉一个元素，直到两个链表都为空，因此需要调用  $R =  O(m+2)$ 次。而在递归函数中我们只进行了 `next` 指针的赋值操作，复杂度为 $O(1) $, 故递归的总时间复杂度为 $O(T) = R * O(1) = O(m+n)$
+
+
+
+**空间复杂度**：$O(m+n)$
+
+对于递归调用 `self.mergeTwoLists()`，当它遇到终止条件准备回溯时，已经递归调用了 $m+n$ 次， 使用了 $m+n$ 个 栈帧 (stack frame),  故最后的空间复杂度为 $O(m+n)$
+
+
+
+
+
+<font size=5> 参考代码 </font>
+
+
+
+
 
 ## 常见单词记录
 
