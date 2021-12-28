@@ -310,10 +310,29 @@ and since we don’t know the values of `left` and `right`, it’s entirely poss
 
 ### 704. Binary Search
 
+> 右移相当于除以二
+> 这样写防止两个大数相加溢出整型的最大值
+>
+> 
+>
+> 就是二进制，去掉最后一位
+> 比如5-->101>>1  --> 10=2
+>
+>
+> 没有必要在二分的时候用 >>，一是这样可读性不好，二是用 /2 编译器也会帮你优化掉，不需要自己手动优化
+>
+>
+> 找没上市的家族企业啊，看你专业啊，丹麦的医疗 电气企业，瑞典的设备制造企业，英国的金融咨询服务公司，德国的传统制造企业，就差说名字了啊。都不是什么互联网企业，只要进公司就发现一公司懒比，为啥不说名字，我懂啊，怕你们这群奋斗逼进去卷啊。
+>
+>
+> 在外企工作爽吗？ - 邵峋的回答 - 知乎
+> https://www.zhihu.com/question/299766610/answer/2196046687
+
 | Title                                                        | Type          | Date       |
 | ------------------------------------------------------------ | ------------- | ---------- |
 | [Search Insert Position](https://leetcode-cn.com/problems/search-insert-position/) | Binary Search | 2021-12-1  |
 |                                                              |               | 2021-12-15 |
+|                                                              |               | 2021-12-28 |
 
 
 
@@ -350,15 +369,109 @@ public class Solution{
 
 
 
+
+
+### 278. [First Bad Version](https://leetcode-cn.com/problems/first-bad-version/)
+
+You are a product manager and currently leading a team to develop a new product. Unfortunately, the latest version of your product fails the quality check. Since each version is developed based on the previous version, all the versions after a bad version are also bad.
+
+Suppose you have `n` versions `[1, 2, ..., n]` and you want to find out the first bad one, which causes all the following ones to be bad.
+
+You are given an API `bool isBadVersion(version)` which returns whether `version` is bad. Implement a function to find the first bad version. You should minimize the number of calls to the API.
+
+
+
+**Example 1:**
+
+```C#
+Input: n = 5, bad = 4
+Output: 4
+Explanation:
+call isBadVersion(3) -> false
+call isBadVersion(5) -> true
+call isBadVersion(4) -> true
+Then 4 is the first bad version.
+```
+
+
+
+<font size=5> 参考代码 </font>
+
+```C#
+/* The isBadVersion API is defined in the parent class VersionControl.
+      bool IsBadVersion(int version); */
+
+public class Solution : VersionControl {
+    public int FirstBadVersion(int n) 
+    {
+        int left = 0, right = n;
+        while(left<right)
+        {
+            int mid = left+(right-left) /2;
+            if(IsBadVersion(mid)) //[left,mid]
+            {
+                right = mid;
+            }else{   
+                 //[mid+1,right]
+                /*为什么这里的mid要加1呢？
+                因为调用IsBadVersion之后返回的是false,说明当前这个是好版本，
+                那么坏版本一定是从当前这个好版本往后一个版本开始的，也就是mid+1开始
+                2021年12月28日11:15:51
+                */
+                left = mid+1;
+            }
+        }
+        return left;
+    }
+}
+```
+
+
+
 ### 35. Search Insert Position
 
-| Title                                                        | Type          | Date      |
-| ------------------------------------------------------------ | ------------- | --------- |
-| [Search Insert Position](https://leetcode-cn.com/problems/search-insert-position/) | Binary Search | 2021-12-1 |
+| Title                                                        | Type          | Date       |
+| ------------------------------------------------------------ | ------------- | ---------- |
+| [Search Insert Position](https://leetcode-cn.com/problems/search-insert-position/) | Binary Search | 2021-12-1  |
+|                                                              |               | 2021-12-28 |
 
 Given a sorted array of distinct integers and a target value, return the index if the target is found. If not, return the index where it would be if it were inserted in order.
 
 You must write an algorithm with $$O(log n)$$ runtime complexity.
+
+```c#
+public class Solution {
+    public int SearchInsert(int[] nums, int target) {
+        int left=0, right = nums.Length -1;
+        /*为什么这里要加上等号?
+        因为出现类似这样的测试用例 [1,3,5,6] t =7,如果不加上等号，而return回来的又是left，
+        就会出现输出为3（正确结果应该要为4）
+        2021-12-28
+        */
+        while(left<=right)
+        {
+            int mid = left+(right-left)/2;
+            if(nums[mid]==target)
+            {
+                return mid;
+            }else if(target > nums[mid]){//[mid,right]
+               /*这里之所以要加1，是因为要返回的是mid往后一个位置
+                比如[1,3]，t=2, 这里的mid=0+1/2=0,则要往后移动一个下标 0+1 =1，
+                在下标为 1 的位置插入
+                */
+             	left = mid+1;
+            }else{
+                /*
+                这里如果不-1，则会在while(left =right)的时候永久的死循环 
+                +1，-1 的结果就是让left,right最后合二为一，返回left
+                2021-12-28*/
+                 right = mid-1;
+            }
+        }
+        return left;
+    }
+}
+```
 
 
 
