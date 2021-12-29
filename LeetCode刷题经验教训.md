@@ -6,6 +6,72 @@
 
 
 
+## 2021-12-29 String.Format语法糖与双循环
+
+
+
+今天在看这道[count-special-quadruplets](https://leetcode-cn.com/problems/count-special-quadruplets/solution/tong-ji-te-shu-si-yuan-zu-by-leetcode-so-50e2/)的时候，竟然无法理解四重循环，进而再回想一下，竟然无法理解双重循环了？？？？
+
+然后打开VS直接测试，结果发现忘记了String.Formate的语法糖了？？？？？
+
+
+
+```c#
+for (int i = 0; i < 5; i++)
+{
+    for (int j = i + 1; j < 5; j++)
+    {
+        Console.WriteLine($@"i={i}, j = {j}");
+    }
+}
+```
+
+```c#
+i=0, j = 1
+i=0, j = 2
+i=0, j = 3
+i=0, j = 4
+i=1, j = 2
+i=1, j = 3
+i=1, j = 4
+i=2, j = 3
+i=2, j = 4
+i=3, j = 4
+```
+
+
+
+
+
+#### i++; ++i
+
+```c#
+for (int i = 0; i < 5; ++i)
+{
+    for (int j = i + 1; j < 5; ++j)
+    {
+        Console.WriteLine($@"i={i}, j = {j}");
+    }
+}
+```
+
+```c#
+i=0, j = 1
+i=0, j = 2
+i=0, j = 3
+i=0, j = 4
+i=1, j = 2
+i=1, j = 3
+i=1, j = 4
+i=2, j = 3
+i=2, j = 4
+i=3, j = 4
+```
+
+
+
+**结论：** 至少在循环内，看起来毫无差别。 只有跳出循环才会有所差别。
+
 
 
 ## 2021-9-7 [Two Sum](https://leetcode-cn.com/problems/two-sum/)

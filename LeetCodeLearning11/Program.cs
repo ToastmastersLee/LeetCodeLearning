@@ -20,10 +20,20 @@ namespace LeetCodeLearning11
             //var retVal = longS.LengthOfLongestSubstring("pwwkew");
             //Console.WriteLine(retVal);
 
-            string s = "2021-12-22";
-            DateTime mDate = DateTime.Parse(s);
-            int aa =  mDate.DayOfYear;
-            Console.WriteLine(aa);
+            //string s = "2021-12-22";
+            //DateTime mDate = DateTime.Parse(s);
+            //int aa =  mDate.DayOfYear;
+            //Console.WriteLine(aa);
+
+            for (int i = 0; i < 5; ++i)
+            {
+                for (int j = i + 1; j < 5; ++j)
+                {
+                    Console.WriteLine($@"i={i}, j = {j}");
+                }
+            }
+
+
             Console.WriteLine("Hello World!");
         }
     }
