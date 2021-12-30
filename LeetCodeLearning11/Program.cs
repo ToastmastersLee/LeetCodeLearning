@@ -25,14 +25,18 @@ namespace LeetCodeLearning11
             //int aa =  mDate.DayOfYear;
             //Console.WriteLine(aa);
 
-            for (int i = 0; i < 5; ++i)
-            {
-                for (int j = i + 1; j < 5; ++j)
-                {
-                    Console.WriteLine($@"i={i}, j = {j}");
-                }
-            }
+            //for (int i = 0; i < 5; ++i)
+            //{
+            //    for (int j = i + 1; j < 5; ++j)
+            //    {
+            //        Console.WriteLine($@"i={i}, j = {j}");
+            //    }
+            //}
 
+
+            _846HandofStraights hand = new _846HandofStraights();
+             var retVal = hand.IsNStraightHand(new[] {1, 2, 3, 6, 2, 3, 4, 7, 8},3);
+             Console.WriteLine(retVal);
 
             Console.WriteLine("Hello World!");
         }

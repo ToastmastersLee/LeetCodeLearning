@@ -684,9 +684,11 @@ public class Solution {
 
 ### 283.Move Zeros
 
-| Title                                                        | Type         | Date      |
-| ------------------------------------------------------------ | ------------ | --------- |
-| [283. Move Zeros](https://leetcode-cn.com/problems/move-zeroes/) | Tow Pointers | 2021-12-5 |
+| Title                                                        | Type         | Date       |
+| ------------------------------------------------------------ | ------------ | ---------- |
+| [283. Move Zeros](https://leetcode-cn.com/problems/move-zeroes/) | Tow Pointers | 2021-12-5  |
+|                                                              |              | 2021-12-17 |
+|                                                              |              | 2021-12-30 |
 
 <font size=5> 题目</font>
 
@@ -715,27 +717,43 @@ Output: [0]
 <font size=5>参考代码</font>
 
 ```csharp
-    public void MoveZeros(int[] nums)
-    {
-        int left = 0, right = 0;
-        while(right<nums.Length)
-        {
-            if(nums[right]!=0)
-            {
-                Swap(nums, left, right);
+public class Solution {
+    public void MoveZeroes(int[] nums) {
+        int left =0, right= 0;
+        while(right < nums.Length){
+            if(nums[right]!=0){
+                Swap(nums,left,right);
+                /*做了交换之后，left指针当前的位置已经不再是0了，
+                则需要继续往左边移动一位，左指针保持不动，这时候左右之争指向同一个位置*/
                 left++;
+                //right++
             }
+            /*等于零，说明此时left,right都是0， 
+            不需要做交换，但是需要确保right指针往右继续移动*/
             right++;
         }
     }
 
-    private void Swap(int[] nums, int left, int right)
-    {
+    private void Swap(int[] nums, int left, int right){
         int temp = nums[left];
-        nums[left] = nums[right];
+        nums[left] =nums[right];
         nums[right] = temp;
     }
+}
 ```
+
+
+
+使用双指针，左指针指向当前已经处理好的序列的尾部，右指针指向待处理序列的头部）这句话难以理解的话，参考下图的S4。
+
+**右(l)**指针不断向右移动，每次右指针指向非零数，则将左右指针对应的数交换，同时左指针右移。
+
+注意到以下性质：
+
+- 左指针左边均为非零数；
+- 右指针左边直到左指针处均为零。
+
+因此每次交换，都是将左指针的零与右指针的非零数交换，且非零数的相对顺序并未改变。
 
 <font size=5>图解过程</font>
 
@@ -1650,9 +1668,12 @@ public class Solution {
 
 
 
-| 单词                                    | 解释                                                         |
-| --------------------------------------- | ------------------------------------------------------------ |
-| **Substring** <br />**Subsequence**     | "**`pwwkew`**"：`wke` be a **substring** of `pwwkew`,  whereas "`pwke`" is a **subsequence** and not a substring toward `pwwkew`. |
-| **in-place**                            | adv： 部署（放置）适当的；就地；原状；在位<br />[In-place algorithm](https://en.wikipedia.org/wiki/In-place_algorithm): In [computer science](https://en.wikipedia.org/wiki/Computer_science), an **in-place algorithm** is an [algorithm](https://en.wikipedia.org/wiki/Algorithm) which transforms input using no auxiliary [data structure](https://en.wikipedia.org/wiki/Data_structure). |
-| **permutation**<br />【ˌpɜːrmjuˈteɪʃn】 | per-完全 + mut-改变 + -ation表名词，***是单词 permute 派生的名词***。<br />**`per-`** <br/>表示“完全，贯穿，自始至终，向前”。forth, ford 是其同源词。<br/>**`mute-`** <br/>= change, 表示“改变、交换”。源自拉丁语 mutare "to change." |
+| 单词                                                         | 解释                                                         |
+| ------------------------------------------------------------ | ------------------------------------------------------------ |
+| **Substring** <br />**Subsequence**                          | "**`pwwkew`**"：`wke` be a **substring** of `pwwkew`,  whereas "`pwke`" is a **subsequence** and not a substring toward `pwwkew`. |
+| **in-place**                                                 | adv： 部署（放置）适当的；就地；原状；在位<br />[In-place algorithm](https://en.wikipedia.org/wiki/In-place_algorithm): In [computer science](https://en.wikipedia.org/wiki/Computer_science), an **in-place algorithm** is an [algorithm](https://en.wikipedia.org/wiki/Algorithm) which transforms input using no auxiliary [data structure](https://en.wikipedia.org/wiki/Data_structure). |
+| **permutation**<br />【ˌpɜːrmjuˈteɪʃn】                      | per-完全 + mut-改变 + -ation表名词，***是单词 permute 派生的名词***。<br />**`per-`** <br/>表示“完全，贯穿，自始至终，向前”。forth, ford 是其同源词。<br/>**`mute-`** <br/>= change, 表示“改变、交换”。源自拉丁语 mutare "to change." |
+| **[indices](https://leetcode-cn.com/problems/two-sum-ii-input-array-is-sorted/)**<br />【ˈɪndɪsiːz】 | [Indices](https://www.collinsdictionary.com/zh/dictionary/english/index) is a [plural](https://www.collinsdictionary.com/zh/dictionary/english/plural) form of [index](https://www.collinsdictionary.com/zh/dictionary/english/index). |
+| **sorted (in)**                                              | **[sorted in non-decreasing order](https://leetcode-cn.com/problems/two-sum-ii-input-array-is-sorted/)**： 按照非递减**排序** |
+| D&C                                                          | Divide and conquer: 分而治之,一种著名的递归式问题解决方法:<br />1. 找出简单的极限条件；<br />2. 确定如何缩小问题的规模，使其符合基线条件。 |
 
