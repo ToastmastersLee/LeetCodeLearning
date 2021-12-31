@@ -1676,4 +1676,8 @@ public class Solution {
 | **[indices](https://leetcode-cn.com/problems/two-sum-ii-input-array-is-sorted/)**<br />【ˈɪndɪsiːz】 | [Indices](https://www.collinsdictionary.com/zh/dictionary/english/index) is a [plural](https://www.collinsdictionary.com/zh/dictionary/english/plural) form of [index](https://www.collinsdictionary.com/zh/dictionary/english/index). |
 | **sorted (in)**                                              | **[sorted in non-decreasing order](https://leetcode-cn.com/problems/two-sum-ii-input-array-is-sorted/)**： 按照非递减**排序** |
 | D&C                                                          | Divide and conquer: 分而治之,一种著名的递归式问题解决方法:<br />1. 找出简单的极限条件；<br />2. 确定如何缩小问题的规模，使其符合基线条件。 |
+| **divisor**<br />【dɪˈvaɪzər】                               | A **[divisor](https://leetcode-cn.com/problems/perfect-number/)** of an integer `x` is an integer that can divide `x` evenly.<br />除数;除子<br />***When you [divide](https://dictionary.cambridge.org/zhs/词典/英语-汉语-简体/divide) 21 by 7, 7 is the divisor.*** |
+| **factor**                                                   | 因子;因数; a number that divides into another number exactly<br />***1, 2, 3, 4, 6 and 12 are the factors of 12.*** |
+| [perfect number](https://leetcode-cn.com/problems/perfect-number/) | A [perfect number](https://en.wikipedia.org/wiki/Perfect_number) is a positive integer that is equal to the sum of its positive divisors, excluding the number itself. <br />对于一个 **正整数**，如果它和除了它自身以外的所有 **正因子** 之和相等，我们称它为 「完美数」。<br />eg：28 = 1 + 2 + 4 + 7 + 14 <br />1, 2, 4, 7, 和 14 是 28 的所有正因子。那么28是个完美数 |
+|                                                              |                                                              |
 
