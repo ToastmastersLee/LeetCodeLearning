@@ -148,13 +148,67 @@ public class Solution {
 
 
 
+## 数学题
+
+### [507. Perfect Number](https://leetcode-cn.com/problems/perfect-number/)
+
+A [perfect number](https://en.wikipedia.org/wiki/Perfect_number) is a **positive integer** that is equal to the sum of its **positive divisors**, excluding the number itself. A **divisor** of an integer `x` is an integer that can divide `x` evenly.
+
+Given an integer `n`, return `true` if `n` is a perfect number, otherwise return `false`.
 
 
-## 罗马数字
 
-一道Hashmap,
+**Example 1:**
 
-一道贪心算法
+```c#
+Input: num = 28
+Output: true
+Explanation: 28 = 1 + 2 + 4 + 7 + 14
+1, 2, 4, 7, and 14 are all divisors of 28.
+```
+
+
+
+#### 方法一：枚举
+
+我们可以枚举  `num` 的所有真因子，累加所有真因子之和，记作 `sum`。若 $sum=num$ 则返回 `true`，否则返回 `false`。
+
+在枚举时，我们只需要枚举不超过  $\sqrt{num}$ 的数。这是因为如果 `num` 有一个大于$\sqrt{num}$ 的因数 `d`, 那么它一定有一个小于 $\sqrt{num}$ 的因数 $\frac{num}{n}$ 。
+
+在枚举时，若找到了一个因数`d`, 那么就找到了因数$\frac{num}{d}$ 。 注意当 $d * d = num$ 时这两个因数相同，此时不能重复计算。
+
+
+
+<font size=5> 参考代码 </font>
+
+```c#
+public class Solution {
+    public bool CheckPerfectNumber(int num) {
+        if(num==1){
+            return false;
+        }
+        int sum = 1;
+        
+        for(int d = 2; d * d <= num; d++){
+            if(num % d == 0){
+                Console.WriteLine(d);
+                sum += d;// 2,4 都在这里执行
+                if(d*d<num){ //真是令人大开眼界
+                    Console.WriteLine("num /d= "+num /d);
+                    sum += num /d; //14 （num/2）,7(num/4)都在这里执行
+                }              
+            }
+        }
+        Console.WriteLine("Sum:"+sum);
+        Console.WriteLine("num:"+num);
+        return  sum == num; 
+    }
+}
+```
+
+
+
+## 哈希表
 
 ### 13. Roman to Integer
 
