@@ -208,7 +208,229 @@ public class Solution {
 
 
 
-## 哈希表
+## Simulation and Matrix
+
+
+
+### [2022. Convert 1D Array Into 2D Array](https://leetcode-cn.com/problems/convert-1d-array-into-2d-array/)  
+
+You are given a **0-indexed** 1-dimensional (1D) integer array `original`, and two integers, `m` and `n`. You are tasked with creating a 2-dimensional (2D) array with `m` rows and `n` columns using **all** the elements from `original`.
+
+The elements from indices `0` to `n - 1` (**inclusive**) of `original` should form the first row of the constructed 2D array, the elements from indices `n` to `2 * n - 1` (**inclusive**) should form the second row of the constructed 2D array, and so on.
+
+Return an `m x n` 2D array constructed according to the above procedure, or an empty 2D array if it is impossible.
+
+ <img src="./img/image-20220101210314961.png" alt="image-20220101210314961" style="zoom: 67%;" />
+
+
+
+**Example:**
+
+```c#
+Input: original = [1,2,3,4], m = 2, n = 2
+Output: [[1,2],[3,4]]
+Explanation: The constructed 2D array should contain 2 rows and 2 columns.
+The first group of n=2 elements in original, [1,2], becomes the first row in the constructed 2D array.
+The second group of n=2 elements in original, [3,4], becomes the second row in the constructed 2D array.
+
+```
+
+
+
+**Example2:**
+
+```c#
+Input: original = [1,2,3], m = 1, n = 3
+Output: [[1,2,3]]
+Explanation: The constructed 2D array should contain 1 row and 3 columns.
+Put all three elements in original into the first row of the constructed 2D array.
+```
+
+
+
+Tips:
+
+1. When is it possible to convert original into a 2D array and when is it impossible?
+2. It is possible if and only if m * n == original.length
+3. If it is possible to convert original to a 2D array, keep an index i such that original[i] is the next element to add to the 2D array.
+
+
+
+
+
+#### 二位数组常识: x轴 = row; y 轴 = column
+
+新建一个二位数值
+
+```c#
+int[][] ans = new int[m][];//定义一个 m(=2) 维的数组, 即指定 y 轴 (column) 为 m;
+```
+
+<img src="./img/image-20220101210802819.png" alt="image-20220101210802819" style="zoom: 67%;" />
+
+
+
+The following example assigns a value to a particular array element.
+
+```csharp
+array5[2, 1] = 25;
+```
+
+Similarly, the following example gets the value of a particular array element and assigns it to variable `elementValue`.
+
+
+
+```csharp
+int elementValue = array5[2, 1];
+```
+
+The following code example initializes the array elements to default values (except for jagged arrays).
+
+
+
+```csharp
+int[,] array6 = new int[10, 10];
+```
+
+<img src="./img/image-20220101211416517.png" alt="image-20220101211416517" style="zoom: 67%;" />
+
+<img src="./img/image-20220101211558239.png" alt="image-20220101211558239" style="zoom:67%;" />
+
+
+
+<font size =5> **Array.Copy Method 描述** </font>
+
+[Array.Copy Method](https://docs.microsoft.com/en-us/dotnet/api/system.array.copy?view=net-6.0#System_Array_Copy_System_Array_System_Int32_System_Array_System_Int32_System_Int32_)
+
+Copies a range of elements in one [Array](https://docs.microsoft.com/en-us/dotnet/api/system.array?view=net-6.0) to another [Array](https://docs.microsoft.com/en-us/dotnet/api/system.array?view=net-6.0) and performs type casting and boxing as required.
+
+
+
+**Copy(Array, Int32, Array, Int32, Int32)**:
+
+Copies a range of elements from an [Array](https://docs.microsoft.com/en-us/dotnet/api/system.array?view=net-6.0) starting at the specified source index and pastes them to another [Array](https://docs.microsoft.com/en-us/dotnet/api/system.array?view=net-6.0) starting at the specified destination index. The length and the indexes are specified as 64-bit integers.
+
+**Parameters Desc:**
+
+     1. **sourceArray**: The Array that contains the data to copy.
+     1. **sourceIndex**: A 32-bit integer that represents the index in the sourceArray at which copying begins.
+     1. **destinationArray**: The Array that receives the data.
+     1. **destinationIndex**: A 32-bit integer that represents the index in the destinationArray at which storing begins.
+     1. **length**: A 32-bit integer that represents the number of elements to copy.
+
+
+
+**这题的核心是通过Array.Copy把Original的数组，按照一定起始值，分别拷贝到 ans[0]和  ans[1] 中**。由于对二维数组的拷贝以及改方法的完全没有接触，导致看答案都看不懂，只能打开Visual Studio直接开撸debugger.
+
+
+
+<font size =5>**Array.Copy(original, i, ans[i / n], 0, n);** </font>
+
+**第一次循环：**
+
+```c#
+// original = [1,2,3,4], m = 2, n = 2
+
+int[][] ans = new int[m][];
+
+for (int i = 0; i < m; ++i)
+{
+    ans[i] = new int[n];
+}
+
+Array.Copy(original, 0, ans[0 / 2], 0, 2);
+=>
+Arrary.Copy(original,0,ans[0],0,2)
+```
+
+<img src="./img/image-20220101212000969.png" alt="image-20220101212000969" style="zoom:80%;" />
+
+
+
+**第二次循环：**
+
+```c#
+// original = [1,2,3,4], m = 2, n = 2
+
+int[][] ans = new int[m][];
+
+for (int i = 0; i < m; ++i)
+{
+    ans[i] = new int[n];
+}
+
+Array.Copy(original, 2, ans[2 / 2], 0, 2);
+ =>
+Array.Copy(original,2,ans[1],0,2);
+```
+
+<img src="./img/image-20220101212931484.png" alt="image-20220101212931484" style="zoom:80%;" />
+
+
+
+如果是一维数组的情况：
+
+```c#
+// original = [1,2,3], m = 1, n = 3
+  /*
+  第一次i=0； 
+  第二次i= i+n = 0+3 = 3,则 3 < 3 为 false,跳出 for 循环
+  */
+  for (int i = 0; i < original.Length; i += n)
+  {
+  		Array.Copy(original, i, ans[i / n], 0, n);
+  }
+```
+
+
+
+<font size=5>方法一：模拟 </font>
+设 `original` 的长度为 `k`，根据题意，如果 $k\ne mnk$  则无法构成二维数组，此时返回空数组。否则我们可以遍历 `original`，每 `n` 个元素创建一个一维数组，放入二维数组中。
+
+
+
+<font size =5> 参考代码 </font>
+
+```c#
+public class Solution {
+    public int[][] Construct2DArray(int[] original, int m, int n) {
+        if(original.Length != m*n){
+            return new int [0][];
+        }
+
+        int[][] ans = new int [m][];//定义一个 m 维的数组, 即指定 y 轴 (column) 为 m;
+        for (int i = 0; i < m; i++){
+            /*
+                分别定义 m(=2)维数组 的 x 轴 (row) 的大小：
+                x 都为 n；
+            */
+            ans[i] = new int[n];
+        }
+        for (int i = 0; i< original.Length; i += n){
+            /*
+            Parameters Desc:
+            1): sourceArray:The Array that contains the data to copy.
+            2): sourceIndex: A 32-bit integer that represents the index in the sourceArray at which copying begins.
+            3):destinationArray:The Array that receives the data.
+            4):destinationIndex: A 32-bit integer that represents the index in the destinationArray at which storing begins.
+            5):length:A 32-bit integer that represents the number of elements to copy.
+            */
+            Array.Copy(original, i, ans[i/n],0,n);
+        }
+        return ans;
+    }
+}
+```
+
+**Reference:**
+
+1. [Multidimensional Arrays (C# Programming Guide)](https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/arrays/multidimensional-arrays)
+
+
+
+
+
+## 哈希表 hash 
 
 ### 13. Roman to Integer
 
