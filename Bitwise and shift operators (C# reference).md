@@ -6,7 +6,33 @@
 
 今日在做  [390. Elimination Game](https://leetcode-cn.com/problems/elimination-game/)的时候直接不会，看答案也是直接懵逼。
 
+```C#
+class Solution {
+public:
+    int lastRemaining(int n) {
+        int head = 1;
+        int step = 1;
+        bool left = true;
+        //int n = n
 
+        while (n > 1) {
+            //从左边开始移除 or（从右边开始移除，数列总数为奇数）
+            if (left || n % 2 != 0) {
+                head += step;
+            }
+            step <<= 1; //步长 * 2
+            n >>= 1;  //总数 / 2
+            left = !left; //取反移除方向
+        }
+
+        return head;
+    }
+
+作者：xing-you-ji
+链接：https://leetcode-cn.com/problems/elimination-game/solution/wo-hua-yi-bian-jiu-kan-dong-de-ti-jie-ni-k2uj/
+来源：力扣（LeetCode）
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+```
 
 
 

@@ -148,6 +148,137 @@ public class Solution {
 
 
 
+## 日历(模拟)
+
+
+
+### 1154. [Day of the Year](https://leetcode-cn.com/problems/day-of-the-year/)
+
+Given a string `date` representing a [Gregorian calendar](https://en.wikipedia.org/wiki/Gregorian_calendar) date formatted as `YYYY-MM-DD`, return the day number of the year.
+
+**Example 1:**
+
+```c#
+Input: date = "2019-01-09"
+Output: 9
+Explanation: Given date is the 9th day of the year in 2019.
+```
+
+
+
+<font size=5>**方法一：直接计算** </font>
+
+我们首先从给定的字符串 `date` 中提取出年 `year`，月 `month` 以及日 `day`。
+
+这样一来，我们就可以首先统计到  `month` 的前一个月为止的天数。这一部分只需要使用一个长度为 $12$ 的数组，预先记录每一个月的天数，再进行累加即可。随后我们将答案再加上 `day`，就可以得到  `date` 是一年中的第几天。
+
+需要注意的是，如果  `year` 是闰年，那么二月份会多出一天。闰年的判定方法为：`year` 是 $400$ 的倍数，或者 `year` 是 $4$ 的倍数且不是 $100$ 的倍数。
+
+```c#
+public class Solution{
+    public int DayOfYear(string date){ //2022-01-03
+        int year = int.Parse(date.Substring(0,4));
+        int month = int.Parse(date.Substring(5,2));//要从第5个字符开始截取，因为第4个字符是：-
+        int day = int.Parse(date.Substring(8));
+        
+        int[] amount = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+        if(year % 400 ==0 ||(year % 4 == 0 || year % 100 != 0)){
+            ++amount[1];
+        }
+        
+        int ans = 0;
+        for(int i = 0; i < mmonth -1 ;i++){
+            ans += amount[i];
+        }
+        return ans + day;
+    }
+}
+```
+
+
+
+<font size = 5>**复杂度分析**</font>
+
+- 时间复杂度：$ O(1)$。我们将字符串的长度（定值 7）以及一年的月份数 12 视为常数。
+- 空间复杂度：$ O(1)$。
+
+
+
+
+
+### 1185. [Day of the Week](https://leetcode-cn.com/problems/day-of-the-week/)
+
+Given a date, return the corresponding day of the week for the date. 
+
+The input is given as three integers representing the `day`, `month` and `year` respectively.
+
+Return the answer as one of the following values `{"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"}`
+
+
+
+**Example 1:**
+
+```c#
+Input: day = 31, month = 8, year = 2019
+Output: "Saturday"
+```
+
+
+
+**Constraints:**
+
+- The given dates are valid dates between the years `1971` and `2100`.
+
+
+
+<font size=5> 模拟 </font>
+
+题目保证日期是在 `1971`到 `2100`之间，我们可以计算给定日期距离 `1970`年的最后一天（星期四）间隔了多少天，从而得知给定日期是周几。
+
+具体的，可以先通过循环处理计算***年份*** 在[1971, year - 1]时间段，经过了多少天（注意平年为365天，闰年为366）；
+
+然后再处理当前年份`year`的月份在[1, month - 1]时间段，经过了多少天（注意当年是否为闰年，以特殊处理 $2$ 月份）；
+
+最后计算当月 `month`经过了多少天，即再增加 `day`天。
+
+得到距离 `1970`的最后一天（星期四）的天数后，进行 ***模拟***，即可映射回答案。
+
+
+
+<font size=5> 代码参考 </font>
+
+```C#
+public class Solution {
+    static string[] weeks = new string[]{"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
+    static int[] days = new int[]{31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+    
+    public string DayOfTheWeek(int day, int month, int year) {
+       
+        int ans = 4;// 1970-12-31是星期四， 那么 1971-1-1是星期五，也就是 ans + 1;
+        
+        for(int i = 1971; i < year; i++){//注意下标是从1971开始而不是0开始
+            bool isLeap = (i % 400 == 0 || (i % 4 == 0 && i % 100 != 0));
+            ans += isLeap ? 366 : 365;
+        }
+
+        for (int i = 1; i < month ; i++){
+           /* Console.WriteLine(i);
+            注意这里是要拿 传递进来的 year 进行闰年的判断，而不是拿 i....
+            if(i==2 && (i % 400 == 0 || (i % 4 == 0 && i % 100 !=0))){
+                ans++;
+            }*/
+            ans += days[i - 1]; ans += days[i - 1];// i=0,则 days[-1]数组越界
+            if (i == 2 && ((year % 4 == 0 && year % 100 != 0) || year % 400 == 0)) ans++;
+        }
+        ans += day;
+        //Console.WriteLine(ans);
+        return weeks[ans % 7];
+    }
+}
+```
+
+
+
 ## 数学题
 
 ### [507. Perfect Number](https://leetcode-cn.com/problems/perfect-number/)
