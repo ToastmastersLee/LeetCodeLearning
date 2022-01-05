@@ -389,7 +389,7 @@ Tips:
 
 
 
-#### 二位数组常识: x轴 = row; y 轴 = column
+#### 二维数组常识: x轴 = row; y 轴 = column
 
 新建一个二位数值
 
@@ -651,6 +651,72 @@ public class Solution {
 
 
 
+
+
+
+## 字符串题
+
+
+
+### [1576. Replace All ?'s to Avoid Consecutive Repeating Characters](https://leetcode-cn.com/problems/replace-all-s-to-avoid-consecutive-repeating-characters/)
+
+Given a string `s` containing only lowercase English letters and the `'?'` character, convert all the `'?'` characters into lowercase letters such that the final string does not contain any **consecutive repeating** characters. You **cannot** modify the non `'?'` characters.
+
+It is **guaranteed** that there are no consecutive repeating characters in the given string **except** for `'?'`.
+
+*Return the final string after all the conversions (possibly zero) have been made*. If there is more than one solution, return **any of them**. It can be shown that an answer is always possible with the given constraints.
+
+
+
+**Example 1:**
+
+```c#
+Input: s = "?zs"
+Output: "azs"
+Explanation: There are 25 solutions for this problem. From "azs" to "yzs", all are valid. Only "z" is an invalid modification as the string will consist of consecutive repeating characters in "zzs".
+```
+
+
+
+**Example 2:**
+
+```c#
+Input: s = "ubv?w"
+Output: "ubvaw"
+Explanation: There are 24 solutions for this problem. Only "v" and "w" are invalid modifications as the strings will consist of consecutive repeating characters in "ubvvw" and "ubvww".
+```
+
+
+
+
+
+<font size=5> 参考代码 </font>
+
+```c#
+public class Solution {
+    public string ModifyString(string s) {
+        int len = s.Length-1;
+        char[] arrS = s.ToArray();
+
+        for(int i = 0; i < len; i ++){
+            if(arrS[i] == '?'){
+                for (char ch = 'a'; ch <= 'c'; ch++){
+                    if( (i > 0 && arrS[i-1] == ch) || (i < len - 1 && arrS[i+1] == ch)){
+                        continue;
+                    }
+                    arrS[i] = ch;
+                    break;// break a-c的循环
+                }
+            }
+        }
+        return new string(arrS);
+    }
+}
+```
+
+- 输入**`"j?qg??b"`**， 输出 **`"jaqgabb"`** 预期结果  **`"jaqgacb"`**
+- 问题可能出在 ` int len = s.Length-1;`，减1，而在判断是否等于ch的时候，又减去1
+- 去掉 `-1` 之后，用例通过
 
 
 

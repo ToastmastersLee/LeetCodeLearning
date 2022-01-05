@@ -1,4 +1,4 @@
-# LeetCode刷题经验教训
+# CLeetCode刷题经验教训
 
 @(.NET开发)[编程语言, 技术扫盲, 命令式编程, LeetCode]
 
@@ -746,3 +746,46 @@ public class Solution {
 相当有趣，如果工作中遇到这种题目，StackOverflow一下就搞定了，很难有机会思考背后的机制原理。刷LeetCode之后才慢慢有所体会。
 
 2021年12月22日10:04:33
+
+
+
+## 2022-1-5 数组越界与编码敏感度
+
+在做[1576. Replace All ?'s to Avoid Consecutive Repeating Characters.](https://leetcode-cn.com/problems/replace-all-s-to-avoid-consecutive-repeating-characters/) ，虽然是道简单题，但是还是遇到了各种不简单的问题
+
+```c#
+public class Solution {
+    public string ModifyString(string s) {
+        int len = s.Length-1;
+        char[] arrS = s.ToArray();
+
+        for(int i = 0; i < len; i ++){
+            if(arrS[i] == '?'){
+                for (char ch = 'a'; ch <= 'c'; ch++){
+                    if(arrS[i-1] == ch || arrS[i+1] == ch){
+                        continue;
+                    }
+                    arrS[i] = ch;
+                    break;// break a-c的循环
+                }
+            }
+        }
+        return new string(arrS);
+    }
+}
+```
+
+- 最终执行的结果是数组越界，原因是 即便 len =  s.Length - 1; 但是代码里面还是对 对下标出做 1-， +1 的处理 `arrS[i-1]`、 `arrS[i+1]`；
+- 我需要调试才能理解，对数组什么情况下容易越界其实不大熟；
+- 既需要时间，更需要不断coding，才能慢慢熟悉并提升敏感度；
+
+
+
+需要做如下调整：
+
+```c#
+if( (i > 0 && arrS[i-1] == ch) || (i<len - 1 && arrS[i+1] == ch)){
+    continue;
+}
+```
+
