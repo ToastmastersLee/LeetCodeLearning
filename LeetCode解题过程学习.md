@@ -720,6 +720,112 @@ public class Solution {
 
 
 
+
+
+## Stack
+
+
+
+
+
+### 71. [Simplify Path](https://leetcode-cn.com/problems/simplify-path/)
+
+Given a string `path`, which is an **absolute path** (starting with a slash `/`) to a file or directory in a Unix-style file system, convert it to the simplified **canonical path** (规范路径).
+
+In a Unix-style file system, a period `'.'` refers to the current directory, a double period `'..'` refers to the directory up a level, and any multiple consecutive slashes (i.e. `'//'`) are treated as a single slash `'/'`. For this problem, any other format of periods such as `'...'` are treated as file/ directory names.
+
+The **canonical path** should have the following format:
+
+- The path starts with a single slash `'/'`.
+
+- Ant two directories are separated by a single slash `'/'`.
+
+- The path does not end with a trailing `'/'`.
+
+- The path only contains the directories on the path from the root directory to the target file or directory (i.e., not period `'.'` or double period `'..'`) 
+
+  > 路径仅包含从根目录到目标文件或目录的路径上的目录（即，不含 `'.'` 或 `'..'`）。
+
+  return *the simplified **canonical path***.
+
+
+
+**Example 1:**
+
+```c#
+Input: path = "/home/"
+Output: "/home"
+Explanation: Note that there is no trailing slash after the last directory name.
+```
+
+**Example 2:**
+
+```c#
+Input: path = "/../"
+Output: "/"
+Explanation: Going one level up from the root directory is a no-op, as the root level is the highest level you can go.
+```
+
+**Example 3:**
+
+```c#
+Input: path = "/home//foo/"
+Output: "/home/foo"
+Explanation: In the canonical path, multiple consecutive slashes are replaced by a single one.
+```
+
+
+
+<font size=5> 参考代码 </font>
+
+```C#
+public class Solution {
+    public string SimplifyPath(string path) {
+        string[] names = path.Split('/');
+        var stack = new List<string>();
+        foreach(string name in names){
+            switch(name){
+               
+                case "..":
+                if(stack.Count > 0 ){
+                    /* 
+                    当输入的是："/../" ，解析出来的是 .. 这时候 stack.Count == 0 
+                    如果不加以判断就会出现 Index was out of range的异常
+                    */
+                    stack.RemoveAt(stack.Count -1);
+                }
+
+                break;
+
+                case ".":
+                break;
+                
+                case "":
+                break;
+
+                default:
+                    stack.Add(name);
+                break;
+            }
+        }
+
+        //var ans =  stack.Aggregate((a, b) =>  a + "/ " + b);
+        //stack.Insert(0,"/"); 这种方法不起作用，只会出现2个斜杆
+        Console.WriteLine(String.Join("\n", stack)); //打印出List/Array元素
+        var ans =  string.Join("/",stack.ToArray());
+        ans =  "/"+ ans;
+        return ans;
+    }
+}
+```
+
+- 学到了List可以当做Stack使用
+- 知道了string.Join和List.Aggregate的用法；
+- 知道了List.Insert(position, item)的用法
+- 知道了如何快速打印list/array给前端展示 `Console.WritelLine(String.Join("\n",stack));`
+
+
+
 ## Binary Search二分查找
 
 
@@ -2155,4 +2261,5 @@ public class Solution {
 | [Afterward](https://leetcode-cn.com/problems/elimination-game/) | Starting from left to right, remove the first number and every other number **afterward** until you reach the end of the list.<br />从左到右，删除第一个数字，然后**每隔**一个数字删除一个，直到到达列表末尾。<br />f you do something or if something happens **afterward**, you do it or it happens after a particular event or time that has already been mentioned. (某事件、某时间) 之后 |
 | **operand**<br />【ˈɑːpərænd】                               | (mathematics) the number on which an operand is to be done. **操作数**；运算数<br /><br />The left-shift operator (<<) shifts its first **operand** left by the number of bits specified by its second **operand**. (左移操作符(<<)将其第一个操作数向左移动其第二个操作数指定的位数。) <br />`<<` 运算符将其左侧操作数向左移动[右侧操作数定义的位数](https://docs.microsoft.com/zh-cn/dotnet/csharp/language-reference/operators/bitwise-and-shift-operators#shift-count-of-the-shift-operators)。<br />eg.`step = step << 2` |
 | left-shift operator                                          | <img src="./img/300px-Rotate_left_logically.svg.png" alt="alt text" style="zoom:80%;" /> |
+| [**canonical path**](https://leetcode-cn.com/problems/simplify-path/) | 规范路径 /  标准路径 / 正则路线                              |
 
