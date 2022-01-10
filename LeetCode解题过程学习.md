@@ -2270,4 +2270,19 @@ public class Solution {
 | **operand**<br />【ˈɑːpərænd】                               | (mathematics) the number on which an operand is to be done. **操作数**；运算数<br /><br />The left-shift operator (<<) shifts its first **operand** left by the number of bits specified by its second **operand**. (左移操作符(<<)将其第一个操作数向左移动其第二个操作数指定的位数。) <br />`<<` 运算符将其左侧操作数向左移动[右侧操作数定义的位数](https://docs.microsoft.com/zh-cn/dotnet/csharp/language-reference/operators/bitwise-and-shift-operators#shift-count-of-the-shift-operators)。<br />eg.`step = step << 2` |
 | left-shift operator                                          | <img src="./img/300px-Rotate_left_logically.svg.png" alt="alt text" style="zoom:80%;" /> |
 | [**canonical path**](https://leetcode-cn.com/problems/simplify-path/) | 规范路径 /  标准路径 / 正则路线                              |
+| **backtracking**<br />【ˈbæktrækɪŋ】                         | 回溯：<br />1. [Backtracking (Think Like a Programmer)](https://www.youtube.com/watch?v=gBC_Fd8EE8A)<br />2. [The Backtracking Blueprint: The Legendary 3 Keys To Backtracking Algorithms](https://www.youtube.com/watch?v=Zq4upTEaQyM) |
+|                                                              |                                                              |
+
+
+
+**backtracking** 【ˈbæktrækɪŋ】
+
+1. If you **backtrack on** a statement or decision you have made, you do or say something that shows that you no longer agree with it or support it. （改变（说法、决定等）；出尔反尔）
+   - The committee backtracked by scrapping **[ˈskræpɪŋ]** the controversial bonus system （委员会改变主意，放弃了有争议的奖金制度。）
+   - Some backtracking is probably inevitable... （有时改变决定可能是不可避免的。）
+   - He promised there would be no backtracking on policies. （他承诺政策不会出尔反尔。）
+2. If you **backtrack**, you go back along a path or route you have just used.（ 原路返回）
+   - Leonard jumped in his car and started backtracking.（伦纳德跳进车里，开始原路折返。）
+3. If you **backtrack** in an account or explanation, you talk about things which happened before the ones you were previously talking about. （ 倒回（描述或解释内容））
+   - Can we just backtrack a little bit and look at your primary and secondary education? （我们能不能回过头来谈谈你的小学和中学教育？）
 
