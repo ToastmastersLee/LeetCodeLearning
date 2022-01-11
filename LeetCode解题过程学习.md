@@ -2257,7 +2257,8 @@ public class Solution {
 
 | 单词                                                         | 解释                                                         |
 | ------------------------------------------------------------ | ------------------------------------------------------------ |
-| **Substring** <br />**Subsequence**                          | "**`pwwkew`**"：`wke` be a **substring** of `pwwkew`,  whereas "`pwke`" is a **subsequence** and not a substring toward `pwwkew`. |
+| **Substring** <br />**Subsequence**                          | "**`pwwkew`**"：`wke` be a **substring** of `pwwkew`,  whereas "`pwke`" is a **subsequence** and not a substring toward `pwwkew`.<br />**substring**： （字符串的）子串<br />**subsequence**: (字符串的) 子序。<br />这两个概念在《算法图解》9.3讲解动态规划（Dynamic Programming)的时候 |
+| Dynamic Programming                                          | [Dynamic Programming](https://www.interviewbit.com/courses/programming/topics/dynamic-programming/) (commonly referred to as DP) is an algorithmic technique for solving a problem by **recursively** breaking it down into simpler subproblems and using the fact that the optimal solution to the overall problem depends upon the optimal solution to it’s individual subproblems. |
 | **in-place**                                                 | adv： 部署（放置）适当的；就地；原状；在位<br />[In-place algorithm](https://en.wikipedia.org/wiki/In-place_algorithm): In [computer science](https://en.wikipedia.org/wiki/Computer_science), an **in-place algorithm** is an [algorithm](https://en.wikipedia.org/wiki/Algorithm) which transforms input using no auxiliary [data structure](https://en.wikipedia.org/wiki/Data_structure). |
 | **permutation**<br />【ˌpɜːrmjuˈteɪʃn】                      | per-完全 + mut-改变 + -ation表名词，***是单词 permute 派生的名词***。<br />**`per-`** <br/>表示“完全，贯穿，自始至终，向前”。forth, ford 是其同源词。<br/>**`mute-`** <br/>= change, 表示“改变、交换”。源自拉丁语 mutare "to change." |
 | **[indices](https://leetcode-cn.com/problems/two-sum-ii-input-array-is-sorted/)**<br />【ˈɪndɪsiːz】 | [Indices](https://www.collinsdictionary.com/zh/dictionary/english/index) is a [plural](https://www.collinsdictionary.com/zh/dictionary/english/plural) form of [index](https://www.collinsdictionary.com/zh/dictionary/english/index). |
@@ -2271,6 +2272,7 @@ public class Solution {
 | left-shift operator                                          | <img src="./img/300px-Rotate_left_logically.svg.png" alt="alt text" style="zoom:80%;" /> |
 | [**canonical path**](https://leetcode-cn.com/problems/simplify-path/) | 规范路径 /  标准路径 / 正则路线                              |
 | **backtracking**<br />【ˈbæktrækɪŋ】                         | 回溯：<br />1. [Backtracking (Think Like a Programmer)](https://www.youtube.com/watch?v=gBC_Fd8EE8A)<br />2. [The Backtracking Blueprint: The Legendary 3 Keys To Backtracking Algorithms](https://www.youtube.com/watch?v=Zq4upTEaQyM) |
+| **[carry](https://leetcode-cn.com/problems/add-two-numbers/solution/liang-shu-xiang-jia-by-leetcode-solution/)**<br />【ˈkæri】 | 进位：to add a number to the next column on the left when adding up numbers, for example when the numbers add up to more than ten. |
 |                                                              |                                                              |
 
 
