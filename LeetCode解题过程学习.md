@@ -339,6 +339,115 @@ public class Solution {
 
 
 
+## Array
+
+### [C# array initialization](https://www.tutorialspoint.com/csharp/csharp_arrays.htm)
+
+An array stores a **fixed-size sequential collection** of elements of the same type.
+
+Declaring an array does not initialize the array in the memory. When the array variable is initialized, you can assign values to the array.
+
+Array is a reference type, so you need to use the **new** keyword to create an instance of the array. For example,
+
+```C#
+double[] balance = new double[10];
+```
+
+
+
+You can assign values to the array **at the time of declaration**, as shown −
+
+```C#
+double[] balance = {2340.0, 4523.69, 3421.0};
+```
+
+
+
+You can also **create and initialize** an array, as shown −
+
+```C#
+int[] marks = new int[5]{99,  98, 92, 97, 95};
+```
+
+
+
+You may also **omit** the size of the array, as shown −
+
+```c#
+int[] marks = new [] {99,  98, 92, 97, 95};
+```
+
+
+
+### [747. Largest Number At Least Twice of Others](https://leetcode-cn.com/problems/largest-number-at-least-twice-of-others/)
+
+
+You are given an integer array `nums` where the largest integer is **unique**.
+
+Determine whether the largest element in the array is **at least twice** as much as every other number in the array. If it is, return *the **index** of the largest element, or return* `-1` *otherwise*.
+
+ **Example 1:**
+
+```c#
+Input: nums = [3,6,1,0]
+Output: 1
+Explanation: 6 is the largest integer.
+For every other number in the array x, 6 is at least twice as big as x.
+The index of value 6 is 1, so we return 1.
+```
+
+**Example 2:**
+
+```c#
+Input: nums = [1,2,3,4]
+Output: -1
+Explanation: 4 is less than twice the value of 3, so we return -1.
+```
+
+**Example 3:**
+
+```c#
+Input: nums = [1]
+Output: 0
+Explanation: 1 is trivially at least twice the value as any other number because there are no other numbers.
+```
+
+
+
+<font size = 5> 我的代码 </font>
+
+```C#
+public class Solution {
+    public int DominantIndex(int[] nums) {
+        int len = nums.Length;
+        if(len <=1){
+            return 0;
+        }
+        //var newArr = nums;使用这种方法传值，sort之后num也会跟着被排序{0，1,3,6}
+        var newArr = new int[len];
+        nums.CopyTo(newArr,0);
+        Array.Sort(newArr);
+        Console.WriteLine(string.Join("\n",nums));
+        if(newArr[len-1] >= newArr[len-2]*2 ){
+            for(int i = 0; i < len; i++){
+                if(nums[i] ==newArr[len-1]){
+                   return i; 
+                }
+            }
+        }
+        return -1;  
+    }
+}
+```
+
+
+
+- 数值如果直接用=赋值，会发生值类型的改变，也就是一个地方发生的元素发生改变，另一个地方也随之变动；
+- 这时候需要使用array.CopyTo进行赋值。这牵涉到了**深拷贝**和**浅拷贝** ，需要到StackOverflow进一步学习；
+- 相比官方提供的[答案](https://leetcode-cn.com/problems/largest-number-at-least-twice-of-others/solution/zhi-shao-shi-qi-ta-shu-zi-liang-bei-de-z-985m/)，我这种写法时间是 O(n<sup>2</sup>logn);因此还需要进一步打磨； 
+
+
+
 ## Simulation and Matrix
 
 
@@ -1063,42 +1172,6 @@ public class Solution {
 
 
 ## Tow Pointers双指针
-
-### [C# array initialization](https://www.tutorialspoint.com/csharp/csharp_arrays.htm)
-
-An array stores a **fixed-size sequential collection** of elements of the same type.
-
-Declaring an array does not initialize the array in the memory. When the array variable is initialized, you can assign values to the array.
-
-Array is a reference type, so you need to use the **new** keyword to create an instance of the array. For example,
-
-```C#
-double[] balance = new double[10];
-```
-
-
-
-You can assign values to the array **at the time of declaration**, as shown −
-
-```C#
-double[] balance = {2340.0, 4523.69, 3421.0};
-```
-
-
-
-You can also **create and initialize** an array, as shown −
-
-```C#
-int[] marks = new int[5]{99,  98, 92, 97, 95};
-```
-
-
-
-You may also **omit** the size of the array, as shown −
-
-```c#
-int[] marks = new [] {99,  98, 92, 97, 95};
-```
 
 
 
