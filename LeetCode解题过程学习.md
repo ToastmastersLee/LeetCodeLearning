@@ -1913,6 +1913,53 @@ It's worth noting that this will break if any character other than `a-z` is pres
 
 
 
+#### `arr[i] - 0` [why subtract '0'?](https://stackoverflow.com/questions/21617298/c-array-push-why-subtract-0)
+
+
+
+The expression `c - '0'` is converting from the character representation of a number to the actual integer value of the same digit. For example it converts the char `'1'` to the int `1`
+
+I think it makes a bit more sense to look at complete examples here
+
+```c
+int charToInt(char c) { 
+  return c - '0';
+}
+
+charToInt('4') // returns 4
+charToInt('9') // returns 9 
+```
+
+
+
+It's not subtracting zero... It's subtracting the ASCII value of the character '0'.
+
+Doing so gives you an ordinal value for the digit, rather than its ASCII representation. In other words, it converts the characters '0' through '9' to the numbers 0 through 9, respectively.
+
+<img src="./img/asciifull.gif" alt="ASCII Table" style="zoom:102%;" /> 
+
+**'9'-'0' 就是 57-48 == 9**
+
+<img src="./img/image-20220118215915964.png" alt="image-20220118215915964" style="zoom:90%;" /> 
+
+
+
+**另外需要注意区分，这个十进制的9，对应的是 Horizontal Tab；而char=9,对应十进制是57：**
+
+<img src="./img/image-20220118220017642.png" alt="image-20220118220017642" style="zoom:80%;" /> 
+
+
+
+
+
+<img src="./img/image-20220118220402124.png" alt="image-20220118220402124" style="zoom: 50%;" /><img src="./img/image-20220118220455606.png" alt="image-20220118220455606" style="zoom: 50%;" /><img src="./img/image-20220118220333781.png" alt="image-20220118220333781" style="zoom: 50%;" />
+
+**Reference:**
+
+1. [C array push, why subtract '0'?](https://stackoverflow.com/questions/21617298/c-array-push-why-subtract-0)
+
+
+
 ####  [How to compare arrays in C#?](https://stackoverflow.com/questions/4423318/how-to-compare-arrays-in-c) 
 
 You can use the Enumerable.SequenceEqual() in the System.Linq to compare the contents in the array

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 
 namespace LeetCodeLearning11
@@ -20,9 +21,12 @@ namespace LeetCodeLearning11
 
              Console.WriteLine(retVal);*/
 
-            _306AddictiveNumber anumber = new _306AddictiveNumber();
-            var retVal = anumber.IsAdditiveNumber("199111992");//"199111992"  112358
-            Console.WriteLine(retVal);
+            //_306AddictiveNumber anumber = new _306AddictiveNumber();
+            //var retVal = anumber.IsAdditiveNumber("199111992");//"199111992"  112358
+            //Console.WriteLine(retVal);
+            _539MinimumTimeDifference mtf = new _539MinimumTimeDifference();
+            
+            mtf.FindMinDifference(new List<string>() { "23:59", "00:00" });
 
             Console.WriteLine("Hello World!");
         }
