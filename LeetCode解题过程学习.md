@@ -2400,6 +2400,12 @@ public class Solution {
 
 
 
+## 动态规划
+
+
+
+
+
 ## 常见单词记录
 
 
@@ -2425,7 +2431,7 @@ public class Solution {
 | [**canonical path**](https://leetcode-cn.com/problems/simplify-path/) | 规范路径 /  标准路径 / 正则路线                              |
 | **backtracking**<br />【ˈbæktrækɪŋ】                         | 回溯：<br />1. [Backtracking (Think Like a Programmer)](https://www.youtube.com/watch?v=gBC_Fd8EE8A)<br />2. [The Backtracking Blueprint: The Legendary 3 Keys To Backtracking Algorithms](https://www.youtube.com/watch?v=Zq4upTEaQyM) |
 | **[carry](https://leetcode-cn.com/problems/add-two-numbers/solution/liang-shu-xiang-jia-by-leetcode-solution/)**<br />【ˈkæri】 | 进位：to add a number to the next column on the left when adding up numbers, for example when the numbers add up to more than ten. |
-|                                                              |                                                              |
+| **game theory**                                              | the part of mathematics that deals with situations in which people compete with each other, for example war or business (博弈论；对策论) |
 
 
 
