@@ -1781,7 +1781,7 @@ public class Solution {
 
   因为尼玛的竟然有空字符串的情况：
 
-  <img src="F:\Lee\Githubs\LeetCodeLearning\img\image-20211220161809062.png" alt="image-20211220161809062" style="zoom: 67%;" />
+  <img src="./img/image-20211220161809062.png" alt="image-20211220161809062" style="zoom: 80%;" /> 
 
 
 
@@ -1791,11 +1791,11 @@ public class Solution {
         // 哈希集合，记录每个字符是否出现过
         //Hashset<char> cSet = new Hashset<char>();
         HashSet<char> cSet = new HashSet<char>();
-        int rk=-1;//右指针
+        int rk = -1;//右指针
         int ans = 0; //答案 answers
-        for (int i=0;i<s.Length;i++) //左指针
+        for (int i = 0;i < s.Length; i++) //左指针
         {
-            if(i!=0)
+            if(i != 0)
             {
                 // 左指针向右移动一格，移除一个字符
                 cSet.Remove(s[i-1]);
