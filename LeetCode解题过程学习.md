@@ -701,7 +701,7 @@ public class Solution {
 
 ## 哈希表 hash 
 
-### 13. Roman to Integer
+### [13. Roman to Integer](https://leetcode-cn.com/problems/roman-to-integer/)
 
 Roman numerals are represented by seven different symbols: `I`, `V`, `X`, `L`, `C`, `D` and `M`.
 
@@ -788,7 +788,61 @@ public class Solution {
 
 
 
+### [884. Uncommon Words from Two Sentences](https://leetcode-cn.com/problems/uncommon-words-from-two-sentences/)
 
+A **sentence** is a string of single-space separated words where each word consists only of lowercase letters.
+
+A word is **uncommon** if it appears exactly once in one of the sentences, and **does not appear** in the other sentence.
+
+Given two **sentences** `s1` and `s2`, return a list of all the **uncommon words**. You may return the answer in **any order**.
+
+ 
+
+Example 1:
+
+```c#
+Input: s1 = "this apple is sweet", s2 = "this apple is sour"
+Output: ["sweet","sour"]
+```
+
+Example 2:
+
+```c#
+Input: s1 = "apple apple", s2 = "banana"
+Output: ["banana"]
+```
+
+
+
+一开始审题不认真，以为只要取两个集合的**差集**就好了：
+
+```C#
+public class Solution {
+    public string[] UncommonFromSentences(string s1, string s2) {
+        string[] word1 = s1.Split(' ');
+        string[] word2 = s2.Split(' ');
+        var list1 = new List<string>();
+        var list2 = new List<string>();
+        foreach(var item in word1)
+        {
+            if(!list1.Contains(item)){
+                list1.Add(item);
+            }
+        }
+
+        foreach(var item in word2){
+            if(!list2.Contains(item)){
+                list2.Add(item);
+            }
+        }
+
+        var list3 = list2.Except(list1);
+        return list3.ToArray();
+    }
+}
+```
+
+<img src="./img/image-20220130225010600.png" alt="image-20220130225010600" style="zoom: 80%;" /> 
 
 
 
