@@ -846,6 +846,53 @@ public class Solution {
 
 
 
+<font size = 5> 参考代码 </font>
+
+```C#
+public class Solution {
+    public string[] UncommonFromSentences(string s1, string s2) {
+        Dictionary<string,int> dic = new Dictionary<string,int>();
+        InsertDic(s1,dic);
+        InsertDic(s2,dic);
+
+        var ans = new List<string>();
+        foreach(KeyValuePair<string,int> pair in dic){
+            if(pair.Value ==1){
+                ans.Add(pair.Key);
+            }
+        }
+        return ans.ToArray();
+    }
+
+    private void InsertDic(string s, Dictionary<string,int> dic){
+        var arr = s.Split(' ');
+        foreach(var item in arr){
+            if(!dic.ContainsKey(item)){
+                dic.Add(item,0);
+            }
+            dic[item]++;
+        }
+    }
+}
+```
+
+**KeyValuePair 和 Dictionary 的关系**
+
+- **KeyValuePair** 
+  - **KeyValuePair** 是一个结构体（struct）；
+  - **KeyValuePair** 只包含一个Key、Value的键值对。
+- **Dictionary** 
+      -  **Dictionary** 可以简单的看作是KeyValuePair 的集合；
+      -  **Dictionary** 可以包含多个Key、Value的键值对。
+
+
+
+#### C#下的HashTable ++效果
+
+<img src="./img/image-20220130232647364.png" alt="image-20220130232647364" style="zoom:67%;" /> <img src="./img/image-20220130232732885.png" alt="image-20220130232732885" style="zoom:67%;" />
+
+
+
 ## 字符串题
 
 
