@@ -893,6 +893,51 @@ public class Solution {
 
 
 
+
+
+### 1178. [Sum of Unique Elements](https://leetcode-cn.com/problems/sum-of-unique-elements/)
+
+You are given an integer array `nums`. The unique elements of an array are the elements that appear **exactly once** in the array.
+
+Return *the **sum** of all the unique elements of* `num`.
+
+**Example 1:**
+
+```c#
+Input: nums = [1,2,3,2]
+Output: 4
+Explanation: The unique elements are [1,3], and the sum is 4.
+```
+
+
+
+**Code**
+
+```C#
+public class Solution {
+    public int SumOfUnique(int[] nums) {
+        //var arrNums = nums.Split(',');
+        var dic = new Dictionary<int,int>();
+        foreach(var item in nums){
+            if(!dic.ContainsKey(item)){
+                //dic.Add(item,1);
+                dic.Add(item,0);
+            }
+            dic[item]++;
+        }
+        int ans = 0;
+        foreach(KeyValuePair<int,int> pair in dic){
+            if(pair.Value == 1){
+                ans += pair.Key;
+            }
+        }
+        return ans;
+    }
+}
+```
+
+
+
 ## 字符串题
 
 
