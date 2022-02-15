@@ -525,14 +525,13 @@ Tips:
 
 
 
-
-
 #### 二维数组常识: x轴 = row; y 轴 = column
 
 新建一个二位数值
 
 ```c#
 int[][] ans = new int[m][];//定义一个 m(=2) 维的数组, 即指定 y 轴 (column) 为 m;
+如果定义一个三维数组，则 int[][] ans = new int[3][];//? 待验证
 ```
 
 <img src="./img/image-20220101210802819.png" alt="image-20220101210802819" style="zoom: 67%;" />
@@ -545,17 +544,17 @@ The following example assigns a value to a particular array element.
 array5[2, 1] = 25;
 ```
 
+
+
 Similarly, the following example gets the value of a particular array element and assigns it to variable `elementValue`.
-
-
 
 ```csharp
 int elementValue = array5[2, 1];
 ```
 
+
+
 The following code example initializes the array elements to default values (except for jagged arrays).
-
-
 
 ```csharp
 int[,] array6 = new int[10, 10];
@@ -581,11 +580,11 @@ Copies a range of elements from an [Array](https://docs.microsoft.com/en-us/dotn
 
 **Parameters Desc:**
 
-     1. **sourceArray**: The Array that contains the data to copy.
-     1. **sourceIndex**: A 32-bit integer that represents the index in the sourceArray at which copying begins.
-     1. **destinationArray**: The Array that receives the data.
-     1. **destinationIndex**: A 32-bit integer that represents the index in the destinationArray at which storing begins.
-     1. **length**: A 32-bit integer that represents the number of elements to copy.
+1. **sourceArray**: The Array that contains the data to copy.
+ 1. **sourceIndex**: A 32-bit integer that represents the index in the sourceArray at which copying begins.
+ 1. **destinationArray**: The Array that receives the data.
+ 1. **destinationIndex**: A 32-bit integer that represents the index in the destinationArray at which storing begins.
+ 1. **length**: A 32-bit integer that represents the number of elements to copy.
 
 
 
@@ -640,7 +639,7 @@ Array.Copy(original,2,ans[1],0,2);
 如果是一维数组的情况：
 
 ```c#
-// original = [1,2,3], m = 1, n = 3
+  // original = [1,2,3], m = 1, n = 3
   /*
   第一次i=0； 
   第二次i= i+n = 0+3 = 3,则 3 < 3 为 false,跳出 for 循环
