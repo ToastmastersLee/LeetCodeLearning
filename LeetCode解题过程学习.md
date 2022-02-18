@@ -534,7 +534,7 @@ int[][] ans = new int[m][];//定义一个 m(=2) 维的数组, 即指定 y 轴 (c
 如果定义一个三维数组，则 int[][] ans = new int[3][];//? 待验证
 ```
 
-<img src="./img/image-20220101210802819.png" alt="image-20220101210802819" style="zoom: 67%;" />
+<img src="./img/image-20220101210802819.png" alt="image-20220101210802819" style="zoom: 67%;" /> 
 
 
 
@@ -560,9 +560,97 @@ The following code example initializes the array elements to default values (exc
 int[,] array6 = new int[10, 10];
 ```
 
-<img src="./img/image-20220101211416517.png" alt="image-20220101211416517" style="zoom: 67%;" />
+<img src="./img/image-20220101211416517.png" alt="image-20220101211416517" style="zoom: 67%;" /> 
 
-<img src="./img/image-20220101211558239.png" alt="image-20220101211558239" style="zoom:67%;" />
+<img src="./img/image-20220101211558239.png" alt="image-20220101211558239" style="zoom:67%;" /> 
+
+
+
+
+
+### Jagged array v.s Multidimensional array
+
+<img src="./img/image-20220218170945130.png" alt="image-20220218170945130" style="zoom:67%;" /> 
+
+> The whole point of a jagged array is that the "nested" arrays needn't be of uniform size
+
+1. What is the difference between jagged array and Multidimensional array. Is there a benefit of one on another?
+
+2. And why would the Visual Studio not allow me to do a
+
+   ```c#
+   MyClass[][] abc = new MyClass[10][20];
+   ```
+
+   (We used to do that in C++, but in C# it underlines [20] with red wriggly line.. Says invalid rank specifier)
+
+   but is happy with
+
+   ```c#
+   MyClass[,] abc = new MyClass[10,20];
+   ```
+
+3. Finally how can I initialize this in a single line (like we do in simple array with `{new xxx...}{new xxx....}`)
+
+   ```c#
+   MyClass[][,][,] itemscollection;
+   ```
+
+
+
+**回答**：
+
+1. A jagged array is an array-of-arrays, so an `int[][]` is an array of `int[]`, each of which can be of different lengths and occupy their own block in memory. A multidimensional array (`int[,]`) is a single block of memory (essentially a matrix).
+
+   > 锯齿状数组是 ***数组的数组***，因此，`int[][]`是`int[]`的数组，每个数组可以有不同的长度，并在内存中占据各自的块。多维数组（`int[，]`）是单个内存块（本质上是一个矩阵）
+
+2. You can't create a `MyClass[10][20]` because each sub-array has to be initialized separately, as they are separate objects:
+
+   > 无法创建“MyClass\[10][20]”，因为每个子数组都必须单独初始化，因为它们是单独的对象：
+
+   ```cs
+   MyClass[][] abc = new MyClass[10][];
+   
+   for (int i=0; i<abc.Length; i++) {
+       abc[i] = new MyClass[20];
+   }
+   ```
+
+   A `MyClass[10,20]` is ok, because it is initializing a single object as a matrix with 10 rows and 20 columns.
+
+   > “MyClass[10,20]”是可以的，因为它将单个对象初始化为10行20列的矩阵。
+
+3. A `MyClass[][,][,]` can be initialized like so (not compile tested though):
+
+   ```cs
+   MyClass[][,][,] abc = new MyClass[10][,][,];
+   
+   for (int i=0; i<abc.Length; i++) {
+       abc[i] = new MyClass[20,30][,];
+   
+       for (int j=0; j<abc[i].GetLength(0); j++) {
+           for (int k=0; k<abc[i].GetLength(1); k++) {
+               abc[i][j,k] = new MyClass[40,50];
+           }
+       }
+   }
+   ```
+
+Bear in mind, that the CLR is heavily optimized for single-dimension array access, so using a jagged array will likely be faster than a multidimensional array of the same size.
+
+> 请记住，CLR针对一维数组访问进行了大量优化，因此使用交错数组可能比使用相同大小的多维数组更快。
+
+
+
+-  A jagged array (`int[][]`): it is an array of arrays. The child array at `arr[0]` can be a different length to the array at `arr[1]`.
+- A 2d array. The dimensions are ***pre-defined*** and the length of ***the second bound never changes*** based on the first.
+
+
+
+**Reference:**
+
+- [Why we have both jagged array and multidimensional array?](https://stackoverflow.com/questions/4648914/why-we-have-both-jagged-array-and-multidimensional-array)
+- [Argument 1: Cannot convert from 'int[\][]' to 'int[*,*]' [duplicate]](https://stackoverflow.com/questions/57346143/argument-1-cannot-convert-from-int-to-int)
 
 
 
@@ -702,7 +790,7 @@ public class Solution {
 
 
 
-### 1791. Find Center of Star Graph
+### [1791. Find Center of Star Graph](https://leetcode-cn.com/problems/find-center-of-star-graph/)
 
 There is an undirected **start** graph consisting of  `n`  nodes labeled from `1` to `n`. A star graph is a graph where there is one **center** node and **exactly** `n-1` edges that connected the center node with every other node.
 
@@ -734,6 +822,97 @@ Output: 1
 - The center is the only node that has more than one edge.
 - The center is also connected to all other nodes.
 - Any two edges must have a common node, which is the center.
+
+
+
+
+
+#### 方法一：计算每个节点的度
+
+由 `n` 个节点组成的星型图中，有一个中心节点，有 `n−1` 条边分别连接中心节点和其余的每个节点。因此，中心节点的度是`n−1`，其余每个节点的度都是 `1`。
+
+> 一个节点的**度**的含义是与**该节点相连的边数**。
+
+遍历 *edges* 中的每条边并计算每个节点的度，度为 *n−1* 的节点即为中心节点。
+
+
+
+```c#
+public class Solution{
+    public int FindCenter(int[][] edges){
+        int n = edges.Lenght + 1; //要加1 ，否则会数组越界
+        int[] degrees = new int[n + 1];
+        foreach(int[] edge in edges){
+            degrees[edges[0]]++
+        }
+    }
+}
+```
+
+
+
+**自测代码：**
+
+```C#
+    public int FindCenter()
+    {
+        int[][] edges = new int[3][];
+        edges[0] = new int[] { 1, 2 };
+        edges[1] = new int[] { 2, 3 };
+        edges[2] = new int[] { 4, 2 };
+
+        int n = edges.Length + 1;
+        int[] degree = new int[n + 1];
+        foreach (var edge in edges)
+        {
+            degree[edge[0]]++;
+            degree[edge[1]]++;
+        }
+        for (int i = 0; ; i++)
+        {
+            if (degree[i] == n - 1)
+            {
+                return i;
+            }
+        }
+    }
+```
+
+-  这里难点是如何构建Jagged Array数组。查了[StatckOverflow](https://stackoverflow.com/questions/4648914/why-we-have-both-jagged-array-and-multidimensional-array),花了下一下才大概搞懂jagged array和multi-dimensional array的差别。
+- 一开始始终无法理解为什么是 **edge[0]**和**edge[1]**；直接debugger进行才知道 **`edges`**被 `foreach` 之后，里面的每项 item 都是两两构成的一个数组，也就是题目里提到的 **[u<sub>i</sub>,v<sub>i</sub>]**.
+- 今日这题的简单题用去了我一个下午 2022年2月18日17:41:21
+
+
+
+ **Round 1:** 
+
+```c#
+edge[0] = 1
+edge[1] = 2
+
+    degree[1]++
+    degree[2]++
+```
+
+**Round 2:** 
+
+```c#
+edge[0] = 2
+edge[1] = 3
+
+    degree[2]++
+    degree[3]++
+```
+
+**Round 3:** 
+
+```C#
+edge[0] = 4
+edge[1] = 2
+
+    degree[4]++
+    degree[2]++
+```
 
 
 
