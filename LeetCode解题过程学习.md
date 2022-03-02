@@ -843,7 +843,13 @@ public class Solution{
         int n = edges.Lenght + 1; //要加1 ，否则会数组越界
         int[] degrees = new int[n + 1];
         foreach(int[] edge in edges){
-            degrees[edges[0]]++
+            degrees[edges[0]]++;
+            degrees[edges[1]]++;
+        }
+        for(int i=0; ; i++){
+            if(degree[i] == n-1){
+                return i;
+            }
         }
     }
 }
