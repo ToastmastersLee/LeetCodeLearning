@@ -1229,6 +1229,46 @@ public class Solution {
 
 
 
+### [953. Verifying an Alien Dictionary](https://leetcode.cn/problems/verifying-an-alien-dictionary/)
+
+In an alien language, surprisingly, they also use English lowercase letters, but possibly in a different order. The order of the alphabet is some permutation of lowercase letters.
+
+Given a sequence of words written in the alien language, and the order of the alphabet, return true if and only if the given words are sorted lexicographically in this alien language.
+
+
+
+**Example 1:**
+
+```python
+Input: words = ["hello","leetcode"], order = "hlabcdefgijkmnopqrstuvwxyz"
+Output: true
+Explanation: As 'h' comes before 'l' in this language, then the sequence is sorted.
+```
+
+**Example 2:**
+
+```python
+Input: words = ["word","world","row"], order = "worldabcefghijkmnpqstuvxyz"
+Output: false
+Explanation: As 'd' comes after 'l' in this language, then words[0] > words[1], hence the sequence is unsorted.
+```
+
+**Example 3:**
+
+```python
+Input: words = ["apple","app"], order = "abcdefghijklmnopqrstuvwxyz"
+Output: false
+Explanation: The first three characters "app" match, and the second string is shorter (in size.) According to lexicographical rules "apple" > "app", because 'l' > '∅', where '∅' is defined as the blank character which is less than any other character (More info).
+```
+
+
+
+<img src="./img/1652718825-AjQPiY-image.png" alt="image.png" style="zoom: 40%;" /> 
+
+
+
+ 
+
 ## Stack
 
 
@@ -2258,7 +2298,7 @@ Output: false
 
 
 
-#### `char[i] - a`: What does substracting a char by a char mean?
+#### `char[i] - a`: What does substracting a char by a char mean? (ASCII码)
 
 The goal is count the occurrences of each character.
 
@@ -2268,9 +2308,36 @@ c - 'a'
 
 is a kind of clever way to get the position of the character in the alphabet. `'a' - 'a'` would give you 0. `'b' - 'a'` would give you 1. `'c' - 'a'` would give you 2, and so on.
 
-That value is used as an index into the array (which as you correctly stated is initialised with zeros) and the count is incremented.
+That value is used as an index into the array (which as you correctly stated is initialized with zeros) and the count is incremented.
 
 It's worth noting that this will break if any character other than `a-z` is present in the string (including uppercase characters), and you'd see an [`IndexOutOfBoundsException`](https://docs.oracle.com/javase/9/docs/api/java/lang/IndexOutOfBoundsException.html)
+
+
+
+还用到[这题](https://leetcode.cn/problems/verifying-an-alien-dictionary/solution/yan-zheng-wai-xing-yu-ci-dian-by-leetcod-jew7/)：
+
+<img src="./img/image-20220517111121285.png" alt="image-20220517111121285" style="zoom:80%;" /> 
+
+```c#
+string order = "leewa";
+int[] index = new int[26];
+for (int i = 0; i < order.Length; ++i) {
+    index[order[i] - 'a'] = i;
+}
+//这段代码我在2022年5月17日10:44:09间隔4个月后重新去刷LeetCode已经看不大懂，只能使用Debugger调试看一遍：
+```
+
+
+
+| [i]      | order[i] | order[i] - 'a'        | Index[order[i] - 'a']      |
+| -------- | -------- | --------------------- | -------------------------- |
+| order[0] | 108 'l'  | 108 'l' - 97 'a' = 11 | index[11] = **0** (不是1)  |
+| order[1] | 101 'e'  | 101 'e' - 97 'a' = 4  | index[4] = 1               |
+| order[2] | 101 'e'  | 101 'e' - 97 'a' = 4  | index[4] = **2** （不是1） |
+| order[3] | 119 'w'  | 110 'w' - 97 'a' = 22 | index[22] = **3**          |
+| order[4] | 97 'a'   | 97 'a' -97 'a' = 0    | index[0] = **4**           |
+
+- 请注意不要出现大写字母，否则就会出现数组越界，比如出现'W'，对应的ASCII码是 87， 那么 87 W’ - 97 ‘a' = - 10. Index[-10]出现编译报错。
 
 
 
@@ -2279,8 +2346,6 @@ It's worth noting that this will break if any character other than `a-z` is pres
 1. [Java: What does subtracting a char by a char mean?](https://stackoverflow.com/questions/48424217/java-what-does-subtracting-a-char-by-a-char-mean)
 
    
-
-
 
 #### `arr[i] - 0` [why subtract '0'?](https://stackoverflow.com/questions/21617298/c-array-push-why-subtract-0)
 
@@ -2771,47 +2836,4 @@ public class Solution {
 
 ## 动态规划
 
-
-
-
-
-## 常见单词记录
-
-
-
-| 单词                                                         | 解释                                                         |
-| ------------------------------------------------------------ | ------------------------------------------------------------ |
-| **Substring** <br />**Subsequence**                          | "**`pwwkew`**"：`wke` be a **substring** of `pwwkew`,  whereas "`pwke`" is a **subsequence** and not a substring toward `pwwkew`.<br />**substring**： （字符串的）子串<br />**subsequence**: (字符串的) 子序。<br />这两个概念在《算法图解》9.3讲解动态规划（Dynamic Programming)的时候 |
-| **Dynamic Programming**                                      | [Dynamic Programming](https://www.interviewbit.com/courses/programming/topics/dynamic-programming/) (commonly referred to as DP) is an algorithmic technique for solving a problem by **recursively** breaking it down into simpler subproblems and using the fact that the optimal solution to the overall problem depends upon the optimal solution to it’s individual subproblems. |
-| **in-place**                                                 | adv： 部署（放置）适当的；就地；原状；在位<br />[In-place algorithm](https://en.wikipedia.org/wiki/In-place_algorithm): In [computer science](https://en.wikipedia.org/wiki/Computer_science), an **in-place algorithm** is an [algorithm](https://en.wikipedia.org/wiki/Algorithm) which transforms input using no auxiliary [data structure](https://en.wikipedia.org/wiki/Data_structure). |
-| **permutation**<br />【ˌpɜːrmjuˈteɪʃn】                      | per-完全 + mut-改变 + -ation表名词，***是单词 permute 派生的名词***。<br />**`per-`** <br/>表示“完全，贯穿，自始至终，向前”。forth, ford 是其同源词。<br/>**`mute-`** <br/>= change, 表示“改变、交换”。源自拉丁语 mutare "to change." |
-| **[indices](https://leetcode-cn.com/problems/two-sum-ii-input-array-is-sorted/)**<br />【ˈɪndɪsiːz】 | [Indices](https://www.collinsdictionary.com/zh/dictionary/english/index) is a [plural](https://www.collinsdictionary.com/zh/dictionary/english/plural) form of [index](https://www.collinsdictionary.com/zh/dictionary/english/index). |
-| **sorted (in)**                                              | **[sorted in non-decreasing order](https://leetcode-cn.com/problems/two-sum-ii-input-array-is-sorted/)**： 按照非递减**排序** |
-| **D&C**                                                      | Divide and conquer: 分而治之,一种著名的递归式问题解决方法:<br />1. 找出简单的极限条件；<br />2. 确定如何缩小问题的规模，使其符合基线条件。 |
-| **divisor**<br />【dɪˈvaɪzər】                               | A **[divisor](https://leetcode-cn.com/problems/perfect-number/)** of an integer `x` is an integer that can divide `x` evenly.<br />除数;除子<br />***When you [divide](https://dictionary.cambridge.org/zhs/词典/英语-汉语-简体/divide) 21 by 7, 7 is the divisor.*** |
-| **factor**                                                   | 因子;因数; a number that divides into another number exactly<br />***1, 2, 3, 4, 6 and 12 are the factors of 12.*** |
-| [**prime factor**](https://leetcode-cn.com/problems/ugly-number-ii/) | [质因数](https://www.mathsisfun.com/definitions/prime-factor.html): A factor that is a prime number.<br />In other words: any of the prime numbers that can be multiplied to give the original number.<br />Example: The prime factors of 15 are 3 and 5 (because 3×5=15, and 3 and 5 are prime numbers).<br /><img src="./img/factor-2x3.svg" alt="Prime Factor" style="zoom:90%;" /> |
-| [**prime number**](https://www.mathsisfun.com/definitions/prime-number.html) | prime number**素数**（也叫**质数**），指只能被1和自身整除且大于1的自然数。A whole number above 1 that can **not** be made by multiplying other whole numbers.<br /><img src="./img/prime-composite.svg" alt="Prime Number" style="zoom:80%;" /><br /><br />词根prim与first同源，意思就是最初的、开始的。其应用于数学概念开始于1560年。我们最为熟悉的应该就是primary school小学和prime minister首相；总理这两个例子了。<br />人是primate灵长类动物是因为你我在哺乳动物中first in order。 |
-| [perfect number](https://leetcode-cn.com/problems/perfect-number/) | A [perfect number](https://en.wikipedia.org/wiki/Perfect_number) is a positive integer that is equal to the sum of its positive divisors, excluding the number itself. <br />对于一个 **正整数**，如果它和除了它自身以外的所有 **正因子** 之和相等，我们称它为 「完美数」。<br />eg：28 = 1 + 2 + 4 + 7 + 14 <br />1, 2, 4, 7, 和 14 是 28 的所有正因子。那么28是个完美数 |
-| [ugly number](https://leetcode-cn.com/problems/ugly-number-ii/) | An ugly number is a positive integer whose **prime factors** are limited to 2, 3, and 5. |
-| [Afterward](https://leetcode-cn.com/problems/elimination-game/) | Starting from left to right, remove the first number and every other number **afterward** until you reach the end of the list.<br />从左到右，删除第一个数字，然后**每隔**一个数字删除一个，直到到达列表末尾。<br />f you do something or if something happens **afterward**, you do it or it happens after a particular event or time that has already been mentioned. (某事件、某时间) 之后 |
-| **operand**<br />【ˈɑːpərænd】                               | (mathematics) the number on which an operand is to be done. **操作数**；运算数<br /><br />The left-shift operator (<<) shifts its first **operand** left by the number of bits specified by its second **operand**. (左移操作符(<<)将其第一个操作数向左移动其第二个操作数指定的位数。) <br />`<<` 运算符将其左侧操作数向左移动[右侧操作数定义的位数](https://docs.microsoft.com/zh-cn/dotnet/csharp/language-reference/operators/bitwise-and-shift-operators#shift-count-of-the-shift-operators)。<br />eg.`step = step << 2` |
-| **left-shift operator**                                      | <img src="./img/300px-Rotate_left_logically.svg.png" alt="alt text" style="zoom:80%;" /> |
-| [**canonical path**](https://leetcode-cn.com/problems/simplify-path/) | 规范路径 /  标准路径 / 正则路线                              |
-| **backtracking**<br />【ˈbæktrækɪŋ】                         | 回溯：<br />1. [Backtracking (Think Like a Programmer)](https://www.youtube.com/watch?v=gBC_Fd8EE8A)<br />2. [The Backtracking Blueprint: The Legendary 3 Keys To Backtracking Algorithms](https://www.youtube.com/watch?v=Zq4upTEaQyM) |
-| **[carry](https://leetcode-cn.com/problems/add-two-numbers/solution/liang-shu-xiang-jia-by-leetcode-solution/)**<br />【ˈkæri】 | 进位：to add a number to the next column on the left when adding up numbers, for example when the numbers add up to more than ten. |
-| **game theory**                                              | the part of mathematics that deals with situations in which people compete with each other, for example war or business (博弈论；对策论) |
-
-
-
-**backtracking** 【ˈbæktrækɪŋ】
-
-1. If you **backtrack on** a statement or decision you have made, you do or say something that shows that you no longer agree with it or support it. （改变（说法、决定等）；出尔反尔）
-   - The committee backtracked by scrapping **[ˈskræpɪŋ]** the controversial bonus system （委员会改变主意，放弃了有争议的奖金制度。）
-   - Some backtracking is probably inevitable... （有时改变决定可能是不可避免的。）
-   - He promised there would be no backtracking on policies. （他承诺政策不会出尔反尔。）
-2. If you **backtrack**, you go back along a path or route you have just used.（ 原路返回）
-   - Leonard jumped in his car and started backtracking.（伦纳德跳进车里，开始原路折返。）
-3. If you **backtrack** in an account or explanation, you talk about things which happened before the ones you were previously talking about. （ 倒回（描述或解释内容））
-   - Can we just backtrack a little bit and look at your primary and secondary education? （我们能不能回过头来谈谈你的小学和中学教育？）
 

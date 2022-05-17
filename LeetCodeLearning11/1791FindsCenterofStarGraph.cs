@@ -4,8 +4,10 @@ using System.Text;
 
 namespace LeetCodeLearning11
 {
+    
     public class _1791FindsCenterofStarGraph
     {
+        public static string aaa;
         //[[1,2],[2,3],[4,2]]
         // int[,] numbers = { {1, 2}, {3, 4}, {5, 6} };
         /*

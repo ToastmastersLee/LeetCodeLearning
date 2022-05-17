@@ -28,9 +28,17 @@ namespace LeetCodeLearning11
 
             //mtf.FindMinDifference(new List<string>() { "23:59", "00:00" });
 
-            _1791FindsCenterofStarGraph test1 = new _1791FindsCenterofStarGraph();
-            var retVal =  test1.FindCenter();
-            Console.WriteLine(retVal);
+            //_1791FindsCenterofStarGraph test1 = new _1791FindsCenterofStarGraph();
+            //var retVal =  test1.FindCenter();
+            //Console.WriteLine(retVal);
+
+
+            string order = "leewa";
+            int[] index = new int[26];
+            for (int i = 0; i < order.Length; ++i)
+            {
+                index[order[i] - 'a'] = i;
+            }
 
             Console.WriteLine("Hello World!");
         }
