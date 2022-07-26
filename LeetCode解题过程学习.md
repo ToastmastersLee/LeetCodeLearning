@@ -1616,6 +1616,7 @@ public class Solution {
 - 更像是一种编程技巧而非“算法”
 - 利用问题本身所给定的序列特性（升序 or 降序）
 - 使用两个下标（指针）对序列进行扫描，可以通向扫描，亦可反向（一指针从队头扫到队尾，另一指针从队尾扫到对头）
+- 双指针对有序数组，字符串的问题特别有用
 
 
 
@@ -1826,11 +1827,26 @@ Explanation: The sum of 2 and 7 is 9. Therefore, index1 = 1, index2 = 2. We retu
 
 
 
+**答案(Python3)**
 
+```python
+class Solution:
+    def twoSum(self, numbers: List[int], target: int) -> List[int]:
+        left, right = 0, len(numbers) -1 #初始化，left指向首元素，right指向末元素
+        while left <= right: #控制循环退出条件
+            sum = numbers[left] + numbers[right]
+            if sum == target:
+                return [left + 1, right + 1]
+            elif sum < target:
+                left += 1
+            else:
+                right -= 1
+        return [-1, -1]
 
+```
 
-
-
+- 空间复杂度： 只需要使用常数个局部变量，复杂度为 O（1）
+- 时间复杂度：使用双指针，总共只对数组进行了一次遍历，故时间复杂度为 O(n)。
 
 
 
