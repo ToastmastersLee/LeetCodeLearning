@@ -1611,72 +1611,226 @@ public class Solution {
 
 ## Tow Pointers双指针
 
+双指针的本质：
 
-
-### 977. Squares of a sorted array
-
-| Title                                                        | Type         | Date      |
-| ------------------------------------------------------------ | ------------ | --------- |
-| [977. Squares of a Sorted Array](https://leetcode-cn.com/problems/squares-of-a-sorted-array/) | Tow Pointers | 2021-12-3 |
-
-
-
-<font size=5> 解题思路 </font>
-
-数组其实是有序的， 只不过负数平方之后可能成为最大数了。
-
-那么数组平方的最大值就在数组的两端，不是最左边就是最右边，不可能是中间。
-
-此时可以考虑双指针法了，i指向起始位置，j指向终止位置。
-
-定义一个新数组result，和A数组一样的大小，让k指向result数组终止位置。
-
-如果`A[i] * A[i] < A[j] * A[j]` 那么`result[k--] = A[j] * A[j];` 。
-
-如果`A[i] * A[i] >= A[j] * A[j]` 那么`result[k--] = A[i] * A[i];` 。
-
-- [Reference](https://leetcode-cn.com/problems/squares-of-a-sorted-array/comments/) 
+- 更像是一种编程技巧而非“算法”
+- 利用问题本身所给定的序列特性（升序 or 降序）
+- 使用两个下标（指针）对序列进行扫描，可以通向扫描，亦可反向（一指针从队头扫到队尾，另一指针从队尾扫到对头）
 
 
 
-<font size=5>算法图解</font>
+### 19. [Remove nth node from end of list](https://leetcode-cn.com/problems/remove-nth-node-from-end-of-list/)
 
-![img](./img/Squares_of_a_sorted_array.gif)
+Given the **`head`** of a linked list, remove the **n<sup>th</sup>** node from the list and return its head.
+
+给你一个链表（上的head节点），删除链表的倒数第 `n` 个结点，并且返回链表的头结点。
+
+**Example 1:**
+
+<img src="./img/image-20211213115333648.png" alt="image-20211213115333648" style="zoom:50%;" />
+
+```c#
+Input: head = [1,2,3,4,5], n = 2
+Output: [1,2,3,5]
+```
+
+**Example 2:**
+
+```c#
+Input: head = [1], n = 1
+Output: []
+```
+
+**Example 3:**
+
+```c#
+Input: head = [1,2], n = 1
+Output: [1]
+```
+
+
+
+#### Dummy node
+
+在对链表进行操作时，一种常用的技巧是添加一个[哑节点](https://leetcode-cn.com/problems/remove-nth-node-from-end-of-list/solution/shan-chu-lian-biao-de-dao-shu-di-nge-jie-dian-b-61/)（**dummy node**），它的**next** 指针指向链表的头节点。这样一来，我们就不需要对头节点进行特殊的判断了。
+
+例如，在本题中，如果我们要删除节点 **y**，我们需要知道节点 **y** 的前驱节点 **x**，并将 **x** 的指针指向 **y** 的后继节点。但由于头节点不存在前驱节点，因此我们需要在删除头节点时进行特殊判断。但如果我们添加了哑节点，那么头节点的前驱节点就是哑节点本身，此时我们就只需要考虑通用的情况即可。
+
+> 特别地，在某些语言中，由于需要自行对内存进行管理。因此在实际的面试中，对于「是否需要释放被删除节点对应的空间」这一问题，我们需要和面试官进行积极的沟通以达成一致。下面的代码中默认不释放空间。
+
+
+
+<font size=5>双指针</font>
+
+
+
+我们也可以在不预处理出链表的长度，以及使用常数空间的前提下解决本题。
+
+由于我们需要找到倒数第 $n$ 个节点，因此我们可以使用两个指针 **first** 和 **second** 同时对链表进行遍历，并且**first** 比 **second**超前 **n** 个节点。当 **first** 遍历到链表的末尾时，**second** 就恰好处于倒数第 **n** 个节点。
+
+具体地，初始时**first** 和 **second** 均指向头节点。我们首先使用 **first** 对链表进行遍历，遍历的次数为 **n**。此时，**first** 和 **second** 之间间隔了 $n−1$ 个节点，即 **first** 比 **second** 超前了 **n** 个节点。
+
+<img src="./img/cc43daa8cbb755373ce4c5cd10c44066dc770a34a6d2913a52f8047cbf5e6e56-file_1559548337458" alt="img" style="zoom: 50%;" />
+
+> 这个[动画](https://leetcode-cn.com/problems/remove-nth-node-from-end-of-list/solution/dong-hua-tu-jie-leetcode-di-19-hao-wen-ti-shan-chu/)实在是神来之笔
+
+因此我们可以考虑在初始时将 **second** 指向哑节点，其余的操作步骤不变。这样一来，当**first** 遍历到链表的末尾时，**second** 的下一个节点就是我们需要删除的节点。
+
+<img src="./img/p3.png" alt="p3" style="zoom:67%;" />
 
 
 
 <font size=5>参考代码</font>
 
-```C#
+```c#
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     public int val;
+ *     public ListNode next;
+ *     public ListNode(int val=0, ListNode next=null) {
+ *         this.val = val;
+ *         this.next = next;
+ *     }
+ * }
+ */
 public class Solution {
-    public int[] SortedSquares(int[] nums) {
-    	//i 是数组开头位置， j是数组结尾位置， pos是返回的数组在当前循环内最大的数组
-     	int i = 0, j = nums.Length -1, pos = nums.Length -1;
-     
-    	// int[] ans = new int[nums.Length-1]; // 数组越界！
-   		int[] ans = new int[nums.Length];
-   		// while(i<j)  [-7,-3,2,3,11] => [0,9,9,49,121]
-        while(i<=j)
-        {
-             if(nums[i] * nums[i] > nums[j] * nums[j])
-             {
-                 ans[pos] = nums[i] * nums[i];
-                 //确认了是i最大，因此移动i指针到下一位进行比较
-                i++;
-             }
-             else
-             {
-                 ans[pos] = nums[j] * nums[j];
-                 //反之，如果确认是j更大，把更大的值赋予ans数组的最大位(pos),并且修改j指针的位置
-                 j--;
-             }
-             //every iterated, need to change the pointer of pos(self minus) 
-             pos-- ;
-         }
-         return ans;
+    public ListNode RemoveNthFromEnd(ListNode head, int n) {
+        /*往head上链表上插入全新的一个节点，生成一个全新的链表dummyList
+        该dummyList有两个作用，一个是赋予second指针删除节点用，
+        另一个是把删除过后的链表返回给方法*/
+        ListNode dummyList = new ListNode(0,head);
+        /*head是head，和dummyList是独立的两条链表，
+        但是这样子无法解释该算法的空间复杂度为O（1）*/
+        ListNode first = head;
+        ListNode second = dummyList;
+        for(int i=0;i<n;i++){ //先移动first指针往前n步
+            first = first.next;
+        }
+        while(first!=null){
+            first=first.next;
+            second=second.next;
+        }
+        second.next=second.next.next;
     }
 }
 ```
+
+- 我对链表模型上可以理解，但是无法解释代码执行情况，说明还未彻底理解；（中文翻译也有点误导）。
+-   `ListNode dummyList = new ListNode(0,head);`究竟是产生了一个全新的链表`dummyList`,还是只是产生一个新的节点？我在这两个认知中反复横条；
+- 我是在尝试写备注，把每一句执行的过程记录下来的过程中发现了问题，才开始反思，否则就这样稀里糊涂过了，所以上面的备注随后以后追溯看起来很会很funny，不过这确实是一个过程，也确实是发现问题的关键所在，值得记录下来为后续的难题记录提供参考。
+- 从字面意识上看 `dummyList`其实是一个节点，因为其类型是`ListNode`,而不是 `ListNode[]` 这样的东西；
+- 由于我未能彻底理解`LinkedList`的结构，在**LeetCode**给出的有限的代码下做错误的理解，因此导致每次写代码都需要看提示。于是我就参考[Implementing Linked List In C#](https://www.c-sharpcorner.com/article/linked-list-implementation-in-c-sharp/)和[LinkedList<T> Class](https://docs.microsoft.com/en-us/dotnet/api/system.collections.generic.linkedlist-1?view=net-6.0)两片文章做进一步了解。
+- 有时候编程需要深入了解才能彻底掌握，急不得，也不要急，大不了**LeetCode**代码多抄写几次，然后先卡在这些题目上几天、几个礼拜。每日的坚持比刷进度，从长远来看，更有效。
+
+
+
+<font size=5>正确代码</font>
+
+```C#
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     public int val;
+ *     public ListNode next;
+ *     public ListNode(int val=0, ListNode next=null) {
+ *         this.val = val;
+ *         this.next = next;
+ *     }
+ * }
+ */
+public class Solution {
+    public ListNode RemoveNthFromEnd(ListNode head, int n) {
+        /*往链表上新增一个DummyNode节点*/
+        ListNode dummyNode = new ListNode(0,head);
+        ListNode first = head;
+        ListNode second = dummyNode;
+        for(int i=0;i<n;i++){ //先移动first指针往前n步
+            first = first.next;
+        }
+        while(first!=null){
+            first=first.next;
+            second=second.next;
+        }
+        //改变链表上的要删除的N点的前驱节点的后驱指针指向的位置
+        second.next=second.next.next;
+        //把哑节点的下一个节点（亦即head节点）传递给ans
+        ListNode ans = dummyNode.next;
+        return ans;
+    }
+}
+```
+
+
+
+
+
+### 27. Remove Element
+
+| Title                                                        | Type         | Date      |
+| ------------------------------------------------------------ | ------------ | --------- |
+| [27. Remove Element](https://leetcode-cn.com/problems/remove-element/) | Tow Pointers | 2021-12-5 |
+
+<font size=5>题目</font>
+
+Given an integer array `nums` and an integer `val`, remove all occurrences of `val` in `nums` [in-place](https://en.wikipedia.org/wiki/In-place_algorithm). The relative order of the elements may be changed.
+
+Since it is impossible to change the length of the array in some languages, you must instead have the result be placed in the **first part** of the array `nums`. More formally, if there are `k` elements after removing the duplicates, then the first `k` elements of `nums` should hold the final result. It does not matter what you leave beyond the first `k` elements.
+
+> 由于在某些语言中不可能改变数组的长度，所以必须将结果放在数组nums的第一部分。
+>
+> 更正式地说，如果在删除重复项之后有k个元素，那么nums的前k个元素应该保存最终结果。除了前k个元素，剩下什么都没关系。
+
+Return `k` after placing the final result in the first `k` slots of `nums`.
+
+> 将最终结果放入nums的前k个槽位后返回k。
+
+Do **not** allocate extra space for another array. You must do this by **modifying the input array** [in-place](https://en.wikipedia.org/wiki/In-place_algorithm) with $O(1)$ extra memory.
+
+> 不要使用额外的数组空间，你必须仅使用 `O(1)` 额外空间并 **[原地 ](https://baike.baidu.com/item/原地算法)修改输入数组**。
+
+
+
+<font size=5>图解过程</font>
+
+<img src="./img/008eGmZEly1gntrds6r59g30du09mnpd.gif" alt="27.移除元素-双指针法" style="zoom:80%;" /> 
+
+**Reference:**
+
+1. [27. 移除元素](https://programmercarl.com/0027.%E7%A7%BB%E9%99%A4%E5%85%83%E7%B4%A0.html#%E6%80%9D%E8%B7%AF)
+2. 
+
+
+
+### [167. Two Sum II - Input Array Is Sorted](https://leetcode.cn/problems/two-sum-ii-input-array-is-sorted/)
+
+Given a **1-indexed** array of integers `numbers` that is already ***sorted in non-decreasing order***, find two numbers such that they add up to a specific `target` number. Let these two numbers be `numbers[index1]` and `numbers[index2]` where `1 <= index1 < index2 <= numbers.length`.
+
+Return the indices of the two numbers, `index1` and `index2`, ***added by one*** as an integer array `[index1, index2]` of length 2.
+
+The tests are generated such that there is ***exactly one solution***. You **may not** use the same element twice.
+
+Your solution must use only constant extra space.
+
+```C#
+Example 1:
+
+Input: numbers = [2,7,11,15], target = 9
+Output: [1,2]
+Explanation: The sum of 2 and 7 is 9. Therefore, index1 = 1, index2 = 2. We return [1, 2].
+```
+
+
+
+<img src="./img/image-20220726105828783.png" alt="image-20220726105828783" style="zoom: 80%;" /> 
+
+
+
+
+
+
+
+
 
 
 
@@ -1865,48 +2019,7 @@ public class Solution {
 - 实际上，S1会立即开始执行交换，且执行left++和right++;由于第一步理解错了，我对整个执行的过程推导都是错的，于是只能打开visual studio单步调试才正确理解；
 - 对于这样的case来说，第一次需要花很长时间，且需要经验积累，跟需要同步调试。过了这关，后续相关的问题，会如Binary Search一样相当好理解了。
 
-
-
-<img src="./img/344_fig1.png" alt="img" style="zoom: 50%;" />
-
-
-
-### 27. Remove Element
-
-| Title                                                        | Type         | Date      |
-| ------------------------------------------------------------ | ------------ | --------- |
-| [27. Remove Element](https://leetcode-cn.com/problems/remove-element/) | Tow Pointers | 2021-12-5 |
-
-<font size=5>题目</font>
-
-Given an integer array `nums` and an integer `val`, remove all occurrences of `val` in `nums` [in-place](https://en.wikipedia.org/wiki/In-place_algorithm). The relative order of the elements may be changed.
-
-Since it is impossible to change the length of the array in some languages, you must instead have the result be placed in the **first part** of the array `nums`. More formally, if there are `k` elements after removing the duplicates, then the first `k` elements of `nums` should hold the final result. It does not matter what you leave beyond the first `k` elements.
-
-> 由于在某些语言中不可能改变数组的长度，所以必须将结果放在数组nums的第一部分。
->
-> 更正式地说，如果在删除重复项之后有k个元素，那么nums的前k个元素应该保存最终结果。除了前k个元素，剩下什么都没关系。
-
-Return `k` after placing the final result in the first `k` slots of `nums`.
-
-> 将最终结果放入nums的前k个槽位后返回k。
-
-Do **not** allocate extra space for another array. You must do this by **modifying the input array** [in-place](https://en.wikipedia.org/wiki/In-place_algorithm) with $O(1)$ extra memory.
-
-> 不要使用额外的数组空间，你必须仅使用 `O(1)` 额外空间并 **[原地 ](https://baike.baidu.com/item/原地算法)修改输入数组**。
-
-
-
-
-
-<font size=5>图解过程</font>
-
-![27.移除元素-双指针法](./img/008eGmZEly1gntrds6r59g30du09mnpd.gif)
-
-**Reference:**
-
-1. [27. 移除元素](https://programmercarl.com/0027.%E7%A7%BB%E9%99%A4%E5%85%83%E7%B4%A0.html#%E6%80%9D%E8%B7%AF)
-2. 
+<img src="./img/344_fig1.png" alt="img" style="zoom: 45%;" />
 
 
 
@@ -1956,151 +2069,74 @@ public class Solution {
 
 <img src="./img/image-20211218214437866.png" alt="image-20211218214437866" style="zoom: 67%;" />
 
-<img src="./img/image-20211218211153995.png" alt="image-20211218211153995" style="zoom: 67%;" />
+<img src="./img/image-20211218211153995.png" alt="image-20211218211153995" style="zoom: 50%;" />
+
+### 977. Squares of a sorted array
+
+| Title                                                        | Type         | Date      |
+| ------------------------------------------------------------ | ------------ | --------- |
+| [977. Squares of a Sorted Array](https://leetcode-cn.com/problems/squares-of-a-sorted-array/) | Tow Pointers | 2021-12-3 |
 
 
 
-### 19. [Remove nth node from end of list](https://leetcode-cn.com/problems/remove-nth-node-from-end-of-list/)
+<font size=5> 解题思路 </font>
 
-Given the **`head`** of a linked list, remove the **n<sup>th</sup>** node from the list and return its head.
+数组其实是有序的， 只不过负数平方之后可能成为最大数了。
 
-给你一个链表（上的head节点），删除链表的倒数第 `n` 个结点，并且返回链表的头结点。
+那么数组平方的最大值就在数组的两端，不是最左边就是最右边，不可能是中间。
 
-**Example 1:**
+此时可以考虑双指针法了，i指向起始位置，j指向终止位置。
 
-<img src="./img/image-20211213115333648.png" alt="image-20211213115333648" style="zoom:50%;" />
+定义一个新数组result，和A数组一样的大小，让k指向result数组终止位置。
 
-```c#
-Input: head = [1,2,3,4,5], n = 2
-Output: [1,2,3,5]
-```
+如果`A[i] * A[i] < A[j] * A[j]` 那么`result[k--] = A[j] * A[j];` 。
 
-**Example 2:**
+如果`A[i] * A[i] >= A[j] * A[j]` 那么`result[k--] = A[i] * A[i];` 。
 
-```c#
-Input: head = [1], n = 1
-Output: []
-```
-
-**Example 3:**
-
-```c#
-Input: head = [1,2], n = 1
-Output: [1]
-```
+- [Reference](https://leetcode-cn.com/problems/squares-of-a-sorted-array/comments/) 
 
 
 
-#### Dummy node
+<font size=5>算法图解</font>
 
-在对链表进行操作时，一种常用的技巧是添加一个[哑节点](https://leetcode-cn.com/problems/remove-nth-node-from-end-of-list/solution/shan-chu-lian-biao-de-dao-shu-di-nge-jie-dian-b-61/)（**dummy node**），它的**next** 指针指向链表的头节点。这样一来，我们就不需要对头节点进行特殊的判断了。
-
-例如，在本题中，如果我们要删除节点 **y**，我们需要知道节点 **y** 的前驱节点 **x**，并将 **x** 的指针指向 **y** 的后继节点。但由于头节点不存在前驱节点，因此我们需要在删除头节点时进行特殊判断。但如果我们添加了哑节点，那么头节点的前驱节点就是哑节点本身，此时我们就只需要考虑通用的情况即可。
-
-> 特别地，在某些语言中，由于需要自行对内存进行管理。因此在实际的面试中，对于「是否需要释放被删除节点对应的空间」这一问题，我们需要和面试官进行积极的沟通以达成一致。下面的代码中默认不释放空间。
-
-
-
-<font size=5>双指针</font>
-
-
-
-我们也可以在不预处理出链表的长度，以及使用常数空间的前提下解决本题。
-
-由于我们需要找到倒数第 $n$ 个节点，因此我们可以使用两个指针 **first** 和 **second** 同时对链表进行遍历，并且**first** 比 **second**超前 **n** 个节点。当 **first** 遍历到链表的末尾时，**second** 就恰好处于倒数第 **n** 个节点。
-
-具体地，初始时**first** 和 **second** 均指向头节点。我们首先使用 **first** 对链表进行遍历，遍历的次数为 **n**。此时，**first** 和 **second** 之间间隔了 $n−1$ 个节点，即 **first** 比 **second** 超前了 **n** 个节点。
-
-<img src="./img/cc43daa8cbb755373ce4c5cd10c44066dc770a34a6d2913a52f8047cbf5e6e56-file_1559548337458" alt="img" style="zoom: 50%;" />
-
-> 这个[动画](https://leetcode-cn.com/problems/remove-nth-node-from-end-of-list/solution/dong-hua-tu-jie-leetcode-di-19-hao-wen-ti-shan-chu/)实在是神来之笔
-
-因此我们可以考虑在初始时将 **second** 指向哑节点，其余的操作步骤不变。这样一来，当**first** 遍历到链表的末尾时，**second** 的下一个节点就是我们需要删除的节点。
-
-<img src="./img/p3.png" alt="p3" style="zoom:67%;" />
+![img](./img/Squares_of_a_sorted_array.gif)
 
 
 
 <font size=5>参考代码</font>
 
-```c#
-/**
- * Definition for singly-linked list.
- * public class ListNode {
- *     public int val;
- *     public ListNode next;
- *     public ListNode(int val=0, ListNode next=null) {
- *         this.val = val;
- *         this.next = next;
- *     }
- * }
- */
-public class Solution {
-    public ListNode RemoveNthFromEnd(ListNode head, int n) {
-        /*往head上链表上插入全新的一个节点，生成一个全新的链表dummyList
-        该dummyList有两个作用，一个是赋予second指针删除节点用，
-        另一个是把删除过后的链表返回给方法*/
-        ListNode dummyList = new ListNode(0,head);
-        /*head是head，和dummyList是独立的两条链表，
-        但是这样子无法解释该算法的空间复杂度为O（1）*/
-        ListNode first = head;
-        ListNode second = dummyList;
-        for(int i=0;i<n;i++){ //先移动first指针往前n步
-            first = first.next;
-        }
-        while(first!=null){
-            first=first.next;
-            second=second.next;
-        }
-        second.next=second.next.next;
-    }
-}
-```
-
-- 我对链表模型上可以理解，但是无法解释代码执行情况，说明还未彻底理解；（中文翻译也有点误导）。
--   `ListNode dummyList = new ListNode(0,head);`究竟是产生了一个全新的链表`dummyList`,还是只是产生一个新的节点？我在这两个认知中反复横条；
-- 我是在尝试写备注，把每一句执行的过程记录下来的过程中发现了问题，才开始反思，否则就这样稀里糊涂过了，所以上面的备注随后以后追溯看起来很会很funny，不过这确实是一个过程，也确实是发现问题的关键所在，值得记录下来为后续的难题记录提供参考。
-- 从字面意识上看 `dummyList`其实是一个节点，因为其类型是`ListNode`,而不是 `ListNode[]` 这样的东西；
-- 由于我未能彻底理解`LinkedList`的结构，在**LeetCode**给出的有限的代码下做错误的理解，因此导致每次写代码都需要看提示。于是我就参考[Implementing Linked List In C#](https://www.c-sharpcorner.com/article/linked-list-implementation-in-c-sharp/)和[LinkedList<T> Class](https://docs.microsoft.com/en-us/dotnet/api/system.collections.generic.linkedlist-1?view=net-6.0)两片文章做进一步了解。
-- 有时候编程需要深入了解才能彻底掌握，急不得，也不要急，大不了**LeetCode**代码多抄写几次，然后先卡在这些题目上几天、几个礼拜。每日的坚持比刷进度，从长远来看，更有效。
-
-
-
-<font size=5>正确代码</font>
-
 ```C#
-/**
- * Definition for singly-linked list.
- * public class ListNode {
- *     public int val;
- *     public ListNode next;
- *     public ListNode(int val=0, ListNode next=null) {
- *         this.val = val;
- *         this.next = next;
- *     }
- * }
- */
 public class Solution {
-    public ListNode RemoveNthFromEnd(ListNode head, int n) {
-        /*往链表上新增一个DummyNode节点*/
-        ListNode dummyNode = new ListNode(0,head);
-        ListNode first = head;
-        ListNode second = dummyNode;
-        for(int i=0;i<n;i++){ //先移动first指针往前n步
-            first = first.next;
-        }
-        while(first!=null){
-            first=first.next;
-            second=second.next;
-        }
-        //改变链表上的要删除的N点的前驱节点的后驱指针指向的位置
-        second.next=second.next.next;
-        //把哑节点的下一个节点（亦即head节点）传递给ans
-        ListNode ans = dummyNode.next;
-        return ans;
+    public int[] SortedSquares(int[] nums) {
+    	//i 是数组开头位置， j是数组结尾位置， pos是返回的数组在当前循环内最大的数组
+     	int i = 0, j = nums.Length -1, pos = nums.Length -1;
+     
+    	// int[] ans = new int[nums.Length-1]; // 数组越界！
+   		int[] ans = new int[nums.Length];
+   		// while(i<j)  [-7,-3,2,3,11] => [0,9,9,49,121]
+        while(i<=j)
+        {
+             if(nums[i] * nums[i] > nums[j] * nums[j])
+             {
+                 ans[pos] = nums[i] * nums[i];
+                 //确认了是i最大，因此移动i指针到下一位进行比较
+                i++;
+             }
+             else
+             {
+                 ans[pos] = nums[j] * nums[j];
+                 //反之，如果确认是j更大，把更大的值赋予ans数组的最大位(pos),并且修改j指针的位置
+                 j--;
+             }
+             //every iterated, need to change the pointer of pos(self minus) 
+             pos-- ;
+         }
+         return ans;
     }
 }
 ```
+
+1
 
 
 
@@ -2835,5 +2871,4 @@ public class Solution {
 
 
 ## 动态规划
-
 
