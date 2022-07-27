@@ -2039,6 +2039,24 @@ public class Solution {
 
 
 
+### [557. Reverse Words in a String III](https://leetcode.cn/problems/reverse-words-in-a-string-iii/)
+
+- 这里也牵涉到双指针，但是需要对字符串怎么分割处理和append也是属于难点。
+- 官网的解答看起来很吃力，后来在另一个[高赞的帖子](https://leetcode.cn/problems/reverse-words-in-a-string-iii/solution/python-fan-zhuan-zi-fu-chuan-zhong-dan-ci-si-lu-xi/)下找到了一份Java答案更好理解
+
+Given a string `s,` reverse the order of characters in each word within a sentence while still preserving whitespace and initial word order.
+
+```C#
+Example 1:
+
+Input: s = "Let's take LeetCode contest"
+Output: "s'teL ekat edoCteeL tsetnoc"
+```
+
+
+
+
+
 ### 876. Middle of the Linked List
 
 | Titile                                                       | Type         | Date       |
