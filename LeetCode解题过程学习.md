@@ -2055,6 +2055,69 @@ Output: "s'teL ekat edoCteeL tsetnoc"
 
 
 
+```java
+class Solution {
+    public String reverseWords(String s) {
+        //因为字符串不可变，所以必须定义一个可变的字符串来存储新的字符
+        StringBuilder ans = new StringBuilder();
+        //遍历原字符串，取出单个单词，以空格分开
+        for(String str: s.trim().split(" ")){
+            //将取出的单词，转化为字符数组的形式
+            char[] chars = str.toCharArray();
+            //反转单词
+            reverseString(chars);
+            //将反转后的单词，追加到新的可变字符串中，并加上空格
+            ans.append(chars).append(" ");
+        }
+        //将字符数组转为字符串形式输出，并删除头尾的空格
+        //因为在追加最后一个字符的时候，末尾会有一个空格
+        return ans.toString().trim();
+    }
+    public void reverseString(char[] chars){
+        //左指针，指向头部
+        int left = 0; 
+        //右指针，指向尾部
+        int right= chars.length-1;
+        //只要左指针小于右指针，就交换两个字符
+        while(left < right){
+            char temp = chars[left];
+            chars[left] = chars[right];
+            chars[right] = temp;
+            //两个指针同时移动
+            left++;
+            right--;
+        }
+    }
+}
+```
+
+
+
+```C#
+public class Solution {
+    public string ReverseWords(string s) {
+        StringBuilder sb = new StringBuilder();
+        foreach(var str in s.Trim().Split(" ")){
+            char[] chars = str.ToCharArray();
+            ReverseString(chars);
+            sb.Append(chars).Append(" ");
+        }
+        return sb.ToString().Trim();
+    }
+
+    public void ReverseString(char[] chars){
+        int left = 0, right = chars.Length - 1;
+        while (left < right){
+            char temp = chars[left];
+            chars[left] = chars[right];
+            chars[right] = temp;
+            left += 1;
+            right -= 1;
+        }
+    }
+}
+```
+
 
 
 ### 876. Middle of the Linked List
