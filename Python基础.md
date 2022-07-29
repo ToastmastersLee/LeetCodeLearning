@@ -59,6 +59,10 @@ num for num 后续没有其他地方引用num了 ，为什么这样写不行呢�
 
 ### 切片
 
+#### 基本解释
+
+Slicing is indexing syntax that extracts a portion from a list
+
 <img src="./img/image-20220729122337128.png" alt="image-20220729122337128" style="zoom: 25%;" /> 
 
 

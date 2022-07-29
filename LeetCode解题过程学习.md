@@ -2093,6 +2093,8 @@ class Solution {
 
 
 
+**C#**：
+
 ```C#
 public class Solution {
     public string ReverseWords(string s) {
@@ -2116,6 +2118,16 @@ public class Solution {
         }
     }
 }
+```
+
+
+
+**Python**
+
+```python
+class Solution:
+    def reverseWords(self,s:str) -> str:
+        return " ".join(word[::-1] for word in s.split(" "))
 ```
 
 
