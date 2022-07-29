@@ -4,9 +4,9 @@
 
 [toc]
 
+### 解包/解构
 
-
-### 1178. [Sum of Unique Elements](https://leetcode-cn.com/problems/sum-of-unique-elements/)
+1178\. [Sum of Unique Elements](https://leetcode-cn.com/problems/sum-of-unique-elements/)
 
 You are given an integer array `nums`. The unique elements of an array are the elements that appear **exactly once** in the array.
 
@@ -54,3 +54,38 @@ num for num 后续没有其他地方引用num了 ，为什么这样写不行呢�
 **Reference**
 
 1. [Python: List Comprehensions](https://web.archive.org/web/20180309053826/http://www.secnetix.de/olli/Python/list_comprehensions.hawk)
+
+
+
+### 切片
+
+
+
+### 字符串操作
+
+[557. 反转字符串中的单词 III](https://leetcode.cn/problems/reverse-words-in-a-string-iii/)
+
+<img src="./img/image-20220729114716245.png" alt="image-20220729114716245" style="zoom:80%;" /> 
+
+```python
+class Solution(object):
+    def reverseWords(self, s):
+        return " ".join(word[::-1] for word in s.split(" "))
+```
+
+Python join() 方法用于将序列中的元素以指定的字符连接生成一个新的字符串。
+
+```python
+str.join(sequence)
+
+str = "-";
+seq = ("a", "b", "c"); # 字符串序列
+print str.join( seq );
+
+#输出：
+a-b-c
+```
+
+
+
+#### Join 方法
