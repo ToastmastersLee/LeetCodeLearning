@@ -2093,7 +2093,7 @@ class Solution {
 
 
 
-**C#**：
+**C#1** ：
 
 ```C#
 public class Solution {
@@ -2119,6 +2119,44 @@ public class Solution {
     }
 }
 ```
+
+
+
+**C#2:**
+
+```C#
+public class Solution {
+    public string ReverseWords(string s) {
+        return string.Join(" ",ReverseStr(s).ToArray());
+    }
+
+    public IEnumerable<string> ReverseStr(string str){
+        foreach(var item in str.Split(" ")){
+            yield return string.Join("",item.ToCharArray().Reverse());
+        }
+    }
+}
+```
+
+- 这里的 yield return的作用是以IEnumerable集合形式返回
+
+
+
+**C#3：**
+
+```C#
+public class Solution {
+    public string ReverseWords(string s) {
+       StringBuilder sb = new StringBuilder();
+        foreach (var item in s.Split(" ")){
+            sb.Append(string.Join("",item.ToArray().Reverse())).Append(" ");
+        }
+        return sb.ToString().Trim();
+    }
+}
+```
+
+<img src="./img/image-20220729143649726.png" alt="image-20220729143649726" style="zoom:80%;" /> 
 
 
 

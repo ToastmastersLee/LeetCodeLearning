@@ -83,6 +83,141 @@ Slicing is indexing syntax that extracts a portion from a list
 
 
 
+#### 反转字符串
+
+Given a string `s`, reverse the order of characters in each word within a sentence while still preserving whitespace and initial word order.
+
+Example 1:
+
+```python
+Input: s = "Let's take LeetCode contest"
+Output: "s'teL ekat edoCteeL tsetnoc"
+```
+
+Example 2:
+
+```python
+Input: s = "God Ding"
+Output: "doG gniD"
+```
+
+
+
+[python 反转字符串中单词思路详解](https://leetcode.cn/problems/reverse-words-in-a-string-iii/solution/python-fan-zhuan-zi-fu-chuan-zhong-dan-ci-si-lu-xi/):
+
+**解题思路**
+
+因为在 Python 中字符串是不可变，因此遍历字符串交换每个单词内字符位置的方法不太可行，但是利用 Python 切片的便利，可以写出更优雅的实现方式。
+
+**1、常规思路**
+
+将字符串分割成单词列表 然后把每个单词反转切片
+
+代码
+
+```python
+Python
+
+class Solution(object):
+    def reverseWords(self, s):
+        return " ".join(word[::-1] for word in s.split(" "))
+```
+
+**分析**
+
+- 时间复杂度： O(n) 。其中 nn 是字符串的长度。
+- 空间复杂度： O(1) 。
+
+**2、利用两次切片，不需遍历**
+
+先反转单词列表 再反转字符串
+
+> 以字符串 “I love drag queen” 为例：
+
+**s.split(" ")** 将字符串分割成单词列表:
+
+```python
+['I', 'love', 'drag', 'queen']
+```
+
+**s.split(" ")[::-1]** 将单词列表反转:
+
+```python
+['queen', 'drag', 'love', 'I']
+```
+
+**" ".join(s.split(" ")[::-1])** 将单词列表转换为字符串，以空格分隔:
+
+```python
+"queen drag love I"
+```
+
+**" ".join(s.split(" ")[::-1])[::-1]** 将字符串反转：
+
+```python
+"I evol gard neeuq"
+```
+
+
+
+**代码**
+
+```python
+class Soution(object):
+    def reverseWords(self, s):
+        return " ".join(s.split(" ")[::-1])[::-1]
+```
+
+**分析**
+
+- **时间复杂度**： O(n)*O*(*n*) 。其中 n*n* 是字符串的长度。
+- **空间复杂度**： O(1)*O*(1) 。
+
+或者，
+
+
+
+**3、先反转字符串，再反转单词列表**
+**s[::-1]** 反转字符串：
+
+```python
+“neeuq gard evol I”
+```
+
+**s[::-1].split(" ")** 将字符串分割成单词列表：
+
+```python
+['neeuq', 'gard', 'evol', 'I']
+```
+
+**s[::-1].split(" ")[::-1]** 将单词列表反转：
+
+```python
+['I', 'evol', 'gard', 'neeuq']
+```
+
+**" ".join(s[::-1].split(" ")[::-1])** 将单词列表转换为字符串，以空格分隔:
+
+```python
+"I evol gard neeuq"
+```
+
+
+代码
+
+```python
+class Soution(object):
+    def reverseWords(self, s):
+        return " ".join(s[::-1].split(" ")[::-1])
+```
+
+##### 分析
+
+- **时间复杂度**：O(n)。其中 n*n* 是字符串的长度。
+- **空间复杂度**：O(1)。
+
+
+
 ### 字符串操作
 
 [557. 反转字符串中的单词 III](https://leetcode.cn/problems/reverse-words-in-a-string-iii/)
