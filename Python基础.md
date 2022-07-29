@@ -59,6 +59,24 @@ num for num 后续没有其他地方引用num了 ，为什么这样写不行呢�
 
 ### 切片
 
+<img src="./img/image-20220729122337128.png" alt="image-20220729122337128" style="zoom: 25%;" /> 
+
+
+
+<img src="./img/image-20220729122535633.png" alt="image-20220729122535633" style="zoom: 36%;" /> 
+
+<img src="./img/image-20220729122720254.png" alt="image-20220729122720254" style="zoom:33%;" /> <img src="./img/image-20220729122739434.png" alt="image-20220729122739434" style="zoom:33%;" /> 
+
+
+
+<img src="./img/image-20220729122758686.png" alt="image-20220729122758686" style="zoom:33%;" /> 
+
+
+
+<img src="./img/image-20220729122818495.png" alt="image-20220729122818495" style="zoom:33%;" /> 
+
+<img src="./img/image-20220729122829099.png" alt="image-20220729122829099" style="zoom:33%;" /> 
+
 
 
 ### 字符串操作
