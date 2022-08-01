@@ -6,6 +6,13 @@ namespace LeetCodeLearning11
 {
     class Program
     {
+        public class Coroutine1Token
+        {
+            public int State { get; set; }
+            public int Value { get; set; }
+
+        }
+
         static void Main(string[] args)
         {
 
@@ -33,14 +40,81 @@ namespace LeetCodeLearning11
             //Console.WriteLine(retVal);
 
 
-            string order = "leewa";
-            int[] index = new int[26];
-            for (int i = 0; i < order.Length; ++i)
+            //string order = "leewa";
+            //int[] index = new int[26];
+            //for (int i = 0; i < order.Length; ++i)
+            //{
+            //    index[order[i] - 'a'] = i;
+            //}
+
+            //Console.WriteLine("Hello World!");
+
+            static int Coroutine1(Coroutine1Token token)
             {
-                index[order[i] - 'a'] = i;
+                // switch on our state
+                switch (token.State)
+                {
+                    case 0: // initially, we increment the value
+                        ++token.Value;
+                        // .. until it's 100, then we go to state 1
+                        if (100 == token.Value)
+                            token.State = 1;
+                        break;
+                    case 1:
+                        // next, after we're done above we decrement the value
+                        --token.Value;
+                        // .. until it's 1, then we go to state 2
+                        if (1 == token.Value)
+                            token.State = 2;
+                        break;
+                    case 2:
+                        // state 2 is just to tell us we're at the end
+                        // which we signal by returning -1
+                        return -1;
+                }
+                // finally, just yield the value we have currently before exiting
+                return token.Value;
             }
 
-            Console.WriteLine("Hello World!");
+            //var tok = new Coroutine1Token();
+            //int c;
+            //Console.WriteLine("Coroutine1():");
+            //while (-1 != (c = Coroutine1(tok)))
+            //    Console.Write(c.ToString() + " ");
+            //Console.WriteLine();
+
+            static IEnumerable<int> Coroutine2()
+            {
+                // at the first state we count from 1 to 100, yielding each value
+                for (var i = 1; i <= 100; i++)
+                {
+                    yield return i;
+                }
+
+                // at the next state we count from 99 to 1, yielding each value
+                for (var i = 99; 0 < i; i--)
+                {
+                    yield return i;
+                }
+                // the final state is implicit, handled by the C# compiler
+            }
+            Console.WriteLine("Coroutine2():");
+            foreach (var i in Coroutine2())
+                Console.Write(i.ToString() + " ");
+            Console.WriteLine();
+
+            Console.WriteLine("Coroutine2() using while:");
+            using (var e = Coroutine2().GetEnumerator())
+            {
+                // each time MoveNext() is called, Coroutine2() is run for a single step
+                while (e.MoveNext())
+                {
+                    // e.Current holds the result of Coroutine2()'s step
+                    Console.Write(e.Current.ToString() + " ");
+                }
+            }
+            Console.WriteLine();
+
         }
     }
 }
