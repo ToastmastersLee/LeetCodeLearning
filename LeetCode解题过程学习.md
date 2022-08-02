@@ -2333,8 +2333,6 @@ Notice that the answer must be a substring, "pwke" is a subsequence and not a su
 
 
 
-
-
 <font size=5> C#代码 </font>
 
 ```C#
@@ -2343,16 +2341,16 @@ public class Solution {
         // 哈希集合，记录每个字符是否出现过
         //Hashset<char> cSet = new Hashset<char>();
         HashSet<char> cSet = new HashSet<char>();
-        int rk=0;//右指针
+        int rk=0;//右指针，初始值为 -1，相当于我们在字符串的左边界的左侧，还没有开始移动
         int ans = 0; //答案 answers
-        for (int i=0;i<s.Length-1;i++) //左指针
+        for (int i=0;i<s.Length-1;i++) //左指针，枚举左指针的位置，初始值隐性地表示为 -1
         {
             if(i!=0)
             {
                 // 左指针向右移动一格，移除一个字符
                 cSet.Remove(s[i-1]);
             }
-            //如果当前哈希表不包含rk字符，则纳入到哈希表
+            //如果当前哈希表不包含rk字符，则纳入到哈希表 移动窗口的长度
             while(rk < s.Length-1 && !cSet.Contains(s[rk])) 
             {
               // 不断地移动右指针 
@@ -2373,7 +2371,7 @@ public class Solution {
 
   因为尼玛的竟然有空字符串的情况：
 
-  <img src="./img/image-20211220161809062.png" alt="image-20211220161809062" style="zoom: 80%;" /> 
+  <img src="./img/image-20211220161809062.png" alt="image-20211220161809062" style="zoom: 67%;" /> 
 
 
 
@@ -2383,16 +2381,16 @@ public class Solution {
         // 哈希集合，记录每个字符是否出现过
         //Hashset<char> cSet = new Hashset<char>();
         HashSet<char> cSet = new HashSet<char>();
-        int rk = -1;//右指针
+        int rk = -1;//右指针，初始值为 -1，相当于我们在字符串的左边界的左侧，还没有开始移动
         int ans = 0; //答案 answers
-        for (int i = 0;i < s.Length; i++) //左指针
+        for (int i = 0;i < s.Length; i++) //左指针，枚举左指针的位置，初始值隐性地表示为 -1
         {
             if(i != 0)
             {
                 // 左指针向右移动一格，移除一个字符
                 cSet.Remove(s[i-1]);
             }
-            //如果当前哈希表不包含rk字符，则纳入到哈希表
+            //如果当前哈希表不包含rk字符，则纳入到哈希表 移动窗口的长度
             while(rk+1 < s.Length && !cSet.Contains(s[rk+1])) 
             {
               // 不断地移动右指针 
@@ -2419,13 +2417,13 @@ public class Solution {
 
 以字符串**pwwkew**为例：
 
-- S1: 很明显，我们需要遍历整个（改字符串的）数组，来建立**散列表**(**Dictionary** / **Hashset**)。
+- S1: 很明显，我们需要遍历整个（该字符串的）数组，来建立**散列表**(**Dictionary** / **Hashset**)。
 
   >  由于我们需要用到子串，所以需要下标的信息
 
 <img src="./img/image-20211219211108564.png" alt="image-20211219211108564" style="zoom:80%;" /> 
 
-- S2: 首先是第一个字符 **p**， 由散列表中没有该记录，因此可以插入散列表中；此时，子串，或者说 移动窗口的长度 加1。
+- S2: 首先是第一个字符 **p**， 由散列表中没有该记录，因此可以插入散列表中；此时，**子串**，或者说 **移动窗口 **的长度 加1。
 
 <img src="./img/image-20211219211559442.png" alt="image-20211219211559442" style="zoom:80%;" /> 
 
