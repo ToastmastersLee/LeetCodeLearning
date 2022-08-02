@@ -6,7 +6,7 @@ namespace LeetCodeLearning11
 {
     public  class _3longest_substring_without_repeating_characters
     {
-        public int LengthOfLongestSubstring(string s)
+        public int LengthOfLongestSubstring(string s= "pwwkew")
         {
             // s = "pwwkew"
             Dictionary<char, int> map = new Dictionary<char, int>();

@@ -2338,42 +2338,30 @@ Notice that the answer must be a substring, "pwke" is a subsequence and not a su
 ```C#
 public class Solution {
     public int LengthOfLongestSubstring(string s) {
-        // 哈希集合，记录每个字符是否出现过
-        //Hashset<char> cSet = new Hashset<char>();
-        HashSet<char> cSet = new HashSet<char>();
-        int rk=0;//右指针，初始值为 -1，相当于我们在字符串的左边界的左侧，还没有开始移动
-        int ans = 0; //答案 answers
-        for (int i=0;i<s.Length-1;i++) //左指针，枚举左指针的位置，初始值隐性地表示为 -1
-        {
-            if(i!=0)
-            {
-                // 左指针向右移动一格，移除一个字符
-                cSet.Remove(s[i-1]);
+        Dictionary<char, int> map = new Dictionary<char, int>();
+        int maxLen = 0;
+        int left = 0;
+        for (int i = 0; i < s.Length; i++){
+            if(map.ContainsKey(s[i])){
+                left = Math.Max(left, map[s[i]] +1);
             }
-            //如果当前哈希表不包含rk字符，则纳入到哈希表 移动窗口的长度
-            while(rk < s.Length-1 && !cSet.Contains(s[rk])) 
-            {
-              // 不断地移动右指针 
-              cSet.Add(s[rk]);
-              rk++;
-            }
-            // 第 i 到 rk 个字符是一个极长的无重复字符子串
-            ans = Math.Max(ans,rk-i);
+            map[s[i]] = i;
+            maxLen = Math.Max(maxLen, i - left + 1);
         }
-        return ans;
+        return maxLen;
     }
 }
 ```
 
+- 这段代码我完全看不懂 2022-8-2 14:55:19
+- 唯一能做的就是复制到vscode里面一步步debugger;
+- 然后把每一步的执行过程记录下来，使用图画一步步讲清楚
 
 
-- 为什么一定要让rk=-1, 直接等于0不是更加单吗？
 
-  因为尼玛的竟然有空字符串的情况：
+ 
 
-  <img src="./img/image-20211220161809062.png" alt="image-20211220161809062" style="zoom: 67%;" /> 
-
-
+其他代码参考
 
 ```C#
 public class Solution {
