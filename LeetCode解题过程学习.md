@@ -2483,6 +2483,18 @@ It's worth noting that this will break if any character other than `a-z` is pres
 
 
 
+**在MySQL上(MMSQL无效)：**
+
+```sql
+select ord('a') -- =97
+
+select ord('b') -- =98
+
+select ord('b') -ord('a') -- =1
+```
+
+
+
 还用到[这题](https://leetcode.cn/problems/verifying-an-alien-dictionary/solution/yan-zheng-wai-xing-yu-ci-dian-by-leetcod-jew7/)：
 
 <img src="./img/image-20220517111121285.png" alt="image-20220517111121285" style="zoom:80%;" /> 
@@ -2525,8 +2537,6 @@ Output: true
 ```
 
 Explanation: sentence contains at least one of every letter of the English alphabet.
-
-
 
 Example 2:
 

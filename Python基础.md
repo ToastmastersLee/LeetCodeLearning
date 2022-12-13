@@ -4,6 +4,8 @@
 
 [toc]
 
+
+
 ### 解包/解构
 
 1178\. [Sum of Unique Elements](https://leetcode-cn.com/problems/sum-of-unique-elements/)
@@ -246,3 +248,43 @@ a-b-c
 
 
 #### Join 方法
+
+
+
+### ord()
+
+> https://leetcode.cn/problems/check-if-the-sentence-is-pangram/submissions/
+
+ord() 函数是 chr() 函数（对于8位的ASCII字符串）或 unichr() 函数（对于Unicode对象）的配对函数，它以一个字符（长度为1的字符串）作为参数，返回对应的 ASCII 数值，或者 Unicode 数值，如果所给的 Unicode 字符超出了你的 Python 定义范围，则会引发一个 TypeError 的异常。
+
+```ABAP
+>>>ord('a') 97 
+>>> ord('b') 98 
+>>> ord('c') 99
+```
+
+[What does the name of the ord() function stand for?](https://stackoverflow.com/questions/50314440/what-does-the-name-of-the-ord-function-stand-for)
+
+> ord(c):
+> Given a string representing one Unicode character, return an integer representing the Unicode code point of that character. For example, ord('a') returns the integer 97 and ord('€') (Euro sign) returns 8364. This is the inverse of chr().
+
+It stands for ["ordinal"](https://en.wikipedia.org/wiki/Ordinal_data_type).
+
+The earliest use of `ord` that I remember was in [Pascal](https://en.wikipedia.org/wiki/Pascal_(programming_language)). There, `ord()` returned the ordinal value of its argument. For characters this was defined as the ASCII code.
+
+The same convention was also used in [Modula-2](https://en.wikipedia.org/wiki/Modula-2).
+
+Later, Python (as well as PHP, some dialects of SQL etc) followed this convention, except that these days they're more likely to use Unicode rather than ASCII.
+
+It could well be that the origins of the term (and the function name) go back further than Pascal.
+
+
+
+**在MySQL上(MMSQL无效)：**
+
+```sql
+select ord('a') -- =97
+select ord('b') -- =98
+select ord('b') -ord('a') -- =1
+```
+
