@@ -42,9 +42,16 @@ public:
 
 > The left-shift operator (<<) shifts its first operand left by the number of bits specified by its second operand. The type of the second operand must be an int. [<< Operator (MSDN C# Reference)](http://msdn.microsoft.com/en-us/library/a1sway8w.aspx) 
 >
+> - 左移位运算符（<<）将其第一个操作数向左移位第二个操作数指定的位数。第二个操作数的类型必须是int.
+> - **operand** [ɑpə'rænd] 运算对象(操作数) ：a number or quantity that has something done to it in a calculation. For example, in **`7 + y`**, **`7`** and **`y`** are the operands.
+>
+> 
+>
 > <img src="./img/300px-Rotate_left_logically.svg.png" alt="alt text" style="zoom:120%;" />
 
 For binary numbers it is a bitwise operation that shifts all of the bits of its operand; every bit in the operand is simply moved a given number of bit positions, and the vacant bit-positions are filled in.
+
+> 对于二进制数，它是逐位操作，移位其操作数的所有位;操作数中的每一位都被简单地移动到给定数量的位位，空的位位被填充。
 
 
 
@@ -99,8 +106,6 @@ Bitwise and shift operations never cause overflow and produce the same results i
 `<<` 运算符将其左侧操作数向左移动[右侧操作数定义的位数](https://docs.microsoft.com/zh-cn/dotnet/csharp/language-reference/operators/bitwise-and-shift-operators#shift-count-of-the-shift-operators)。
 
 左移运算会放弃超出结果类型范围的高阶位，并将低阶空位位置设置为零，如以下示例所示：
-
-C#复制运行
 
 ```csharp
 uint x = 0b_1100_1001_0000_0000_0000_0000_0001_0001;
@@ -168,6 +173,34 @@ static void Main(string[] args)
 
 
 
+### 小结
+
+对于[这道](https://leetcode.cn/problems/search-insert-position/solution/sou-suo-cha-ru-wei-zhi-by-leetcode-solution/)题目：
+
+```C++
+class Solution {
+public:
+    int searchInsert(vector<int>& nums, int target) {
+        int n = nums.size();
+        int left = 0, right = n - 1, ans = n;
+        while (left <= right) {
+            int mid = ((right - left) >> 1) + left;
+            if (target <= nums[mid]) {
+                ans = mid;
+                right = mid - 1;
+            } else {
+                left = mid + 1;
+            }
+        }
+        return ans;
+    }
+};
+```
+
+`(right - left) >> 1` 表示的就是 `(right - left) // 2`
+
+
+
 ## Reference
 
 1. [Bitwise and shift operators (C# reference)](https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/operators/bitwise-and-shift-operators#left-shift-operator-)
@@ -179,6 +212,7 @@ static void Main(string[] args)
 
 ## 文档修订记录
 
-| 版本号 | 变化状态 | 简要说明             | 日期     |
-| ------ | -------- | -------------------- | -------- |
-| v0.1   | 初稿     | 初步恶补了位移运算符 | 2022-1-2 |
+| 版本号 | 变化状态 | 简要说明             | 日期       |
+| ------ | -------- | -------------------- | ---------- |
+| v0.1   | 初稿     | 初步恶补了位移运算符 | 2022-1-2   |
+| v0.1   | 补充     | 又重新温习了一遍     | 2022-12-16 |
