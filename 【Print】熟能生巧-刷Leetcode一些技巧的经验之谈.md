@@ -106,6 +106,8 @@ Leetcode 我年年都有买会员, 一年160美元, 很值. Preimium 会员的�
 
 每天不一定要[刷一题](https://justyy.com/archives/6471)新的, 可以是你自己刷过的, 换种语言刷刷? 换种思路试试? 然后就是看看别人是怎么做的. 这些都能让你进步.
 
+
+
 ## Reference
 
 1. [熟能生巧 – 刷题的一些技巧的经验之谈](https://justyy.com/archives/44858)
