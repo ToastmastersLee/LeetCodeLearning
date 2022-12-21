@@ -150,3 +150,6 @@ Leetcode 我年年都有买会员, 一年160美元, 很值. Preimium 会员的�
 
 
 
+## Whig history
+
+> https://en.wikipedia.org/wiki/Whig_history
