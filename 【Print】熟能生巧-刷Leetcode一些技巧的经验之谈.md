@@ -150,6 +150,22 @@ Leetcode 我年年都有买会员, 一年160美元, 很值. Preimium 会员的�
 
 
 
+## 
+
+
+
+## 2022-12-30 这多半是分了吧
+
+> 2022-12-30 Friday cloudy
+
+### 这多半是分了吧
+
+<img src="./img/image-20221230091955314.png" alt="image-20221230091955314" style="zoom:80%;" /> 
+
+
+
+
+
 ## Whig history
 
 > https://en.wikipedia.org/wiki/Whig_history
