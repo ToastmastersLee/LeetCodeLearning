@@ -169,3 +169,17 @@ Leetcode 我年年都有买会员, 一年160美元, 很值. Preimium 会员的�
 ## Whig history
 
 > https://en.wikipedia.org/wiki/Whig_history
+
+
+
+
+
+## 1
+
+if you think this is a malice place ~~to~~ for  you, you should consider two things for ~~yourselve~~  yourself:
+
+One is trying to take ~~the~~  effective actions, like learning English hard **and** getting through the TOEFL/IELTS(International English Language Testing System) ~~exames~~ exams.
+
+**The** second is to understand the game theory. The position I am standing **in** is the result of ~~multi player player dynamice game~~ a multiplayer dynamic game. The skills, ability, communication skills, and attitudes, all of them construct together and push you to be **in** the position. It means if you are unsatisfying ~~about~~ with[^1] the circumstance, you should improve yourself, and then ~~found~~ find a right position for you.
+
+[^1]: **satisfied with** something.  <br>**upset about** something. <br>**Lose sleep over** - common usage in my dialect (Midwestern US)<br> In english (as well as other languages I've encountered), verb + preposition pairings are somewhat arbitrary and just have to be learned in pairs.<br> https://forum.wordreference.com/threads/satisfied-about-or-with.66809/  
