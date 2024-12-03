@@ -90,7 +90,7 @@
 
 > 老是遇到 "ModuleNotFoundError: No module named 'pandas'" 的问题。
 
-原因找到了,在 command palette 中选择正确的环境（**myenv**）再次允许就消除了上述的报错
+原因找到了,在 command palette 中选择正确的环境（**myenv**）再次运行就消除了上述的报错
 
 <img src="./img/image-20230908181532681.png" alt="image-20230908181532681" style="zoom:33%;" /> 
 
