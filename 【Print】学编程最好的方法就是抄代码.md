@@ -16,21 +16,19 @@
 
 每周讲一课, 然后每天上机练习, 全家一起学习, 搞不好媳妇以后也可以转码成为程序媛.
 
-.
-
-[![2021-11-21-11.53.06 教媳妇编程: 学编程最好的方法就是抄代码 媳妇 学习笔记 程序设计 ](https://justyy.com/wp-content/uploads/2021/11/2021-11-21-11.53.06.jpg)](https://justyy.com/wp-content/uploads/2021/11/2021-11-21-11.53.06.jpg)
+[<img src="/Users/leewang/Documents/Githubs/LeetCodeLearning/img/2021-11-21-11.53.06.jpg" alt="2021-11-21-11.53.06 教媳妇编程: 学编程最好的方法就是抄代码 媳妇 学习笔记 程序设计 " style="zoom:25%;" />](https://justyy.com/wp-content/uploads/2021/11/2021-11-21-11.53.06.jpg)
 
 媳妇在抄代码, 好像基本指法不熟
 
-[![2021-11-21-11.52.23-rotated 教媳妇编程: 学编程最好的方法就是抄代码 媳妇 学习笔记 程序设计 ](https://justyy.com/wp-content/uploads/2021/11/2021-11-21-11.52.23-rotated.jpg)](https://justyy.com/wp-content/uploads/2021/11/2021-11-21-11.52.23-rotated.jpg)
+[<img src="/Users/leewang/Documents/Githubs/LeetCodeLearning/img/2021-11-21-11.52.23-rotated.jpg" alt="2021-11-21-11.52.23-rotated 教媳妇编程: 学编程最好的方法就是抄代码 媳妇 学习笔记 程序设计 " style="zoom:25%;" />](https://justyy.com/wp-content/uploads/2021/11/2021-11-21-11.52.23-rotated.jpg)
 
-[![2021-11-21-11.52.04 教媳妇编程: 学编程最好的方法就是抄代码 媳妇 学习笔记 程序设计 ](https://justyy.com/wp-content/uploads/2021/11/2021-11-21-11.52.04.jpg)](https://justyy.com/wp-content/uploads/2021/11/2021-11-21-11.52.04.jpg)
+[<img src="https://justyy.com/wp-content/uploads/2021/11/2021-11-21-11.52.04.jpg" alt="2021-11-21-11.52.04 教媳妇编程: 学编程最好的方法就是抄代码 媳妇 学习笔记 程序设计 " style="zoom:25%;" />](https://justyy.com/wp-content/uploads/2021/11/2021-11-21-11.52.04.jpg)
 
-[![2021-11-20-20.34.34 教媳妇编程: 学编程最好的方法就是抄代码 媳妇 学习笔记 程序设计 ](https://justyy.com/wp-content/uploads/2021/11/2021-11-20-20.34.34.jpg)](https://justyy.com/wp-content/uploads/2021/11/2021-11-20-20.34.34.jpg)
+[<img src="https://justyy.com/wp-content/uploads/2021/11/2021-11-20-20.34.34.jpg" alt="2021-11-20-20.34.34 教媳妇编程: 学编程最好的方法就是抄代码 媳妇 学习笔记 程序设计 " style="zoom:25%;" />](https://justyy.com/wp-content/uploads/2021/11/2021-11-20-20.34.34.jpg)
 
 媳妇的代码小抄笔记
 
-[![2021-11-19-10.07.33 教媳妇编程: 学编程最好的方法就是抄代码 媳妇 学习笔记 程序设计 ](https://justyy.com/wp-content/uploads/2021/11/2021-11-19-10.07.33.jpg)](https://justyy.com/wp-content/uploads/2021/11/2021-11-19-10.07.33.jpg)
+[<img src="https://justyy.com/wp-content/uploads/2021/11/2021-11-19-10.07.33.jpg" alt="2021-11-19-10.07.33 教媳妇编程: 学编程最好的方法就是抄代码 媳妇 学习笔记 程序设计 " style="zoom:25%;" />](https://justyy.com/wp-content/uploads/2021/11/2021-11-19-10.07.33.jpg)
 
 每周给媳妇上编程课
 
