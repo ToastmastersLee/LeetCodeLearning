@@ -1,0 +1,6 @@
+@IQOrdersAPI_HostAddress = http://localhost:5214
+
+GET {{IQOrdersAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
